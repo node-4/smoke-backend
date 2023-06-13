@@ -23,7 +23,12 @@ app.get("/home", (req, res) => {
   res.status(200).send({ msg: "Working App" });
 });
 app.use("/api/v1/", require("./route/user"));
-app.use("/api/v1/request", require("./route/add_request"))
+app.use("/api/v1/request", require("./route/add_request"));
+app.use("/api/v1/question", require("./route/question"))
+app.use("/api/v1/questionAnswer", require("./route/questionAnswer"))
+app.use("/api/v1/static", require("./route/staticContent"))
+app.use("/api/v1/faq", require("./route/faq.route"))
+app.use("/api/v1/help", require("./route/helpandsupport.route"))
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

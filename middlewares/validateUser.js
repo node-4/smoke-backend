@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../model/user");
 
 const isValidPassword = (password) => {
     // checks password meets requirements

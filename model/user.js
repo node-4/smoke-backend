@@ -31,15 +31,15 @@ const userSchema = mongoose.Schema({
     default: "",
   },
   member: {
-    type:String,
+    type: String,
     default: "",
   },
   latitude: {
-    type:String,
+    type: String,
     default: "",
   },
   longitude: {
-    type:String,
+    type: String,
     default: "",
   },
   educationlevel: {
@@ -86,6 +86,30 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+  flameUser: {
+    type: Array,
+    ref: "userProfile",
+  },
+  flameCount: {
+    type: Number,
+    default: 0
+  },
+  friendCount: {
+    type: Number,
+    default: 0
+  },
+  friends: {
+    type: Array,
+    ref: "userProfile",
+  },
+  blockUser: {
+    type: Array,
+    ref: "userProfile",
+  },
+  coin: {
+    type: Number,
+    default: 0
+  },
   photo: {
     type: String,
     default:
@@ -94,5 +118,4 @@ const userSchema = mongoose.Schema({
 });
 
 const userModel = mongoose.model("userProfile", userSchema);
-
 module.exports = userModel;

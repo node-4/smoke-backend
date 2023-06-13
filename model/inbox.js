@@ -1,10 +1,26 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const inboxSchema = mongoose.Schema({
-  a: {
-    type:String
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userProfile',
+    required: true,
+  },
+  flameUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'userProfile',
+    required: true,
+  },
+  view: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
-const districtModel = mongoose.model("inbox", inboxSchema);
 
-module.exports = districtModel;
+const Inbox = mongoose.model('inbox', inboxSchema);
+
+module.exports = Inbox;
