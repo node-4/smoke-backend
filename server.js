@@ -23,6 +23,7 @@ app.get("/home", (req, res) => {
   res.status(200).send({ msg: "Working App" });
 });
 require('./controllers/SubscriptionCronjob')
+require('./controllers/QuestionCronjob')
 app.use("/api/v1/", require("./route/user"));
 app.use("/api/v1/request", require("./route/add_request"));
 app.use("/api/v1/question", require("./route/question"))
@@ -42,10 +43,3 @@ app.listen(PORT, () => {
 module.exports = {
   handler: serverless(app),
 };
-
-
-
-
-
-
-
