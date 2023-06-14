@@ -9,6 +9,10 @@ const subscriptionSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "subscription",
   },
+  name: {
+    type: String,
+    enum: ["Monthly", "Week"]
+  },
   firstLetter: {
     type: String,
     default: "Unlimited"
@@ -37,6 +41,9 @@ const subscriptionSchema = mongoose.Schema({
   subscriptionStatus: {
     type: Boolean,
     default: false,
+  },
+  subscriptionExpire: {
+    type: Date,
   },
 });
 

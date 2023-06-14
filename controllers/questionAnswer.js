@@ -77,7 +77,7 @@ exports.giveAnswer = async (req, res) => {
                                                                                 return res.status(200).json({ status: 200, message: "Answer update successfully." });
                                                                         }
                                                                 } else if (findHistoryCoin.answerCount == 11) {
-                                                                        if (findHistoryCoin.startQuize <= 2) {
+                                                                        if (findHistoryCoin.startQuize < Date.now()) {
                                                                                 let findUser = await user.findById({ _id: req.user.id });
                                                                                 let updateUser = await user.findByIdAndUpdate({ _id: findUser._id }, { $set: { coin: findUser.coin + 15 } }, { new: true })
                                                                                 let update = await questionHistoryCoin.findByIdAndDelete({ _id: findHistoryCoin._id });
@@ -96,7 +96,7 @@ exports.giveAnswer = async (req, res) => {
                                                                         user: req.user.id,
                                                                         questionTime: question.questionTime,
                                                                         answerCount: findHistoryCoin.answerCount + 1,
-                                                                        startQuize: new Date(Date.now())
+                                                                        startQuize: new Date(Date.now() + 2 * 60 * 60 * 1000)
                                                                 }
                                                                 const Data = await questionHistoryCoin.create(data);
                                                                 if (Data) {

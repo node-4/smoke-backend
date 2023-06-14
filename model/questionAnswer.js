@@ -8,6 +8,9 @@ const quesSchema = mongoose.Schema({
     type: String,
     enum: ["07", "09", "11", "13", "15", "17", "19", "21", "23"]
   },
+  questionDate:{
+    type: String
+  },
   question: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "question",
