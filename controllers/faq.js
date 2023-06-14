@@ -1,4 +1,4 @@
-const Faq = require("../models/faq");
+const Faq = require("../model/faq");
 
 exports.getAllFaqs = async (req, res) => {
     try {

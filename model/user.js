@@ -26,9 +26,9 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "https://static.vecteezy.com/system/resources/thumbnails/008/154/360/small/student-logo-vector.jpg",
   },
-  nameOfSchool: {
-    type: String,
-    default: "",
+  school: {
+    type: objectid,
+    ref: "school",
   },
   member: {
     type: String,
@@ -41,6 +41,9 @@ const userSchema = mongoose.Schema({
   longitude: {
     type: String,
     default: "",
+  },
+  pinCode: {
+    type: String,
   },
   educationlevel: {
     type: String,

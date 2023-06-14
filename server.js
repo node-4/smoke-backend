@@ -29,6 +29,10 @@ app.use("/api/v1/questionAnswer", require("./route/questionAnswer"))
 app.use("/api/v1/static", require("./route/staticContent"))
 app.use("/api/v1/faq", require("./route/faq.route"))
 app.use("/api/v1/help", require("./route/helpandsupport.route"))
+app.use("/api/v1/state", require("./route/state"))
+app.use("/api/v1/school", require("./route/school"))
+app.use("/api/v1/post", require("./route/post"))
+app.use("/api/v1/subsription", require("./route/subsription"))
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

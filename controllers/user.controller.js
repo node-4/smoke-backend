@@ -6,6 +6,7 @@ const userSchema = require("../model/user");
 const cloudinary = require("cloudinary");
 var newOTP = require("otp-generators");
 const FriendRequest = require('../model/add_request');
+const schoolModel = require('../model/school');
 cloudinary.config({
         cloud_name: "https-www-pilkhuwahandloom-com",
         api_key: "886273344769554",
@@ -21,9 +22,17 @@ exports.createUser = async (req, res) => {
                 }
                 req.body.profileImage = photo;
                 const userData = req.body;
+                let findSchool = await schoolModel.findById({ _id: req.body.school });
+                if (!findSchool) {
+                        return res.status(404).json({ status: 404, message: 'School not found' });
+                }
                 const newUser = await userSchema.create(userData);
-
-                return res.status(201).json(newUser);
+                if (newUser) {
+                        let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
+                        if (updateSchool) {
+                                return res.status(201).json(newUser);
+                        }
+                }
         } catch (error) {
                 console.error(error);
                 return res.status(500).json({ message: 'Internal server error' });
