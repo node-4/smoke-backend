@@ -1,0 +1,12 @@
+const auth = require("../controllers/admin.controller");
+const { authJwt } = require("../middlewares");
+const express = require('express');
+const router = express.Router();
+router.post("/registration", auth.registration);
+router.post("/login", auth.signin);
+router.put("/update", [authJwt.verifyToken], auth.update);
+router.post("/Banner/AddBanner", [authJwt.verifyToken], auth.AddBanner);
+router.get("/Banner/allBanner", auth.getBanner);
+router.get("/Banner/getBannerById/:id", auth.getBannerById);
+router.delete("/Banner/deleteBanner/:id", [authJwt.verifyToken], auth.DeleteBanner);
+module.exports = router;

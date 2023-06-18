@@ -113,6 +113,11 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  userType: {
+    type: String,
+    enum: ["USER", "ADMIN"],
+    default: "USER"
+  },
   photo: {
     type: String,
     default:

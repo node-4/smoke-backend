@@ -35,6 +35,8 @@ app.use("/api/v1/state", require("./route/state"))
 app.use("/api/v1/school", require("./route/school"))
 app.use("/api/v1/post", require("./route/post"))
 app.use("/api/v1/subsription", require("./route/subsription"))
+app.use("/api/v1/admin", require("./route/admin.route"))
+
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
