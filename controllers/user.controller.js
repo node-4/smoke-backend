@@ -174,3 +174,15 @@ exports.getUserById = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
         }
 };
+exports.getUser = async (req, res) => {
+        try {
+                const user = await userSchema.find().populate("city state district")
+                if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                }
+                return res.status(200).json({ msg: user });
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+}
