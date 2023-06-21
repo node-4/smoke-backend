@@ -29,7 +29,7 @@ const postSchema = mongoose.Schema({
   Comment: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "userProfile",
     },
     Comment: {
       type: String
