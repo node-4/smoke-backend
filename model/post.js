@@ -14,34 +14,35 @@ const postSchema = mongoose.Schema({
     type: objectId,
     ref: "userProfile"
   },
-  like: {
-    count: {
-      type: Number,
-      default: 0,
-    },
-    user: [
-      {
-        type: objectId,
-        ref: "userProfile",
-      },
-    ],
+  likeCount: {
+    type: Number,
+    default: 0,
   },
-  comment: {
-    countt: {
-      type: Number,
-      default: 0,
-    },
-    user: [{
-        type: objectId,
-        ref: "userProfile",
-      },
-    ],
-    comment: {
-      type: String,
-      default: ""
-    }
+  likeUser: [{
+    type: objectId,
+    ref: "userProfile",
+  }],
+  commentCount: {
+    type: Number,
+    default: 0,
   },
-
+  Comment: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
+    Comment: {
+      type: String
+    },
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+  }],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 

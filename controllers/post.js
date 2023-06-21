@@ -95,14 +95,15 @@ exports.addLike = async (req, res) => {
     const post = await PostModel.findById(id);
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
+    } else {
+      if (post.like.includes(user)) {
+        return res.status(400).json({ error: 'User has already liked the post' });
+      }
+      const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { likeUser: user }, $set: { likeCount: post.likeCount + 1 } }, { new: true });
+      if (update) {
+        res.status(200).json({ status: 200, message: "like add successfully", data: update });
+      }
     }
-    if (post.like.user.includes(user)) {
-      return res.status(400).json({ error: 'User has already liked the post' });
-    }
-    post.like.user.push(user);
-    post.like.count++;
-    const updatedPost = await post.save();
-    res.status(200).json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while adding the like' });
@@ -116,11 +117,10 @@ exports.getLikeCount = async (req, res) => {
 
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
+    } else {
+      const likeCount = post.likeCount;
+      res.status(200).json({ count: likeCount });
     }
-
-    const likeCount = post.like.count;
-
-    res.status(200).json({ count: likeCount });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching the like count' });
@@ -130,23 +130,19 @@ exports.addComment = async (req, res) => {
   try {
     const { id } = req.params;
     const { user, comment } = req.body;
-
-    // Find the post by ID
     const post = await PostModel.findById(id);
-
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
+    } else {
+      let obj = {
+        user: user,
+        Comment: comment,
+      }
+      const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { Comment: obj }, $set: { commentCount: post.commentCount + 1 } }, { new: true });
+      if (update) {
+        res.status(200).json({ status: 200, message: "Comment add successfully", data: update });
+      }
     }
-
-    // Add the comment to the post's comment list
-    post.comment.user.push(user);
-    post.comment.comment = comment;
-    post.comment.countt++;
-
-    // Save the updated post
-    const updatedPost = await post.save();
-
-    res.status(200).json(updatedPost);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while adding the comment' });
