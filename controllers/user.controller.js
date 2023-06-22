@@ -124,7 +124,7 @@ exports.getUserflame = async (req, res) => {
         try {
                 let findUser = await userSchema.findById({ _id: req.user.id }).populate({ path: 'flameUser', select: '_id firstName lastName userName' });
                 if (findUser) {
-                        return res.status(200).json({ msg: "profile details updated", data: { user: findUser } });
+                        return res.status(200).json({ msg: "profile details updated", data: { user: findUser.flameUser } });
                 } else {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 }
@@ -137,7 +137,7 @@ exports.getUserFriends = async (req, res) => {
         try {
                 let findUser = await userSchema.findById({ _id: req.user.id }).populate({ path: 'friends', select: '_id firstName lastName userName' });
                 if (findUser) {
-                        return res.status(200).json({ msg: "profile details updated", data: { user: findUser } });
+                        return res.status(200).json({ msg: "profile details updated", data: { user: findUser.friends } });
                 } else {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 }
