@@ -5,7 +5,7 @@ const inbox = require("../model/inbox");
 
 exports.getAllQuestions = async (req, res) => {
         try {
-                const questions = await questionAnswer.find({ userID: req.user.id });
+                const questions = await questionAnswer.find({ userID: req.user.id }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' }, );
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
@@ -18,7 +18,7 @@ exports.getAllQuestions = async (req, res) => {
 exports.getQuestionById = async (req, res) => {
         const { questionId } = req.params;
         try {
-                const question = await questionAnswer.findById(questionId).populate('question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12');
+                const question = await questionAnswer.findById(questionId).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' }, );;
                 if (!question) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
