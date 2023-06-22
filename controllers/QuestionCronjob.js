@@ -139,11 +139,12 @@ new cronJob("*/20 * * * * *", async function () {
         })
     }
     if ((hr + 1) == '13') {
+        console.log("------------");
         let findUser = await user.find({});
         findUser.map(async i => {
-            if ((i.friends.length > 4) == false) {
-                console.log("No friends currently", i.firstName, "-", i.lastName, "-", i.userName);
-            } else {
+            if ((i.friends.length < 4) == true) {
+                console.log("No friends currently", i._id, "-", i.lastName, "-", i.userName);
+            } else if ((i.friends.length >= 4) == true) {
                 let totalQuestion = await questionAnswer.findOne({ userID: i._id, questionTime: hr + 1, questionDate: fullDate }).count();
                 if (totalQuestion == 12) {
                     console.log("total 12 question created", fullDate, "hr    ", hr + 1);
