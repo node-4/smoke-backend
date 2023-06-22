@@ -61,7 +61,7 @@ exports.rejectFriendRequest = async (req, res) => {
 };
 exports.getAllFriendRequest = async (req, res) => {
   try {
-    const cities = await FriendRequest.find({ receiver: req.params.userId, status: "pending" });
+    const cities = await FriendRequest.find({ receiver: req.params.userId, status: "pending" }).populate('sender receiver');
     res.json({ total: cities.length, msg: cities });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -69,7 +69,7 @@ exports.getAllFriendRequest = async (req, res) => {
 };
 exports.getByIdFriendRequest = async (req, res) => {
   try {
-    const cities = await FriendRequest.find({ _id: req.params.id });
+    const cities = await FriendRequest.find({ _id: req.params.id }).populate('sender receiver');
     res.json({ msg: cities });
   } catch (err) {
     res.status(500).json({ message: err.message });
