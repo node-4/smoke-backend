@@ -96,7 +96,7 @@ exports.addLike = async (req, res) => {
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     } else {
-      if (post.like.includes(user)) {
+      if (post.likeUser.includes(user)) {
         return res.status(400).json({ error: 'User has already liked the post' });
       }
       const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { likeUser: user }, $set: { likeCount: post.likeCount + 1 } }, { new: true });
