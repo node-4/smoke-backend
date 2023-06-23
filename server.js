@@ -36,6 +36,7 @@ app.use("/api/v1/school", require("./route/school"))
 app.use("/api/v1/post", require("./route/post"))
 app.use("/api/v1/subsription", require("./route/subsription"))
 app.use("/api/v1/admin", require("./route/admin.route"))
+app.use("/api/v1/chat", require("./route/ChatRouter"))
 
 
 app.listen(PORT, () => {
