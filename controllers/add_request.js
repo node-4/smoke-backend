@@ -88,10 +88,19 @@ exports.getfriendsofFriend = async (req, res) => {
   try {
     let findUser = await userSchema.findById({ _id: req.user.id });
     if (findUser) {
-      const my = new Map(findUser.friends.map(s => [s._id, s]));
-      const otheruser = new Map(my.friends.map(s => [s._id, s]));
-      const result = otheruser.filter(f => !my.get(f._id))
-      return res.status(200).json({ msg: "Data found successfully.", data: { user: result } });
+      let Friends = [], storeData = []
+      for (let j = 0; j < findUser.friends.length; j++) {
+        let data = await userSchema.findById({ _id: findUser.friends[j] });
+        for (let i = 0; i < data.friends.length; i++) {
+          let id = (data.friends[i]).toString();
+          if (!Friends.includes(id)) {
+            Friends.push(id);
+            let FindData = await userSchema.findById({ _id: id });
+            storeData.push(FindData)
+          }
+        }
+      }
+      return res.status(200).json({ msg: "Data found successfully.", data: { user: storeData } })
 
     }
   } catch (err) {
@@ -105,10 +114,14 @@ exports.getfriendsFromSchool = async (req, res) => {
   try {
     let findUser = await userSchema.findById({ _id: req.user.id });
     if (findUser) {
-      const myFriend = new Map(findUser.friends.map(s => [s._id, s]));
-      let data = await userSchema.find({ nameOfSchool: findUser.nameOfSchool });
-      const result = data.filter(f => !myFriend.get(f._id))
-      return res.status(200).json({ msg: "Data found successfully.", data: { user: result } });
+      let Friends = []
+      let data = await userSchema.find({ school: findUser.school, _id: { $ne: findUser._id } });
+      for (let i = 0; i < data.length; i++) {
+        if (!findUser.friends.includes(data[i]._id)) {
+          Friends.push(data[i])
+        }
+      }
+      return res.status(200).json({ msg: "Data found successfully.", data: { user: Friends } });
     }
   } catch (err) {
     console.log(err);
@@ -149,7 +162,7 @@ exports.unblockUser = async (req, res) => {
         return res.status(404).json({ msg: "user not found", data: {} });
       } else {
         if (findUser.blockUser.includes(getUser._id)) {
-          let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { blockUser: req.params.id }, $push: {friends: req.params.id } }, { new: true })
+          let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { blockUser: req.params.id }, $push: { friends: req.params.id } }, { new: true })
           return res.status(200).json({ msg: "User un block successfully.", data: update });
         } else {
           return res.status(404).json({ msg: "user not found", data: {} });
