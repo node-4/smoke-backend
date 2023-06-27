@@ -82,7 +82,6 @@ exports.viewChat = async (req, res) => {
                 return res.status(500).json({ status: 500, message: 'Internal server error' });
         }
 };
-
 exports.chattingHistory = async (req, res) => {
         try {
                 let userData = await userModel.findOne({ _id: req.user.id });
@@ -90,41 +89,34 @@ exports.chattingHistory = async (req, res) => {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 } else {
                         let query = {};
-                        return new Promise((resolve, reject) => {
-                                if (req.query.userName != (null || undefined)) {
-                                        query.$or = [{ userName1: req.query.userName, user2: userData._id, deleteChat2: false }, { userName2: req.query.userName, user1: userData._id, deleteChat1: false }]
-                                } else {
-                                        query.$or = [{ user2: userData._id, deleteChat2: false }, { user1: userData._id, deleteChat1: false }]
-                                }
-                                let unRead = [];
-                                chatModel.find(query).sort({ "messages.createdAt": -1 }).populate("user1 user2", "name")
-                                        .exec((err, result) => {
-                                                if (err) {
-                                                        response(res, ErrorCode.INTERNAL_ERROR, { err }, ErrorMessage.INTERNAL_ERROR);
-                                                }
-                                                else if (result.length == 0) {
-                                                        return res.status(200).json({ status: 200, message: "Data found successfully.", data: [] });
-                                                }
-                                                else {
-                                                        result.map(o => {
-                                                                let count = o.messageDetail.filter(obj => obj.messageStatus == "Unread" && ((o.user2._id).toString() == userData._id)).length
-                                                                let ob = {
-                                                                        status: o.status,
-                                                                        _id: o._id,
-                                                                        user1: o.user1,
-                                                                        user2: o.user2,
-                                                                        messageDetail: o.messageDetail,
-                                                                        totalUnreadMsg: count,
-                                                                        createdAt: o.createdAt,
-                                                                        updatedAt: o.updatedAt,
-                                                                        __v: o.__v
-                                                                }
-                                                                unRead.push(ob)
-                                                        })
-                                                        return res.status(200).json({ status: 200, message: "Data found successfully.", data: unRead });
-                                                }
-                                        })
-                        })
+                        if (req.query.userName != (null || undefined)) {
+                                query.$or = [{ userName1: req.query.userName, user2: userData._id, deleteChat2: false }, { userName2: req.query.userName, user1: userData._id, deleteChat1: false }]
+                        } else {
+                                query.$or = [{ user2: userData._id, deleteChat2: false }, { user1: userData._id, deleteChat1: false }]
+                        }
+                        let unRead = [];
+                        let result = await chatModel.find(query).sort({ "messages.createdAt": -1 }).populate("user1 user2", "firstName lastName");
+                        if (result.length == 0) {
+                                return res.status(200).json({ status: 200, message: "Data found successfully.", data: [] });
+                        }
+                        else {
+                                result.map(o => {
+                                        let count = o.messageDetail.filter(obj => obj.messageStatus == "Unread" && ((o.user2._id).toString() == userData._id)).length
+                                        let ob = {
+                                                status: o.status,
+                                                _id: o._id,
+                                                user1: o.user1,
+                                                user2: o.user2,
+                                                messageDetail: o.messageDetail,
+                                                totalUnreadMsg: count,
+                                                createdAt: o.createdAt,
+                                                updatedAt: o.updatedAt,
+                                                __v: o.__v
+                                        }
+                                        unRead.push(ob)
+                                })
+                                return res.status(200).json({ status: 200, message: "Data found successfully.", data: unRead });
+                        }
                 }
         } catch (error) {
                 return res.status(500).json({ status: 500, message: 'Internal server error' });
