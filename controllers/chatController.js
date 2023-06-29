@@ -56,7 +56,6 @@ exports.viewChat = async (req, res) => {
                 if (!user) {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 } else {
-                        var query = { status: "ACTIVE" }
                         let newMessages = []
                         return new Promise(async (resolve, reject) => {
                                 let view = await chatModel.findOne({ _id: req.query._id }).populate("user1 user2", "firstName lastName").sort({ "messageDetail.time": -1 })
@@ -71,7 +70,7 @@ exports.viewChat = async (req, res) => {
                                         })
                                         let update = await chatModel.findOneAndUpdate({ _id: view._id }, { $set: { messageDetail: newMessages } }, { new: true });
                                         if (update) {
-                                                let chat = await chatModel.findOne(query).populate("user1 user2", "firstName lastName").sort({ "messages.time": -1 })
+                                                let chat = await chatModel.findOne(update._id).populate("user1 user2", "firstName lastName").sort({ "messages.time": -1 })
                                                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: chat });
                                         }
                                 }
