@@ -113,6 +113,16 @@ const userSchema = mongoose.Schema({
     type: Number,
     default: 0
   },
+  poleUser: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userProfile"
+    },
+    count: {
+      type: Number,
+      default: 0
+    },
+  }],
   userType: {
     type: String,
     enum: ["USER", "ADMIN"],
