@@ -1,4 +1,6 @@
 const Question = require("../model/questions");
+const xlsx = require("xlsx");
+const fs = require('fs')
 exports.createQuestion = async (req, res) => {
   try {
     const findData = await Question.findOne({ question: req.body.question });
@@ -68,5 +70,32 @@ exports.deleteQuestion = async (req, res) => {
     return res
       .status(500)
       .json({ error: "An error occurred while deleting the question." });
+  }
+};
+exports.uploadthroughExcel = async (req, res) => {
+  try {
+    console.log(req.file);
+    const workbook = xlsx.readFile(req.file.path);
+    const sheet_name_list = workbook.SheetNames;
+    const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+    for (let i = 0; i < data.length; i++) {
+      console.log(i, "----------------", data[i]);
+      const product = new Question({
+        question: data[i].question,
+        type: data[i].type,
+        emoji: data[i].emoji,
+      });
+      let a = await product.save();
+    }
+    fs.unlink(req.file.path, (err) => {
+      if (err) throw err;
+      console.log("Uploaded file deleted");
+    });
+    res.status(200).json({ message: "Product Data is Saved " });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      message: err.message,
+    });
   }
 };

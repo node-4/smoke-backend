@@ -1,9 +1,11 @@
 const express = require("express");
 const questionController = require("../controllers/question");
+const upload = require("../middlewares/fileUpload");
 const router = express.Router();
 router.post("/", questionController.createQuestion);
 router.get("/", questionController.getAllQuestions);
 router.get("/:questionId", questionController.getQuestionById);
 router.put("/:questionId", questionController.updateQuestion);
 router.delete("/:questionId", questionController.deleteQuestion);
+router.route("/uploadExcel").post(upload.single("uploadfiles"), questionController.uploadthroughExcel);
 module.exports = router;
