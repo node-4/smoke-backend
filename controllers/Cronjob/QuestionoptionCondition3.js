@@ -16,337 +16,6 @@ new cronJob("*/40 * * * * *", async function () {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
             if (findUser) {
                 let findSchoolMember = await user.find({ _id: { $ne: findUser._id }, school: findUser.school });
-                if (totalQuestion[i].condition1 == true) {
-                    if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
-                        console.log("Enter into Condition 1", findUser.firstName);
-                    } else if (((0 < findSchoolMember.length) && (findSchoolMember.length < 4)) && ((0 < findUser.friends.length) && (findUser.friends.length < 4))) {
-                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition2: true } }, { new: true })
-                    } else if (findUser.friends.length >= 4) {
-                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
-                    } else {
-                        console.log("28----------------------------");
-                    }
-                }
-                if (totalQuestion[i].condition2 == true) {
-                    if (((0 < findSchoolMember.length) && (findSchoolMember.length < 4)) && ((0 < findUser.friends.length) && (findUser.friends.length < 4))) {
-                        console.log("Enter into Condition 2-", findUser.firstName);
-                        if (totalQuestion[i].priority2_1 == true) {
-                            console.log("-120-------------------------------");
-                            if (totalQuestion[i].optionCount == 12) {
-                                console.log("145-----------------------------", totalQuestion[i].optionCount);
-                            } else {
-                                console.log("Enter into Condition 3", findUser.firstName);
-                                if (totalQuestion[i].type == 'Flirtatious') {
-                                    console.log("-------------------32-----------------", totalQuestion[i].type);
-                                    var userArray = [];
-                                    for (let j = 0; j < findUser.friends.length; j++) {
-                                        if (userArray.includes(findUser.friends[j].toString())) {
-                                            console.log("49==================================================");
-                                        } else {
-                                            if (findUser.gender == 'female') {
-                                                let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'male' });
-                                                if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                }
-                                            }
-                                            if (findUser.gender == 'male') {
-                                                let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'female' });
-                                                if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority2_1: false, priority2_2: true } }, { new: true })
-                                    } else {
-                                        const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-                                        if (totalQuestion[i].optionCount == 0) {
-                                            if (sample.length == 1) {
-                                                console.log("-------138--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], optionCount: 1, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 2) {
-                                                console.log("-------142--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], optionCount: 2, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 3) {
-                                                console.log("-------146--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 4) {
-                                                console.log("-------150--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 5) {
-                                                console.log("-------154--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 6) {
-                                                console.log("-------158--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 7) {
-                                                console.log("-------162--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 8) {
-                                                console.log("-------166--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 9) {
-                                                console.log("-------170--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 10) {
-                                                console.log("-------174--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 11) {
-                                                console.log("-------178--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 12) {
-                                                console.log("-------182--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority2_1: false, priority2_2: false } }, { new: true });
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    var userArray = [];
-                                    for (let j = 0; j < findUser.friends.length; j++) {
-                                        if (userArray.includes(findUser.friends[j].toString())) {
-                                            console.log("49==================================================");
-                                        } else {
-                                            let findFriend = await user.findById({ _id: findUser.friends[j].toString() });
-                                            if (findFriend.flameCount > 0) {
-                                                userArray.push(findUser.friends[j].toString())
-                                            }
-                                        }
-                                    }
-                                    if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority2_1: false, priority2_2: true } }, { new: true })
-                                    } else {
-                                        const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-                                        if (totalQuestion[i].optionCount == 0) {
-                                            if (sample.length == 1) {
-                                                console.log("-------138--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], optionCount: 1, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 2) {
-                                                console.log("-------142--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], optionCount: 2, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 3) {
-                                                console.log("-------146--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 4) {
-                                                console.log("-------150--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 5) {
-                                                console.log("-------154--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 6) {
-                                                console.log("-------158--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 7) {
-                                                console.log("-------162--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 8) {
-                                                console.log("-------166--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 9) {
-                                                console.log("-------170--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 10) {
-                                                console.log("-------174--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 11) {
-                                                console.log("-------178--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority2_1: false, priority2_2: true } }, { new: true });
-                                            }
-                                            if (sample.length == 12) {
-                                                console.log("-------182--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority2_1: false, priority2_2: false } }, { new: true });
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                        if (totalQuestion[i].priority2_2 == true) {
-                            if (totalQuestion[i].optionCount == 12) {
-                                console.log("145-----------------------------", totalQuestion[i].optionCount);
-                            } else {
-                                if (totalQuestion[i].type == 'Flirtatious') {
-                                    console.log("-263------------------------------");
-                                    var userArray = [];
-                                    if (findSchoolMember.length > 0) {
-                                        for (let j = 0; j < findSchoolMember.length; j++) {
-                                            if (userArray.includes(findSchoolMember[j]._id).toString() || ((totalQuestion[i].option_1).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_2).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_3).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_4).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_5).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_6).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_7).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_8).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_9).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_10).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_11).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_12).toString() == (findSchoolMember[j]._id).toString())) {
-                                                console.log("267==================================================");
-                                            } else {
-                                                if (findUser.gender == 'female') {
-                                                    let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'male' });
-                                                    if (findFriend.flameCount == 0) {
-                                                        userArray.push((findSchoolMember[j]._id).toString())
-                                                    }
-                                                }
-                                                if (findUser.gender == 'male') {
-                                                    let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'female' });
-                                                    if (findFriend.flameCount == 0) {
-                                                        userArray.push((findSchoolMember[j]._id).toString())
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true })
-                                    }
-                                    if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true })
-                                    } else {
-                                        const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-                                        if (totalQuestion[i].optionCount == 0) {
-                                            if (sample.length == 1) {
-                                                console.log("-------138--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], optionCount: 1, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 2) {
-                                                console.log("-------142--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], optionCount: 2, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 3) {
-                                                console.log("-------146--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 4) {
-                                                console.log("-------150--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 5) {
-                                                console.log("-------154--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 6) {
-                                                console.log("-------158--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 7) {
-                                                console.log("-------162--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 8) {
-                                                console.log("-------166--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 9) {
-                                                console.log("-------170--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 10) {
-                                                console.log("-------174--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 11) {
-                                                console.log("-------178--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 12) {
-                                                console.log("-------182--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, condition2: false, condition3: true, priority2_1: true, priority2_2: false } }, { new: true });
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    console.log("-263------------------------------");
-                                    var userArray = [];
-                                    if (findSchoolMember.length > 0) {
-                                        for (let j = 0; j < findSchoolMember.length; j++) {
-                                            if (userArray.includes(findSchoolMember[j]._id).toString() || ((totalQuestion[i].option_1).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_2).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_3).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_4).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_5).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_6).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_7).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_8).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_9).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_10).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_11).toString() == (findSchoolMember[j]._id).toString()) || ((totalQuestion[i].option_12).toString() == (findSchoolMember[j]._id).toString())) {
-                                                console.log("267==================================================");
-                                            } else {
-                                                userArray.push((findSchoolMember[j]._id).toString())
-                                            }
-                                        }
-                                    } else {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true })
-                                    }
-                                    if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true })
-                                    } else {
-                                        const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-                                        if (totalQuestion[i].optionCount == 0) {
-                                            if (sample.length == 1) {
-                                                console.log("-------138--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], optionCount: 1, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 2) {
-                                                console.log("-------142--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], optionCount: 2, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 3) {
-                                                console.log("-------146--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 4) {
-                                                console.log("-------150--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 5) {
-                                                console.log("-------154--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 6) {
-                                                console.log("-------158--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 7) {
-                                                console.log("-------162--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 8) {
-                                                console.log("-------166--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 9) {
-                                                console.log("-------170--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 10) {
-                                                console.log("-------174--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 11) {
-                                                console.log("-------178--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                            if (sample.length == 12) {
-                                                console.log("-------182--------");
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    } else if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
-                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition1: true } }, { new: true })
-                    } else if (findUser.friends.length >= 4) {
-                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true } }, { new: true })
-                    } else {
-                        console.log("40----------------------------");
-                    }
-                }
                 if (totalQuestion[i].condition3 == true) {
                     console.log("27-----------------------------", totalQuestion.length);
                     if (findUser.friends.length >= 4) {
@@ -412,6 +81,7 @@ new cronJob("*/40 * * * * *", async function () {
                                         if (totalQuestion[i].optionCount == 0) {
                                             if (userArray.length == 1) {
                                                 console.log("-------69--------");
+                                                
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: userArray[0], optionCount: 1, priority2: false, priority3: true } }, { new: true });
                                             }
                                             if (userArray.length == 2) {
@@ -488,51 +158,39 @@ new cronJob("*/40 * * * * *", async function () {
                                         const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
                                         if (totalQuestion[i].optionCount == 0) {
                                             if (sample.length == 1) {
-                                                console.log("-------138--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], optionCount: 1, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 2) {
-                                                console.log("-------142--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], optionCount: 2, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 3) {
-                                                console.log("-------146--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 4) {
-                                                console.log("-------150--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 5) {
-                                                console.log("-------154--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 6) {
-                                                console.log("-------158--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 7) {
-                                                console.log("-------162--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 8) {
-                                                console.log("-------166--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 9) {
-                                                console.log("-------170--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 10) {
-                                                console.log("-------174--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 11) {
-                                                console.log("-------178--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority3: false, priority4: true } }, { new: true });
                                             }
                                             if (sample.length == 12) {
-                                                console.log("-------182--------");
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority3: false, priority4: false } }, { new: true });
                                             }
                                         }

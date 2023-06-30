@@ -23,8 +23,10 @@ app.get("/", (req, res) => {
   res.status(200).send({ msg: "Working App" });
 });
 require('./controllers/SubscriptionCronjob')
-require('./controllers/QuestionCronjob')
-require('./controllers/QuestionoptionCronjob')
+require('./controllers/Cronjob/QuestionCronjob')
+require('./controllers/Cronjob/QuestionoptionCondition1')
+require('./controllers/Cronjob/QuestionoptionCondition2')
+// require('./controllers/Cronjob/QuestionoptionCondition3')
 app.use("/api/v1/", require("./route/user"));
 app.use("/api/v1/request", require("./route/add_request"));
 app.use("/api/v1/question", require("./route/question"))
