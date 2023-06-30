@@ -10,7 +10,7 @@ new cronJob("*/40 * * * * *", async function () {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString()
-    let totalQuestion = await questionAnswer.find({ questionTime: hr, questionDate: fullDate })
+    let totalQuestion = await questionAnswer.find({ questionTime: (hr + 2 || hr + 1), questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
@@ -31,7 +31,7 @@ new cronJob("*/40 * * * * *", async function () {
         }
 
     } else {
-        console.log('No data found');
+        console.log('Question Condition 1 cron job  No data found');
     }
-    // }).start();
-}).stop()
+}).start();
+// }).stop()

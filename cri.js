@@ -10,9 +10,9 @@
         
         
         "2. When a person has less than 4 friends and less that 4 members from their school but greater than 0;"
-        "a.Display the friends that they have added;"
-        "b.Display Schoolmates / college mates on app;"
-        "c.priority 1 - 6 defined below will remain same;"
+        "a.Display the friends that they have added;-----------------------------------------------------done"
+        "b.Display Schoolmates / college mates on app;-----------------------------------------------------done"
+        "c.priority 1 - 6 defined below will remain same;-----------------------------------------------------done"
         "d.If still, we are not able to find 4 names fill as many names we get and then grey out other options;"
 
 

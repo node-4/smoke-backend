@@ -5,7 +5,12 @@ const inbox = require("../model/inbox");
 
 exports.getAllQuestions = async (req, res) => {
         try {
-                const questions = await questionAnswer.find({ userID: req.user.id }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' }, );
+                let hr = new Date(Date.now()).getHours();
+                let date = new Date(Date.now()).getDate();
+                let month = new Date(Date.now()).getMonth() + 1;
+                let year = new Date(Date.now()).getFullYear();
+                let fullDate = (`${date}/${month}/${year}`).toString()
+                const questions = await questionAnswer.find({ userID: req.user.id, questionTime: hr, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
@@ -18,7 +23,7 @@ exports.getAllQuestions = async (req, res) => {
 exports.getQuestionById = async (req, res) => {
         const { questionId } = req.params;
         try {
-                const question = await questionAnswer.findById(questionId).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' }, );;
+                const question = await questionAnswer.findById(questionId).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' },);;
                 if (!question) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
