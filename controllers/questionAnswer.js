@@ -10,7 +10,7 @@ exports.getAllQuestions = async (req, res) => {
                 let month = new Date(Date.now()).getMonth() + 1;
                 let year = new Date(Date.now()).getFullYear();
                 let fullDate = (`${date}/${month}/${year}`).toString()
-                console.log( req.user);
+                console.log(req.user._id);
                 const questions = await questionAnswer.find({ userID: req.user._id, questionTime: hr-1, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
