@@ -66,7 +66,7 @@ exports.verify = async (req, res) => {
                         return res.status(400).json({ message: "Invalid OTP" });
                 }
                 const updated = await userSchema.findByIdAndUpdate({ _id: user._id }, { accountVerification: true }, { new: true });
-                const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '24h', });
+                const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '365d', });
                 res.status(200).send({ message: "logged in successfully", accessToken: accessToken, });
         } catch (err) {
                 console.log(err.message);
@@ -80,11 +80,11 @@ exports.socialLogin = async (req, res) => {
                 if (!user || user.length == 0) {
                         const data1 = { google_id: req.body.google_id, name: req.body.name, email: req.body.email, phone: req.body.phone, };
                         const create = await userSchema.create(data1);
-                        const accessToken1 = jwt.sign({ id: create._id }, process.env.KEY, { expiresIn: "1d", })
+                        const accessToken1 = jwt.sign({ id: create._id }, process.env.SECRET, { expiresIn: "365d", })
                         res.setHeader("x-api-key", /* "Bearer "*/ +accessToken1);
                         return res.status(200).send({ message: "logged in successfully", accessToken: accessToken1, data: create, });
                 } else {
-                        const accessToken = jwt.sign({ id: user._id }, process.env.KEY, { expiresIn: "1d", });
+                        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "365d", });
                         res.setHeader("x-api-key", /* "Bearer "*/ +accessToken);
                         return res.status(200).send({ message: "logged in successfully", accessToken: accessToken, data: user, });
                 }
