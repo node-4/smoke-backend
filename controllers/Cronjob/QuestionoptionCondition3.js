@@ -3319,503 +3319,507 @@ new cronJob("*/40 * * * * *", async function () {
                                 if (totalQuestion[i].priority4 == true) {
                                     console.log("-49-------------------------------");
                                     let findwhatAppContact = await whatAppContact.findOne({ userID: totalQuestion[i].userID });
-                                    if (findwhatAppContact.userContacts.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
-                                    } else {
-                                        var userArray = [];
-                                        for (let k = 0; k < findwhatAppContact.userContacts.length; k++) {
-                                            let findUsers = await user.findOne({ phone: findwhatAppContact.userContacts[k].phone });
-                                            if ((userArray.includes(findUsers._id).toString()) || ((totalQuestion[i].option_1).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_2).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_3).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_4).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_5).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_6).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_7).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_8).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_9).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_10).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_11).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_12).toString() == (findUsers._id).toString())) {
-                                                console.log("-198-------------------------------");
-                                            } else {
-                                                userArray.push((findUsers._id).toString())
-                                            }
-                                        }
-                                        if (userArray.length == 0) {
+                                    if (findwhatAppContact) {
+                                        if (findwhatAppContact.userContacts.length == 0) {
                                             let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
                                         } else {
-                                            const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-                                            if (totalQuestion[i].optionCount == 0) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_1: sample[0], optionCount: 1, priority4: false, priority5: true }
+                                            var userArray = [];
+                                            for (let k = 0; k < findwhatAppContact.userContacts.length; k++) {
+                                                let findUsers = await user.findOne({ phone: findwhatAppContact.userContacts[k].phone });
+                                                if ((userArray.includes(findUsers._id).toString()) || ((totalQuestion[i].option_1).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_2).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_3).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_4).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_5).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_6).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_7).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_8).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_9).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_10).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_11).toString() == (findUsers._id).toString()) || ((totalQuestion[i].option_12).toString() == (findUsers._id).toString())) {
+                                                    console.log("-198-------------------------------");
+                                                } else {
+                                                    userArray.push((findUsers._id).toString())
                                                 }
-                                                if (sample.length == 2) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
                                             }
-                                            if (totalQuestion[i].optionCount == 1) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_2: sample[0], optionCount: 2, priority4: false, priority5: true }
+                                            if (userArray.length == 0) {
+                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
+                                            } else {
+                                                const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
+                                                if (totalQuestion[i].optionCount == 0) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_1: sample[0], optionCount: 1, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 1) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_2: sample[0], optionCount: 2, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 2) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_3: sample[0], optionCount: 3, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 3) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_4: sample[0], optionCount: 4, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 4) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_5: sample[0], optionCount: 5, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 5) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_6: sample[0], optionCount: 6, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 6) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_7: sample[0], optionCount: 7, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 7) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_8: sample[0], optionCount: 8, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 8) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_9: sample[0], optionCount: 9, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 9) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_10: sample[0], optionCount: 10, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 10) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_11: sample[0], optionCount: 11, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
+                                                }
+                                                if (totalQuestion[i].optionCount == 11) {
+                                                    let obj;
+                                                    if (sample.length == 1) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
+                                                    }
+                                                    if (sample.length == 2) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
+                                                    }
+                                                    if (sample.length == 3) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
+                                                    }
+                                                    if (sample.length == 4) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
+                                                    }
+                                                    if (sample.length == 5) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 6) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 7) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 8) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 9) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 10) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 11) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    if (sample.length == 12) {
+                                                        obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
+                                                    }
+                                                    let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
                                                 }
-                                                if (sample.length == 2) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 2) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_3: sample[0], optionCount: 3, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 3) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_4: sample[0], optionCount: 4, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 4) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_5: sample[0], optionCount: 5, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 5) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_6: sample[0], optionCount: 6, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 6) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_7: sample[0], optionCount: 7, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 7) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_8: sample[0], optionCount: 8, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 8) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_9: sample[0], optionCount: 9, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 9) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_10: sample[0], optionCount: 10, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 10) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_11: sample[0], optionCount: 11, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
-                                            }
-                                            if (totalQuestion[i].optionCount == 11) {
-                                                let obj;
-                                                if (sample.length == 1) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
-                                                }
-                                                if (sample.length == 2) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
-                                                }
-                                                if (sample.length == 3) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
-                                                }
-                                                if (sample.length == 4) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false }
-                                                }
-                                                if (sample.length == 5) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 6) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 7) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 8) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 9) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 10) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 11) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                if (sample.length == 12) {
-                                                    obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: false };
-                                                }
-                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
                                             }
                                         }
+                                    } else {
+                                        console.log("--------------------------------");
                                     }
                                 }
                                 if (totalQuestion[i].priority5 == true) {
