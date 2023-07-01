@@ -14,13 +14,13 @@ exports.getAllQuestions = async (req, res) => {
                 let hrs;
                 if (min) {
                         if (min > 30) {
-                                hrs = hr + 5
-                        } else {
                                 hrs = hr + 6
+                        } else {
+                                hrs = hr + 5
                         }
                 }
                 console.log(hrs);
-                console.log({ userID: req.user._id, questionTime: hrs, questionDate: fullDate });
+                console.log({ userID: req.user._id, serverTime: hr, questionTime: hrs, questionDate: fullDate });
                 const questions = await questionAnswer.find({ userID: req.user._id, questionTime: hrs, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
