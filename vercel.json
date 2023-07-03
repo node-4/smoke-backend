@@ -1,33 +1,5 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "./server.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/.*",
-            "dest": "server.js"
-        }
-    ],
-    "crons": [
-        {
-            "path": "./controllers/Cronjob/QuestionCronjob",
-            "schedule": "*/20 * * * * *"
-        },
-        {
-            "path": "./controllers/Cronjob/QuestionoptionCondition1",
-            "schedule": "*/30 * * * * *"
-        },
-        {
-            "path": "./controllers/Cronjob/QuestionoptionCondition2",
-            "schedule": "*/40 * * * * *"
-        },
-        {
-            "path": "./controllers/Cronjob/QuestionoptionCondition3",
-            "schedule": "*/50 * * * * *"
-        }
-    ]
+    "builds": [{ "src": "./server.js", "use": "@vercel/node" }],
+    "routes": [{ "src": "/.*", "dest": "server.js" }]
 }
