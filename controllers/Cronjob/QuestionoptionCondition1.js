@@ -3,7 +3,8 @@ let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
-new cronJob("*/40 * * * * *", async function () {
+module.exports = (req, res) => {
+    new cronJob("*/40 * * * * *", async function () {
     console.log("----------------------------------------------------------------------------------7----------------------------------");
     let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
@@ -49,3 +50,4 @@ new cronJob("*/40 * * * * *", async function () {
     }
 }).start();
 // }).stop()
+}
