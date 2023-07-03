@@ -5,21 +5,25 @@ const inbox = require("../model/inbox");
 
 exports.getAllQuestions = async (req, res) => {
         try {
-                let hr = new Date(Date.now()).getHours();
+                let hrs = new Date(Date.now()).getHours();
                 let date = new Date(Date.now()).getDate();
                 let month = new Date(Date.now()).getMonth() + 1;
                 let year = new Date(Date.now()).getFullYear();
                 let fullDate = (`${date}/${month}/${year}`).toString()
                 let min = new Date(Date.now()).getMinutes();
-                let hrs;
+                let hrs1, hr;
+                if (hrs < 10) {
+                        hrs1 = '' + 0 + hrs;
+                } else {
+                        hrs1 = hrs
+                }
                 if (min) {
                         if (min > 30) {
-                                hrs = hr + 6
+                                hr = hrs1 + 6
                         } else {
-                                hrs = hr + 5
+                                hr = hrs1 + 5
                         }
                 }
-                console.log(hrs);
                 console.log({ userID: req.user._id, serverTime: hr, questionTime: hrs, questionDate: fullDate });
                 const questions = await questionAnswer.find({ userID: req.user._id, questionTime: hrs, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
                 if (questions.length == 0) {

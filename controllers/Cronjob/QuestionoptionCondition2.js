@@ -5,11 +5,25 @@ let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
 new cronJob("*/40 * * * * *", async function () {
     console.log("----------------------------------------------------------------------------------7----------------------------------");
-    let hr = new Date(Date.now()).getHours();
+    let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
-    let fullDate = (`${date}/${month}/${year}`).toString()
+    let fullDate = (`${date}/${month}/${year}`).toString();
+    let min = new Date(Date.now()).getMinutes();
+    let hrs1, hr;
+    if (hrs < 10) {
+        hrs1 = '' + 0 + hrs;
+    } else {
+        hrs1 = hrs
+    }
+    if (min) {
+        if (min > 30) {
+            hr = hrs1 + 6
+        } else {
+            hr = hrs1 + 5
+        }
+    }
     let totalQuestion = await questionAnswer.find({ questionTime: hr + 1, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
