@@ -9,19 +9,20 @@ new cronJob("*/20 * * * * *", async function () {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     let min = new Date(Date.now()).getMinutes();
-    let hrs1,hr;
+    let hrs1, hr;
     if (hrs < 10) {
         hrs1 = '' + 0 + hrs;
     } else {
         hrs1 = hrs
     }
     if (min) {
-            if (min > 30) {
-                    hr = hrs1 + 6
-            } else {
-                    hr = hrs1 + 5
-            }
+        if (min > 30) {
+            hr = hrs1 + 6
+        } else {
+            hr = hrs1 + 5
+        }
     }
+    console.log("------------------------------25----------------", hr + 1);
     if (((hr + 1) == '07') || ((hr + 1) == '09') || ((hr + 1) == '11') || ((hr + 1) == '13') || ((hr + 1) == '19') || ((hr + 1) == '21') || ((hr + 1) == '23')) {
         let findUser = await user.find({});
         findUser.map(async i => {
