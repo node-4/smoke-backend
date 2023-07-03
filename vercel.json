@@ -14,19 +14,19 @@
     ],
     "crons": [
         {
-            "path": "./controllers/Cronjob/Cronjob/QuestionCronjob",
+            "path": "./controllers/Cronjob/QuestionCronjob",
             "schedule": "*/20 * * * * *"
         },
         {
-            "path": "./controllers/Cronjob/Cronjob/QuestionoptionCondition1",
+            "path": "./controllers/Cronjob/QuestionoptionCondition1",
             "schedule": "*/30 * * * * *"
         },
         {
-            "path": "./controllers/Cronjob/Cronjob/QuestionoptionCondition2",
+            "path": "./controllers/Cronjob/QuestionoptionCondition2",
             "schedule": "*/40 * * * * *"
         },
         {
-            "path": "./controllers/Cronjob/Cronjob/QuestionoptionCondition3",
+            "path": "./controllers/Cronjob/QuestionoptionCondition3",
             "schedule": "*/50 * * * * *"
         }
     ]
