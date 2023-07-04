@@ -2,7 +2,6 @@ const questionAnswer = require("../model/questionAnswer");
 const questionHistoryCoin = require("../model/questionHistoryCoin");
 const user = require("../model/user");
 const inbox = require("../model/inbox");
-
 exports.getAllQuestions = async (req, res) => {
         try {
                 let hrs = new Date(Date.now()).getHours();
@@ -12,6 +11,7 @@ exports.getAllQuestions = async (req, res) => {
                 let fullDate = (`${date}/${month}/${year}`).toString()
                 let min = new Date(Date.now()).getMinutes();
                 let hrs1, hr;
+                console.log(hrs);
                 if (hrs < 10) {
                         hrs1 = '' + 0 + hrs;
                 } else {
@@ -25,7 +25,7 @@ exports.getAllQuestions = async (req, res) => {
                         }
                 }
                 console.log({ userID: req.user._id, serverTime: hr, questionTime: hr, questionDate: fullDate });
-                const questions = await questionAnswer.find({ userID: req.user._id, questionTime: hrs, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
+                const questions = await questionAnswer.find({ userID: req.user._id, questionTime: hr, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
