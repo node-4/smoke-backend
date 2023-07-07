@@ -35,7 +35,7 @@ new cronJob("*/20 * * * * *", async function () {
     //     hrs1 = hrs
     // }
     // hr = hrs1 - 1;
-    console.log("----------------------26-----------question cronjob-----------------------",hr);
+    console.log("min=========",min,"----------------------26-----------question cronjob-----------------------",hr);
     if (((hr + 1) == '07') || ((hr + 1) == '09') || ((hr + 1) == '11') || ((hr + 1) == '13') || ((hr + 1) == '15') || ((hr + 1) == '17') || ((hr + 1) == '19') || ((hr + 1) == '21') || ((hr + 1) == '23')) {
         let findUser = await user.find({ _id: "64902ae7ff2e7a8d9c5355fa" });
         findUser.map(async i => {
