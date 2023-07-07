@@ -37,7 +37,6 @@ new cronJob("*/60 * * * * *", async function () {
     // }
     // hr = hrs1 - 1;
     console.log("----------------------26-----------option1 cronjob-----------------------",hr);
-    return;
     let totalQuestion = await questionAnswer.find({ questionTime: hr + 1, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
