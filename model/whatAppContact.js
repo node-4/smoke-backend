@@ -4,6 +4,9 @@ const whatAppSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "userProfile",
   },
+  phone: {
+    type: String,
+  },
   userContacts: [{
     phone: {
       type: String,

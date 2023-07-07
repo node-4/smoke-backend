@@ -7,6 +7,7 @@ const cloudinary = require("cloudinary");
 var newOTP = require("otp-generators");
 const FriendRequest = require('../model/add_request');
 const schoolModel = require('../model/school');
+const whatAppContact = require('../model/whatAppContact');
 cloudinary.config({
         cloud_name: "https-www-pilkhuwahandloom-com",
         api_key: "886273344769554",
@@ -28,9 +29,59 @@ exports.createUser = async (req, res) => {
                 }
                 const newUser = await userSchema.create(userData);
                 if (newUser) {
-                        let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
-                        if (updateSchool) {
-                                return res.status(201).json(newUser);
+                        let findData = await whatAppContact.findOne({ phone: req.body.phone });
+                        if (findData) {
+                                let updateData = await whatAppContact.findByIdAndUpdate({ _id: findData._id }, { $set: { userID: newUser._id } }, { new: true });
+                                if (updateData) {
+                                        let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
+                                        if (updateSchool) {
+                                                return res.status(201).json(newUser);
+                                        }
+                                }
+                        }
+                }
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+}
+exports.addWhatAppNumber = async (req, res) => {
+        try {
+                let findData = await whatAppContact.findOne({ phone: req.params.phone });
+                if (!findData) {
+                        let userContacts = [];
+                        for (let i = 0; i < req.body.contact.length; i++) {
+                                for (let k = 0; k < req.body.contact[i].phone.length; k++) {
+                                        let a = req.body.contact[i].phone[k].split(" ").join("");
+                                        let b = a.split("+91").join("")
+                                        let obj1 = {
+                                                phone: b,
+                                                firstName: req.body.contact[i].firstName,
+                                                lastName: req.body.contact[i].lastName,
+                                        };
+                                        userContacts.push(obj1)
+                                }
+                        }
+                        let obj = { phone: req.params.phone, userContacts: userContacts }
+                        const newUser = await whatAppContact.create(obj);
+                        return res.status(200).json({ status: 200, data: newUser });
+                } else {
+                        let userContacts = [];
+                        for (let i = 0; i < req.body.contact.length; i++) {
+                                for (let k = 0; k < req.body.contact[i].phone.length; k++) {
+                                        let a = req.body.contact[i].phone[k].split(" ").join("");
+                                        let b = a.split("+91").join("")
+                                        let obj1 = {
+                                                phone: b,
+                                                firstName: req.body.contact[i].firstName,
+                                                lastName: req.body.contact[i].lastName,
+                                        };
+                                        userContacts.push(obj1)
+                                }
+                        }
+                        let updateData = await whatAppContact.findByIdAndUpdate({ _id: findData._id }, { $set: { userContacts: userContacts } }, { new: true });
+                        if (updateData) {
+                                return res.status(200).json({ status: 200, data: updateData });
                         }
                 }
         } catch (error) {
