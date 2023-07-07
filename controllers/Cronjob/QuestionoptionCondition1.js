@@ -3,26 +3,7 @@ let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
-new cronJob("*/10 * * * * *", async function () {
-    // let hrs = new Date(Date.now()).getHours();
-    // let date = new Date(Date.now()).getDate();
-    // let month = new Date(Date.now()).getMonth() + 1;
-    // let year = new Date(Date.now()).getFullYear();
-    // let fullDate = (`${date}/${month}/${year}`).toString();
-    // let min = new Date(Date.now()).getMinutes();
-    // // let hrs1, hr;
-    // // if (hrs < 10) {
-    // //     hrs1 = '' + 0 + hrs;
-    // // } else {
-    // //     hrs1 = hrs
-    // // }
-    // // if (min) {
-    // //     if (min > 30) {
-    // //         hr = hrs1 + 6
-    // //     } else {
-    // //         hr = hrs1 + 5
-    // //     }
-    // // }
+new cronJob("*/60 * * * * *", async function () {
     let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
@@ -35,8 +16,28 @@ new cronJob("*/10 * * * * *", async function () {
     } else {
         hrs1 = hrs
     }
-    hr = hrs1 - 1;
-    console.log("----------------------26-----------option 1 cronjob-----------------------");
+    if (min) {
+        if (min > 30) {
+            hr = hrs1 + 6
+        } else {
+            hr = hrs1 + 5
+        }
+    }
+    // let hrs = new Date(Date.now()).getHours();
+    // let date = new Date(Date.now()).getDate();
+    // let month = new Date(Date.now()).getMonth() + 1;
+    // let year = new Date(Date.now()).getFullYear();
+    // let fullDate = (`${date}/${month}/${year}`).toString();
+    // let min = new Date(Date.now()).getMinutes();
+    // let hrs1, hr;
+    // if (hrs < 10) {
+    //     hrs1 = '' + 0 + hrs;
+    // } else {
+    //     hrs1 = hrs
+    // }
+    // hr = hrs1 - 1;
+    console.log("----------------------26-----------option1 cronjob-----------------------",hr);
+    return;
     let totalQuestion = await questionAnswer.find({ questionTime: hr + 1, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -64,5 +65,5 @@ new cronJob("*/10 * * * * *", async function () {
     } else {
         console.log('Question Condition 1 cron job  No data found');
     }
-// }).start();
-    }).stop()
+}).start();
+    // }).stop()

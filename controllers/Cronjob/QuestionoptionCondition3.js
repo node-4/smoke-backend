@@ -3,27 +3,8 @@ let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
-new cronJob("*/40 * * * * *", async function () {
+new cronJob("*/60 * * * * *", async function () {
     console.log("----------------------------------------------------------------------------------7----------------------------------");
-    // let hrs = new Date(Date.now()).getHours();
-    // let date = new Date(Date.now()).getDate();
-    // let month = new Date(Date.now()).getMonth() + 1;
-    // let year = new Date(Date.now()).getFullYear();
-    // let fullDate = (`${date}/${month}/${year}`).toString();
-    // let min = new Date(Date.now()).getMinutes();
-    // let hrs1, hr;
-    // if (hrs < 10) {
-    //     hrs1 = '' + 0 + hrs;
-    // } else {
-    //     hrs1 = hrs
-    // }
-    // if (min) {
-    //     if (min > 30) {
-    //         hr = hrs1 + 6
-    //     } else {
-    //         hr = hrs1 + 5
-    //     }
-    // }
     let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
@@ -36,9 +17,29 @@ new cronJob("*/40 * * * * *", async function () {
     } else {
         hrs1 = hrs
     }
-    hr = hrs1 - 1;
-console.log(hr);
-    let totalQuestion = await questionAnswer.find({ questionTime: hr + 2, questionDate: fullDate })
+    if (min) {
+        if (min > 30) {
+            hr = hrs1 + 6
+        } else {
+            hr = hrs1 + 5
+        }
+    }
+    // let hrs = new Date(Date.now()).getHours();
+    // let date = new Date(Date.now()).getDate();
+    // let month = new Date(Date.now()).getMonth() + 1;
+    // let year = new Date(Date.now()).getFullYear();
+    // let fullDate = (`${date}/${month}/${year}`).toString();
+    // let min = new Date(Date.now()).getMinutes();
+    // let hrs1, hr;
+    // if (hrs < 10) {
+    //     hrs1 = '' + 0 + hrs;
+    // } else {
+    //     hrs1 = hrs
+    // }
+    // hr = hrs1 - 1;
+    console.log("----------------------26-----------option 3 cronjob-----------------------",hr);
+    return;
+    let totalQuestion = await questionAnswer.find({ questionTime: hr + 1, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
@@ -1743,7 +1744,7 @@ console.log(hr);
                                             }
                                         }
                                     } else {
-                                        console.log("----------------------");
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
                                     }
                                 }
                                 if (totalQuestion[i].priority5 == true) {
@@ -1769,10 +1770,11 @@ console.log(hr);
                                             }
                                         }
                                     } else {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false } }, { new: true })
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false, condition1: true, condition3: false, priority1: true } }, { new: true })
                                     }
                                     if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false } }, { new: true })
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false, condition1: true, condition3: false, priority1: true } }, { new: true })
+
                                     } else {
                                         const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
                                         if (totalQuestion[i].optionCount == 0) {
@@ -2258,12 +2260,15 @@ console.log(hr);
                                     }
                                 }
                             } else {
+                                console.log("------------2261---------------------", totalQuestion[i].priority4);
+                            
                                 if (totalQuestion[i].priority1 == true) {
                                     if (findUser.poleUser.length > 0) {
                                         for (let k = 0; k < findUser.poleUser.length; k++) {
                                             if (findUser.poleUser[k].count == 0) {
                                                 console.log("33-----------------------------");
                                             } else {
+                                                console.log("2270-----------------------------");
                                                 var userArray = [];
                                                 if (userArray.includes(findUser.poleUser[k].user.toString())) {
                                                     console.log("49==================================================");
@@ -2335,6 +2340,7 @@ console.log(hr);
                                         }
                                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority1: false, priority2: true } }, { new: true });
                                     } else {
+                                        console.log("2342-----------------------------");
                                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority1: false, priority2: true } }, { new: true })
                                     }
                                 }
@@ -2360,6 +2366,7 @@ console.log(hr);
                                             }
                                         }
                                     }
+                                    console.log(userArray.length);
                                     if (userArray.length == 0) {
                                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority2: false, priority3: true } }, { new: true })
                                     } else {
@@ -2401,6 +2408,7 @@ console.log(hr);
                                             if (userArray.length == 12) {
                                                 obj = { option_1: userArray[0], option_2: userArray[1], option_3: userArray[2], option_4: userArray[3], option_5: userArray[4], option_6: userArray[5], option_7: userArray[6], option_8: userArray[7], option_9: userArray[8], option_10: userArray[9], option_11: userArray[10], option_12: userArray[11], optionCount: 12, priority2: false, priority3: false };
                                             }
+                                            console.log(obj);
                                             let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
                                         }
                                         if (totalQuestion[i].optionCount == 1) {
@@ -2858,6 +2866,7 @@ console.log(hr);
                                             }
                                         }
                                     }
+                                    console.log("---------", userArray);
                                     if (userArray.length == 0) {
                                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority3: false, priority4: true } }, { new: true })
                                     } else {
@@ -3220,6 +3229,7 @@ console.log(hr);
                                             if (sample.length == 12) {
                                                 obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority3: false, priority4: false };
                                             }
+                                            console.log("2640===========================", obj);
                                             let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: obj }, { new: true })
                                         }
                                         if (totalQuestion[i].optionCount == 9) {
@@ -3360,10 +3370,14 @@ console.log(hr);
                                                     userArray.push((findUsers._id).toString())
                                                 }
                                             }
+                                            console.log("-------------------", userArray);
+                                            return;
                                             if (userArray.length == 0) {
                                                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
                                             } else {
                                                 const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
+                                                console.log(sample);
+                                                return;
                                                 if (totalQuestion[i].optionCount == 0) {
                                                     let obj;
                                                     if (sample.length == 1) {
@@ -3847,7 +3861,7 @@ console.log(hr);
                                             }
                                         }
                                     } else {
-                                        console.log("--------------------------------");
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority4: false, priority5: true } }, { new: true })
                                     }
                                 }
                                 if (totalQuestion[i].priority5 == true) {
@@ -3862,10 +3876,10 @@ console.log(hr);
                                             }
                                         }
                                     } else {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false } }, { new: true })
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false, condition1: true, condition3: false, priority1: true } }, { new: true })
                                     }
                                     if (userArray.length == 0) {
-                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false } }, { new: true })
+                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { priority5: false, condition1: true, condition3: false, priority1: true } }, { new: true })
                                     } else {
                                         const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
                                         if (totalQuestion[i].optionCount == 0) {
@@ -4366,5 +4380,5 @@ console.log(hr);
     } else {
         console.log('Question Condition 3 cron job  No data found');
     }
-// }).start();
-}).stop()
+}).start();
+// }).stop()
