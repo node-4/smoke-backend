@@ -11,34 +11,33 @@ new cronJob("*/60 * * * * *", async function () {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     let min = new Date(Date.now()).getMinutes();
-    let hrs1, hr;
+    console.log("server time ===>", hrs, ":", min);
+    let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {
-        hrs1 = '' + 0 + hrs;
+        hrs1 = '' + 0 + parseInt(hrs);
     } else {
-        hrs1 = hrs
+        hrs1 = parseInt(hrs);
+    }
+    if (min < 0) {
+        min = 0
     }
     if (min) {
         if (min > 30) {
-            hr = hrs1 + 6
+            hr = parseInt(hrs1) + 6
         } else {
-            hr = hrs1 + 5
+            hr = parseInt(hrs1) + 5
         }
     }
-    // let hrs = new Date(Date.now()).getHours();
-    // let date = new Date(Date.now()).getDate();
-    // let month = new Date(Date.now()).getMonth() + 1;
-    // let year = new Date(Date.now()).getFullYear();
-    // let fullDate = (`${date}/${month}/${year}`).toString();
-    // let min = new Date(Date.now()).getMinutes();
-    // let hrs1, hr;
-    // if (hrs < 10) {
-    //     hrs1 = '' + 0 + hrs;
-    // } else {
-    //     hrs1 = hrs
-    // }
-    // hr = hrs1 - 1;
-    console.log("----------------------26-----------option 2 cronjob-----------------------",hr);
-    let totalQuestion = await questionAnswer.find({ questionTime: hr + 1, questionDate: fullDate })
+    console.log("after create time + 5:30  ===>", hr, ":", min);
+    if (hr < 10) {
+        hrs2 = '' + 0 + parseInt(hr + 1);
+    } else {
+        hrs2 = parseInt(hr + 1);
+    }
+    console.log(fullDate,"------26------option2 cronjob----------", hrs2);
+    hrs3 = hrs2; /// server
+    // hrs3= hrs;  local
+    let totalQuestion = await questionAnswer.find({ questionTime: hrs3, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         console.log(hr + 1);
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -2087,7 +2086,7 @@ new cronJob("*/60 * * * * *", async function () {
             }
         }
     } else {
-        console.log('Question Condition 2 cron job  No data found');
+        console.log('Question Condition 2 cron job  No data found',hrs3);
     }
 }).start();
 // }).stop()

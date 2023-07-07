@@ -9,46 +9,45 @@ new cronJob("*/20 * * * * *", async function () {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     let min = new Date(Date.now()).getMinutes();
-    let hrs1, hr;
+    console.log("server time ===>", hrs, ":", min);
+    let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {
-        hrs1 = '' + 0 + hrs;
+        hrs1 = '' + 0 + parseInt(hrs);
     } else {
-        hrs1 = hrs
+        hrs1 = parseInt(hrs);
+    }
+    if (min < 0) {
+        min = 0
     }
     if (min) {
         if (min > 30) {
-            hr = hrs1 + 6
+            hr = parseInt(hrs1) + 6
         } else {
-            hr = hrs1 + 5
+            hr = parseInt(hrs1) + 5
         }
     }
-    // let hrs = new Date(Date.now()).getHours();
-    // let date = new Date(Date.now()).getDate();
-    // let month = new Date(Date.now()).getMonth() + 1;
-    // let year = new Date(Date.now()).getFullYear();
-    // let fullDate = (`${date}/${month}/${year}`).toString();
-    // let min = new Date(Date.now()).getMinutes();
-    // let hrs1, hr;
-    // if (hrs < 10) {
-    //     hrs1 = '' + 0 + hrs;
-    // } else {
-    //     hrs1 = hrs
-    // }
-    // hr = hrs1 - 1;
-    console.log("min=========",min,"----------------------26-----------question cronjob-----------------------",hr);
-    if (((hr + 1) == '07') || ((hr + 1) == '09') || ((hr + 1) == '11') || ((hr + 1) == '13') || ((hr + 1) == '15') || ((hr + 1) == '17') || ((hr + 1) == '19') || ((hr + 1) == '21') || ((hr + 1) == '23')) {
+    console.log("after create time + 5:30  ===>", hr, ":", min);
+    if (hr < 10) {
+        hrs2 = '' + 0 + parseInt(hr + 1);
+    } else {
+        hrs2 = parseInt(hr + 1);
+    }
+    console.log(fullDate, "------26------question cronjob----------", hrs2);
+    hrs3 = hrs2; /// server
+    // hrs3= hrs;  local
+    if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
         let findUser = await user.find({ _id: "64902ae7ff2e7a8d9c5355fa" });
         findUser.map(async i => {
             let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hr + 1, questionDate: fullDate })
             if (totalQuestion.length == 12) {
-                console.log("total 12 question created", fullDate, "hr+1    ", hr + 1);
+                console.log("total 12 question created", fullDate, "hr+1    ", hrs3);
             } else {
                 let findQuestion = await questions.find({});
                 let QuesRandom = findQuestion.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 12);
                 QuesRandom.map(async k => {
                     let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hr + 1, questionDate: fullDate })
                     if (totalQuestion.length == 12) {
-                        console.log("total 12 question created", fullDate, "hr+1    ", hr + 1);
+                        console.log("total 12 question created", fullDate, "hr+1    ", hrs3);
                     } else {
                         let findQuestionAnswer = await questionAnswer.findOne({ userID: i._id, questionTime: hr + 1, questionDate: fullDate, question: k._id });
                         if (!findQuestionAnswer) {
@@ -80,7 +79,7 @@ new cronJob("*/20 * * * * *", async function () {
 
         })
     } else {
-        console.log("Question cron job hour is ", (hr + 1));
+        console.log("Question cron job hour is ", hrs3);
     }
 }).start();
 // }).stop()
