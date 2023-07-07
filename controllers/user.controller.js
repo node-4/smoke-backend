@@ -38,6 +38,11 @@ exports.createUser = async (req, res) => {
                                                 return res.status(201).json(newUser);
                                         }
                                 }
+                        } else {
+                                let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
+                                if (updateSchool) {
+                                        return res.status(201).json(newUser);
+                                }
                         }
                 }
         } catch (error) {
