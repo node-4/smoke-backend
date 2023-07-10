@@ -110,6 +110,14 @@ const quesSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "userProfile",
   },
+  option_13: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "userProfile",
+  },
+  option_14: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "userProfile",
+  },
   answer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "userProfile",

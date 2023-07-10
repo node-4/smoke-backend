@@ -36,7 +36,7 @@ new cronJob("*/60 * * * * *", async function () {
     console.log(fullDate, "------26------option1 cronjob----------", hrs2);
     hrs3 = hrs2; // server
     // hrs3= hrs;  // local
-    let totalQuestion = await questionAnswer.find({ questionTime: hrs3, questionDate: fullDate })
+    let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
@@ -52,7 +52,7 @@ new cronJob("*/60 * * * * *", async function () {
                     }
                     else if (findUser.friends.length >= 4) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
-                        console.log("56----------------");
+                        console.log(i,"----------------56-");
                     } else {
                         console.log("28----------------------------");
                     }
@@ -63,5 +63,5 @@ new cronJob("*/60 * * * * *", async function () {
     } else {
         console.log('Question Condition 1 cron job  No data found', hrs3);
     }
-    }).start();
-// }).stop()
+    // }).start();
+}).stop()
