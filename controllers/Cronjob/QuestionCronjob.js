@@ -81,5 +81,5 @@ new cronJob("*/20 * * * * *", async function () {
     } else {
         console.log("Question cron job hour is ", hrs3);
     }
-    }).start();
-// }).stop()
+    // }).start();
+}).stop()

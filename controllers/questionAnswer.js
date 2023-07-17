@@ -172,7 +172,7 @@ exports.getAllQuestionsByAdmin = async (req, res) => {
                                 hr = hrs1 + 5
                         }
                 }
-                const questions = await questionAnswer.find({}).populate({ path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
+                const questions = await questionAnswer.find({ questionDate: fullDate }).populate({ path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
                 }
