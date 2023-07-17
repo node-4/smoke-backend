@@ -52,7 +52,7 @@ new cronJob("*/60 * * * * *", async function () {
                     }
                     else if (findUser.friends.length >= 4) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
-                        console.log(i,"----------------56-");
+                        console.log(i, "----------------56-");
                     } else {
                         console.log("28----------------------------");
                     }
@@ -63,5 +63,5 @@ new cronJob("*/60 * * * * *", async function () {
     } else {
         console.log('Question Condition 1 cron job  No data found', hrs3);
     }
-    // }).start();
-}).stop()
+}).start();
+// }).stop()

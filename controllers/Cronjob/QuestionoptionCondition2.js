@@ -34,10 +34,10 @@ new cronJob("*/60 * * * * *", async function () {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    console.log(fullDate,"------26------option2 cronjob----------", hrs2);
+    console.log(fullDate, "------26------option2 cronjob----------", hrs2);
     hrs3 = hrs2; /// server
     // hrs3= hrs;  local
-    let totalQuestion = await questionAnswer.find({ questionTime: hrs3, questionDate: fullDate })
+    let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
     if (totalQuestion.length > 0) {
         console.log(hr + 1);
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -2086,7 +2086,7 @@ new cronJob("*/60 * * * * *", async function () {
             }
         }
     } else {
-        console.log('Question Condition 2 cron job  No data found',hrs3);
+        console.log('Question Condition 2 cron job  No data found', hrs3);
     }
 }).start();
 // }).stop()

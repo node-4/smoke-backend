@@ -38,18 +38,18 @@ new cronJob("*/20 * * * * *", async function () {
     if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
         let findUser = await user.find({ _id: "64902ae7ff2e7a8d9c5355fa" });
         findUser.map(async i => {
-            let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hr + 1, questionDate: fullDate })
+            let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hrs3, questionDate: fullDate })
             if (totalQuestion.length == 12) {
                 console.log("total 12 question created", fullDate, "hr+1    ", hrs3);
             } else {
                 let findQuestion = await questions.find({});
                 let QuesRandom = findQuestion.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 12);
                 QuesRandom.map(async k => {
-                    let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hr + 1, questionDate: fullDate })
+                    let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hrs3, questionDate: fullDate })
                     if (totalQuestion.length == 12) {
                         console.log("total 12 question created", fullDate, "hr+1    ", hrs3);
                     } else {
-                        let findQuestionAnswer = await questionAnswer.findOne({ userID: i._id, questionTime: hr + 1, questionDate: fullDate, question: k._id });
+                        let findQuestionAnswer = await questionAnswer.findOne({ userID: i._id, questionTime: hrs3, questionDate: fullDate, question: k._id });
                         if (!findQuestionAnswer) {
                             let findSchoolMember = await user.find({ _id: { $ne: i._id }, school: i.school });
                             let condition1, condition2, condition3;
@@ -61,7 +61,7 @@ new cronJob("*/20 * * * * *", async function () {
                             }
                             let obj = {
                                 userID: i._id,
-                                questionTime: hr + 1,
+                                questionTime: hrs3,
                                 questionDate: fullDate,
                                 question: k._id,
                                 type: k.type,
@@ -81,5 +81,5 @@ new cronJob("*/20 * * * * *", async function () {
     } else {
         console.log("Question cron job hour is ", hrs3);
     }
-}).start();
+    }).start();
 // }).stop()

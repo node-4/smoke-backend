@@ -8,7 +8,7 @@ exports.registration = async (req, res) => {
     const { phone, email } = req.body;
     try {
         req.body.email = email.split(" ").join("").toLowerCase();
-        let user = await User.findOne({ $and: [{ $or: [{ email: req.body.email }, { phone: phone }] }], userType: "ADMIN" });
+        let user = await User.findOne({ email: req.body.email, userType: "ADMIN" });
         if (!user) {
             req.body.password = bcrypt.hashSync(req.body.password, 8);
             req.body.userType = "ADMIN";
@@ -39,8 +39,8 @@ exports.signin = async (req, res) => {
         if (!isValidPassword) {
             return res.status(401).send({ message: "Wrong password" });
         }
-        const accessToken = jwt.sign({ id: user._id }, authConfig.secret, {
-            expiresIn: authConfig.accessTokenTime,
+        const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, {
+            expiresIn: '365d',
         });
         res.status(201).send({ data: user, accessToken: accessToken });
     } catch (error) {
@@ -74,7 +74,11 @@ exports.update = async (req, res) => {
 };
 exports.AddBanner = async (req, res) => {
     try {
-        const data = { image: req.body.image, desc: req.body.desc }
+        let fileUrl;
+        if (req.file) {
+            fileUrl = req.file ? req.file.path : "";
+        }
+        const data = { image: fileUrl, desc: req.body.desc }
         const Data = await banner.create(data);
         res.status(200).json({ status: 200, message: "Banner is Addded ", data: Data })
     } catch (err) {
@@ -119,3 +123,15 @@ exports.DeleteBanner = async (req, res) => {
         res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };
+exports.getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({ userType: "USER" });
+        if (users.length == 0) {
+            return res.status(404).json({ status: 404, message: "User not found" });
+        } else {
+            return res.status(200).json({ status: 200, message: "All Employee found.", data: users, });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+}

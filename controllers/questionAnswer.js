@@ -150,3 +150,35 @@ exports.getInbox = async (req, res) => {
                 });
         }
 };
+exports.getAllQuestionsByAdmin = async (req, res) => {
+        try {
+                let hrs = new Date(Date.now()).getHours();
+                let date = new Date(Date.now()).getDate();
+                let month = new Date(Date.now()).getMonth() + 1;
+                let year = new Date(Date.now()).getFullYear();
+                let fullDate = (`${date}/${month}/${year}`).toString()
+                let min = new Date(Date.now()).getMinutes();
+                let hrs1, hr;
+                console.log(hrs);
+                if (hrs < 10) {
+                        hrs1 = '' + 0 + hrs;
+                } else {
+                        hrs1 = hrs
+                }
+                if (min) {
+                        if (min > 30) {
+                                hr = hrs1 + 6
+                        } else {
+                                hr = hrs1 + 5
+                        }
+                }
+                const questions = await questionAnswer.find({}).populate({ path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
+                if (questions.length == 0) {
+                        return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
+                }
+                return res.status(200).json({ status: 200, message: "Question found.", data: questions });
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ error: "An error occurred while retrieving the questions." });
+        }
+};
