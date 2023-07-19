@@ -3,42 +3,13 @@ let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
-new cronJob("*/60 * * * * *", async function () {
+async function CreateSession() {
     console.log("----------------------------------------------------------------------------------7----------------------------------");
-    let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    let min = new Date(Date.now()).getMinutes();
-    console.log("server time ===>", hrs, ":", min);
-    let hrs1, hr, hrs2, hrs3;
-    if (hrs < 10) {
-        hrs1 = '' + 0 + parseInt(hrs);
-    } else {
-        hrs1 = parseInt(hrs);
-    }
-    if (min < 0) {
-        min = 0
-    }
-    if (min) {
-        if (min > 30) {
-            hr = parseInt(hrs1) + 6
-        } else {
-            hr = parseInt(hrs1) + 5
-        }
-    }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
-    if (hr < 10) {
-        hrs2 = '' + 0 + parseInt(hr + 1);
-    } else {
-        hrs2 = parseInt(hr + 1);
-    }
-    console.log(fullDate, "------26------option3 cronjob----------", hrs2);
-    hrs3 = hrs2; /// server
-    // hrs3= hrs;  local
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
-    // let totalQuestion = await questionAnswer.find({ questionTime: hrs3, questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
@@ -4961,7 +4932,7 @@ new cronJob("*/60 * * * * *", async function () {
         }
 
     } else {
-        console.log('Question Condition 3 cron job  No data found', hrs3);
+        console.log('Question Condition 3 cron job  No data found');
     }
-}).start();
-// }).stop()
+}
+setInterval(CreateSession, 60000);

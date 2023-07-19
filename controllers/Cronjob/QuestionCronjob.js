@@ -2,7 +2,8 @@ const cronJob = require("cron").CronJob;
 let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let user = require("../../model/user");
-new cronJob("*/20 * * * * *", async function () {
+async function CreateSession() {
+    // new cronJob("*/20 * * * * *", async function () {
     let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
@@ -81,5 +82,7 @@ new cronJob("*/20 * * * * *", async function () {
     } else {
         console.log("Question cron job hour is ", hrs3);
     }
-}).start();
+}
+// ).start();
 // }).stop()
+setInterval(CreateSession, 20000);

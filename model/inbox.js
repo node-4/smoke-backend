@@ -11,7 +11,15 @@ const inboxSchema = mongoose.Schema({
     ref: 'userProfile',
     required: true,
   },
+  questionId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'questionAnswer',
+  },
   view: {
+    type: Boolean,
+    default: false,
+  },
+  hide: {
     type: Boolean,
     default: false,
   },

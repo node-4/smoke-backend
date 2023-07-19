@@ -1,8 +1,13 @@
 const PostModel = require('../model/post');
-
+const activity = require('../model/activity');
 exports.createPost = async (req, res) => {
   try {
-    const { image_vedio, desc, userId } = req.body;
+    const { desc } = req.body;
+    let image_vedio;
+    if (req.file) {
+      image_vedio = req.file ? req.file.path : "";
+    }
+    let userId = req.user._id;
     const newPost = new PostModel({ image_vedio, desc, userId, });
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
@@ -14,7 +19,6 @@ exports.createPost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     const posts = await PostModel.find().populate({ path: 'userId likeUser Comment.user', select: 'firstName lastName profileImage' });
-
     res.status(200).json({ msg: posts });
   } catch (error) {
     console.error(error);
@@ -101,7 +105,13 @@ exports.addLike = async (req, res) => {
       }
       const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { likeUser: user }, $set: { likeCount: post.likeCount + 1 } }, { new: true });
       if (update) {
-        res.status(200).json({ status: 200, message: "like add successfully", data: update });
+        if ((post.userId).toString() == user) {
+          res.status(200).json({ status: 200, message: "like add successfully", data: update });
+        } else {
+          let obj = { userId: post.userId, otherUserId: user, description: "User like your post.", logType: "Like", }
+          const savedFriendRequest = await activity.create(obj);
+          res.status(200).json({ status: 200, message: "like add successfully", data: update });
+        }
       }
     }
   } catch (error) {
@@ -148,4 +158,15 @@ exports.addComment = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while adding the comment' });
   }
 };
-
+exports.getAllActivity = async (req, res) => {
+  try {
+    const post = await activity.find({ userId: req.user._id });
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    res.status(200).json({ msg: "Data found successfully", data: post });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching the post' });
+  }
+};

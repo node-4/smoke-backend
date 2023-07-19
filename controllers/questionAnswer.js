@@ -87,9 +87,11 @@ exports.giveAnswer = async (req, res) => {
                                 } else {
                                         let findUser = await user.findById({ _id: req.body.answer });
                                         if (findUser) {
-                                                const updated = await user.findByIdAndUpdate(findUser._id, { $push: { flameUser: req.user.id }, $set: { flameCount: findUser.flameCount + 1 } }, { new: true });
-                                                const Data = await inbox.create({ userId: findUser._id, flameUser: req.user.id });
+                                                const updated = await user.findByIdAndUpdate(findUser._id, { $push: { flameUser: req.user._id }, $set: { flameCount: findUser.flameCount + 1 } }, { new: true });
+                                                const Data = await inbox.create({ userId: findUser._id, flameUser: req.user.id, questionId: updatedQuestion._id });
                                                 if (updated && Data) {
+                                                        let obj = { userId: post.userId, inboxId: Data._id, description: "Some one Chose you..", logType: "Inbox", }
+                                                        const savedFriendRequest = await activity.create(obj);
                                                         let findHistoryCoin = await questionHistoryCoin.findOne({ user: req.user.id, questionTime: question.questionTime });
                                                         if (findHistoryCoin) {
                                                                 if (findHistoryCoin.answerCount == 0) {
@@ -99,7 +101,7 @@ exports.giveAnswer = async (req, res) => {
                                                                         }
                                                                 } else if (findHistoryCoin.answerCount == 11) {
                                                                         if (findHistoryCoin.startQuize < Date.now()) {
-                                                                                let findUser = await user.findById({ _id: req.user.id });
+                                                                                let findUser = await user.findById({ _id: req.user._id });
                                                                                 let updateUser = await user.findByIdAndUpdate({ _id: findUser._id }, { $set: { coin: findUser.coin + 15 } }, { new: true })
                                                                                 let update = await questionHistoryCoin.findByIdAndDelete({ _id: findHistoryCoin._id });
                                                                                 if (update) {
@@ -137,9 +139,25 @@ exports.giveAnswer = async (req, res) => {
 };
 exports.getInbox = async (req, res) => {
         try {
-                let findUser = await inbox.find({ userId: req.user.id }).populate({ path: 'flameUser', select: 'gender' });
+                let findUser = await inbox.find({ userId: req.user._id }).populate({ path: 'flameUser', select: 'gender' });
                 if (findUser.length > 0) {
-                        return res.status(200).json({ msg: "Inbox detail fetch successfully.", data: { user: findUser } });
+                        return res.status(200).json({ msg: "Inbox detail fetch successfully.", data: findUser });
+                } else {
+                        return res.status(404).json({ status: 404, message: "Inbox detail not found.", data: {} });
+                }
+        } catch (err) {
+                console.log(err);
+                return res.status(400).json({
+                        message: err.message,
+                });
+        }
+};
+exports.getInboxById = async (req, res) => {
+        try {
+                let findUser = await inbox.findById({ _id: req.params.id }).populate('flameUser questionId');
+                if (findUser) {
+                        let update = await inbox.findByIdAndUpdate({ _id: findUser._id }, { $set: { view: true } }, { new: true })
+                        return res.status(200).json({ msg: "Inbox detail fetch successfully.", data: update });
                 } else {
                         return res.status(404).json({ status: 404, message: "Inbox detail not found.", data: {} });
                 }
