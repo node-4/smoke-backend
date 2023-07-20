@@ -157,7 +157,7 @@ exports.getInboxById = async (req, res) => {
         try {
                 let findUser = await inbox.findById({ _id: req.params.id }).populate('flameUser questionId');
                 if (findUser) {
-                        let update = await inbox.findByIdAndUpdate({ _id: findUser._id }, { $set: { view: true } }, { new: true })
+                        let update = await inbox.findByIdAndUpdate({ _id: findUser._id }, { $set: { view: true } }, { new: true }).populate('flameUser questionId');
                         return res.status(200).json({ msg: "Inbox detail fetch successfully.", data: update });
                 } else {
                         return res.status(404).json({ status: 404, message: "Inbox detail not found.", data: {} });
