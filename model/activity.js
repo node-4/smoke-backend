@@ -16,6 +16,10 @@ const DocumentSchema = schema({
         description: {
                 type: String,
         },
+        hide: {
+                type: Boolean,
+                default: false,
+        },
         logType: {
                 type: String,
         },

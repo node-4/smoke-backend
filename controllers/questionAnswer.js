@@ -201,3 +201,19 @@ exports.getAllQuestionsByAdmin = async (req, res) => {
                 return res.status(500).json({ error: "An error occurred while retrieving the questions." });
         }
 };
+exports.hideInboxFromActivity = async (req, res) => {
+        try {
+                let findUser = await inbox.findById({ _id: req.params.id });
+                if (findUser) {
+                        let update = await activity.findOneAndUpdate({ inboxId: findUser._id }, { $set: { hide: true } }, { new: true })
+                        return res.status(200).json({ msg: "Hide from activity.", data: update });
+                } else {
+                        return res.status(404).json({ status: 404, message: "Inbox detail not found.", data: {} });
+                }
+        } catch (err) {
+                console.log(err);
+                return res.status(400).json({
+                        message: err.message,
+                });
+        }
+};

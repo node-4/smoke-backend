@@ -37,7 +37,7 @@ async function CreateSession() {
     hrs3 = hrs2; /// server
     // hrs3 = hrs;  //local
     if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
-        let findUser = await user.find({ _id: "64a50d5736f785021796f46d" });
+        let findUser = await user.find();
         findUser.map(async i => {
             let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hrs3, questionDate: fullDate })
             if (totalQuestion.length == 12) {

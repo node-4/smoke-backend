@@ -9,4 +9,5 @@ router.put("/answer/:questionId", [authJwt.verifyToken], questionController.give
 router.get("/getInbox/All", [authJwt.verifyToken], questionController.getInbox);
 router.get("/getInboxById/:id", [authJwt.verifyToken], questionController.getInboxById);
 router.get("/admin/getAllQuestionsByAdmin", questionController.getAllQuestionsByAdmin);
+router.put("/hideInboxFromActivity/:id", [authJwt.verifyToken], questionController.hideInboxFromActivity);
 module.exports = router;

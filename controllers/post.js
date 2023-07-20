@@ -160,7 +160,7 @@ exports.addComment = async (req, res) => {
 };
 exports.getAllActivity = async (req, res) => {
   try {
-    const post = await activity.find({ userId: req.user._id });
+    const post = await activity.find({ userId: req.user._id, hide: false });
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
