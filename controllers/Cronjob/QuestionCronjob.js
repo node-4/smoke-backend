@@ -35,7 +35,7 @@ async function CreateSession() {
     }
     console.log(fullDate, "------26------question cronjob----------", hrs2);
     hrs3 = hrs2; /// server
-    // hrs3= hrs;  local
+    // hrs3 = hrs;  //local
     if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
         let findUser = await user.find({ _id: "64902ae7ff2e7a8d9c5355fa" });
         findUser.map(async i => {

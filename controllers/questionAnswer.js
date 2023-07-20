@@ -2,6 +2,7 @@ const questionAnswer = require("../model/questionAnswer");
 const questionHistoryCoin = require("../model/questionHistoryCoin");
 const user = require("../model/user");
 const inbox = require("../model/inbox");
+const activity = require('../model/activity');
 exports.getAllQuestions = async (req, res) => {
         try {
                 let hrs = new Date(Date.now()).getHours();
