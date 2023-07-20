@@ -91,7 +91,7 @@ exports.giveAnswer = async (req, res) => {
                                                 const updated = await user.findByIdAndUpdate(findUser._id, { $push: { flameUser: req.user._id }, $set: { flameCount: findUser.flameCount + 1 } }, { new: true });
                                                 const Data = await inbox.create({ userId: findUser._id, flameUser: req.user.id, questionId: updatedQuestion._id });
                                                 if (updated && Data) {
-                                                        let obj = { userId: post.userId, inboxId: Data._id, description: "Some one Chose you..", logType: "Inbox", }
+                                                        let obj = { userId: req.user._id, inboxId: Data._id, description: "Some one Chose you..", logType: "Inbox", }
                                                         const savedFriendRequest = await activity.create(obj);
                                                         let findHistoryCoin = await questionHistoryCoin.findOne({ user: req.user.id, questionTime: question.questionTime });
                                                         if (findHistoryCoin) {
@@ -119,7 +119,7 @@ exports.giveAnswer = async (req, res) => {
                                                                 let data = {
                                                                         user: req.user.id,
                                                                         questionTime: question.questionTime,
-                                                                        answerCount: findHistoryCoin.answerCount + 1,
+                                                                        answerCount: 1,
                                                                         startQuize: new Date(Date.now() + 2 * 60 * 60 * 1000)
                                                                 }
                                                                 const Data = await questionHistoryCoin.create(data);

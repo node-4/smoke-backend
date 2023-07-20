@@ -9,7 +9,7 @@ async function CreateSession() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
+    let totalQuestion = await questionAnswer.find({userID:"64a50d5736f785021796f46d", questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
@@ -4935,4 +4935,4 @@ async function CreateSession() {
         console.log('Question Condition 3 cron job  No data found');
     }
 }
-setInterval(CreateSession, 60000);
+setInterval(CreateSession, 10000);
