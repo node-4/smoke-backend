@@ -20,7 +20,7 @@ router.delete('/:id', postController.deletePost);
 router.post('/like/:id', postController.addLike);
 router.get('/posts/:id/like/count', postController.getLikeCount);
 router.post('/comment/:id', postController.addComment);
-router.get('/getAllActivity', [authJwt.verifyToken], postController.getAllActivity);
+router.get('/getAll/Activity', [authJwt.verifyToken], postController.getAllActivity);
 module.exports = router;
 
 
