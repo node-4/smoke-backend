@@ -4,8 +4,18 @@ const objectId = mongoose.Types.ObjectId;
 const postSchema = mongoose.Schema({
   image_vedio: {
     type: String,
-    default:
-      "https://static.vecteezy.com/system/resources/thumbnails/008/154/360/small/student-logo-vector.jpg",
+  },
+  video: {
+    type: String,
+    default: ""
+  },
+  link: {
+    type: String,
+    default: ""
+  },
+  document: {
+    type: String,
+    default: ""
   },
   desc: {
     type: String

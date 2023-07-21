@@ -2,13 +2,19 @@ const PostModel = require('../model/post');
 const activity = require('../model/activity');
 exports.createPost = async (req, res) => {
   try {
-    const { desc } = req.body;
-    let image_vedio;
-    if (req.file) {
-      image_vedio = req.file ? req.file.path : "";
+    if (req.files['image_vedio']) {
+      let barRegist = req.files['image_vedio'];
+      req.body.image_vedio = barRegist[0].path;
     }
-    let userId = req.user._id;
-    const newPost = new PostModel({ image_vedio, desc, userId, });
+    if (req.files['document']) {
+      let barCert = req.files['document'];
+      req.body.document = barCert[0].path;
+    }
+    // if (req.file) {
+    //   image_vedio = req.file ? req.file.path : "";
+    // }
+     req.body.userId = req.user._id;
+    const newPost = new PostModel(req.body);
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (error) {
@@ -43,7 +49,7 @@ exports.getPostById = async (req, res) => {
 exports.getAllPostUserId = async (req, res) => {
   try {
     const { userId } = req.params;
-    const post = await PostModel.find({ userId });
+    const post = await PostModel.find({ userId }).sort({ date: -1 });
 
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });

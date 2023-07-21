@@ -10,8 +10,8 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 const { authJwt } = require('../middlewares');
-
-router.post('/createPost', upload.single("image_vedio"), [authJwt.verifyToken], postController.createPost);
+var cpUpload = upload.fields([{ name: 'image_vedio', maxCount: 1 }, { name: 'document', maxCount: 1 },]);
+router.post('/createPost', cpUpload, [authJwt.verifyToken], postController.createPost);
 router.get('/all', postController.getAllPosts);
 router.get('/:id', postController.getPostById);
 router.get('/getAllPostUserId/user/:userId', postController.getAllPostUserId);
