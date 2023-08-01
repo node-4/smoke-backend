@@ -13,4 +13,6 @@ router.post("/getfriendsofFriend", [authJwt.verifyToken],friendRequestController
 router.post("/getfriendsFromSchool", [authJwt.verifyToken],friendRequestController.getfriendsFromSchool);
 router.put("/blockUser/:id", [authJwt.verifyToken],friendRequestController.blockUser);
 router.put("/unblockUser/:id", [authJwt.verifyToken],friendRequestController.unblockUser);
+router.put("/hideUser/:id", [authJwt.verifyToken],friendRequestController.hideUser);
+router.put("/unFriend/:id", [authJwt.verifyToken],friendRequestController.unFriend);
 module.exports = router;

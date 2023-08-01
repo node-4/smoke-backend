@@ -93,7 +93,7 @@ exports.getfriendsofFriend = async (req, res) => {
         let data = await userSchema.findById({ _id: findUser.friends[j] });
         for (let i = 0; i < data.friends.length; i++) {
           let id = (data.friends[i]).toString();
-          if (!Friends.includes(id)) {
+          if (!Friends.includes(id) && !findUser.hideUser.includes(id)) {
             Friends.push(id);
             let FindData = await userSchema.findById({ _id: id });
             storeData.push(FindData)
@@ -117,7 +117,7 @@ exports.getfriendsFromSchool = async (req, res) => {
       let Friends = []
       let data = await userSchema.find({ school: findUser.school, _id: { $ne: findUser._id } });
       for (let i = 0; i < data.length; i++) {
-        if (!findUser.friends.includes(data[i]._id)) {
+        if (!findUser.friends.includes(data[i]._id) && !findUser.hideUser.includes(data[i]._id)) {
           Friends.push(data[i])
         }
       }
@@ -164,6 +164,52 @@ exports.unblockUser = async (req, res) => {
         if (findUser.blockUser.includes(getUser._id)) {
           let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { blockUser: req.params.id }, $push: { friends: req.params.id } }, { new: true })
           return res.status(200).json({ msg: "User un block successfully.", data: update });
+        } else {
+          return res.status(404).json({ msg: "user not found", data: {} });
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while accepting the friend request' });
+  }
+};
+exports.hideUser = async (req, res) => {
+  try {
+    let findUser = await userSchema.findById({ _id: req.user.id });
+    if (!findUser) {
+      return res.status(404).json({ msg: "user token expire or invalid.", data: {} });
+    } else {
+      let getUser = await userSchema.findById({ _id: req.params.id });
+      if (!getUser) {
+        return res.status(404).json({ msg: "user not found", data: {} });
+      } else {
+        if (findUser.hideUser.includes(getUser._id)) {
+          return res.status(409).json({ msg: "Already hide", data: {} });
+        } else {
+          let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $push: { hideUser: req.params.id } }, { new: true })
+          return res.status(200).json({ msg: "hide successfully successfully.", data: update });
+        }
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while sending the friend request' });
+  }
+};
+exports.unFriend = async (req, res) => {
+  try {
+    let findUser = await userSchema.findById({ _id: req.user.id });
+    if (!findUser) {
+      return res.status(404).json({ msg: "user token expire or invalid.", data: {} });
+    } else {
+      let getUser = await userSchema.findById({ _id: req.params.id });
+      if (!getUser) {
+        return res.status(404).json({ msg: "user not found", data: {} });
+      } else {
+        if (findUser.friends.includes(getUser._id)) {
+          let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { friends: req.params.id } }, { new: true })
+          return res.status(200).json({ msg: "User unfriend successfully.", data: update });
         } else {
           return res.status(404).json({ msg: "user not found", data: {} });
         }

@@ -111,6 +111,10 @@ const userSchema = mongoose.Schema({
     type: Array,
     ref: "userProfile",
   },
+  hideUser: {
+    type: Array,
+    ref: "userProfile",
+  },
   blockUser: {
     type: Array,
     ref: "userProfile",

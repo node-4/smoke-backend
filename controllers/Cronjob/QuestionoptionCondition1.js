@@ -5,12 +5,12 @@ let whatAppContact = require("../../model/whatAppContact");
 let user = require("../../model/user");
 
 async function CreateSession() {
-    console.log("8---------------")
     // new cronJob("*/60 * * * * *", async function () {
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
+    console.log("8---------------", fullDate)
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -41,4 +41,4 @@ async function CreateSession() {
 }
 // ).start();
 // }).stop()
-setInterval(CreateSession, 60000);
+setInterval(CreateSession, 10000);

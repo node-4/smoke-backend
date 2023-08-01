@@ -10,6 +10,7 @@ async function CreateSession() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
+    console.log("8---------2------", fullDate)
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -2063,4 +2064,4 @@ async function CreateSession() {
 }
 // ).start();
 // }).stop()
-setInterval(CreateSession, 60000);
+setInterval(CreateSession, 10000);
