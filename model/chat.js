@@ -38,6 +38,18 @@ const chatSchema = new schema({
                 message: {
                         type: String
                 },
+                video: {
+                        type: String
+                },
+                image: {
+                        type: String
+                },
+                docs: {
+                        type: String
+                },
+                audio: {
+                        type: String
+                },
                 time: {
                         type: Date,
                         default: Date.now(),

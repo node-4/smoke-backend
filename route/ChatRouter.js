@@ -1,40 +1,20 @@
 const userController = require('../controllers/chatController');
 const { authJwt } = require("../middlewares");
 const router = require('express').Router()
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({ cloud_name: "dbrvq9uxa", api_key: "567113285751718", api_secret: "rjTsz9ksqzlDtsrlOPcTs_-QtW4", });
+const storage = new CloudinaryStorage({
+        cloudinary: cloudinary, params: { folder: "images/image", allowed_formats: ["jpg", "jpeg", "mp4", "mp3", "png", "PNG", "xlsx", "xls", "pdf", "PDF"], },
+});
+const upload = multer({ storage: storage });
+var cpUpload = upload.fields([{ name: 'video', maxCount: 1 },
+ { name: 'image', maxCount: 1 },
+ { name: 'docs', maxCount: 1 },
+ { name: 'audio', maxCount: 1 },]);
 
-
-/**
- * @swagger
- * /api/v1/chat/userChat:
- *  post:
- *    tags:
- *       - USER CHAT (6)
- *    produces:
- *      - application/json
- *    parameters:
- *       - name: token
- *         description: token
- *         in: header
- *         required: true
- *       - name: userId
- *         description: userId
- *         in: query
- *         required: false
- *       - name: message
- *         description: message
- *         in: query
- *         required: false
- *    responses:
- *       200:
- *         description: Thanks, You have successfully signed up.
- *       404:
- *         description: This mobile number already exists.
- *       500:
- *         description: Internal Server Error.
- *       501:
- *         description: Something went wrong!   
- */
-router.post('/userChat', [authJwt.verifyToken], userController.userChat);
+router.post('/userChat', [authJwt.verifyToken], cpUpload, userController.userChat);
 /**
  * @swagger
  * /api/v1/chat/viewChat:

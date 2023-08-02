@@ -6,30 +6,124 @@ exports.userChat = async (req, res) => {
                 if (!userData) {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 } else {
-                        let viewUser = await userModel.findOne({ _id: req.query.userId });
+                        let viewUser = await userModel.findOne({ _id: req.body.userId });
                         if (!viewUser) {
                                 return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
                         } else {
                                 let chatData = await chatModel.findOne({ $and: [{ $or: [{ user1: userData._id }, { user1: viewUser._id }] }, { $or: [{ user2: viewUser._id }, { user2: userData._id }] }] });
                                 if (chatData) {
-                                        let messageDetail = {
-                                                sender: userData._id,
-                                                userName: `${userData.firstName} ${userData.lastName}`,
-                                                Type: "TEXT",
-                                                message: req.query.message,
-                                                time: Date.now()
+                                        let messageDetail;
+                                        if (req.body.Type == "TEXT") {
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        message: req.body.message,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "AUDIO") {
+                                                let audio = req.files['audio'];
+                                                req.body.audio = audio[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        audio: req.body.audio,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "VIDEO") {
+                                                let video = req.files['video'];
+                                                req.body.video = video[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        video: req.body.video,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "DOCS") {
+                                                let docs = req.files['docs'];
+                                                req.body.docs = docs[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        docs: req.body.docs,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "IMAGES") {
+                                                let image = req.files['image'];
+                                                req.body.image = image[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        image: req.body.image,
+                                                        time: Date.now()
+                                                }
                                         }
                                         let saveChat = await chatModel.findByIdAndUpdate({ _id: chatData._id }, { $push: { messageDetail: messageDetail }, $set: { userName1: `${userData.firstName} ${userData.lastName}`, userName2: `${viewUser.firstName} ${viewUser.lastName}`, } }, { new: true })
                                         if (saveChat) {
                                                 return res.status(200).json({ status: 200, message: "Message send successfully", data: saveChat });
                                         }
                                 } else {
-                                        let messageDetail = {
-                                                sender: userData._id,
-                                                userName: `${userData.firstName} ${userData.lastName}`,
-                                                Type: "TEXT",
-                                                message: req.query.message,
-                                                time: Date.now()
+                                        let messageDetail;
+                                        if (req.body.Type == "TEXT") {
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        message: req.body.message,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "AUDIO") {
+                                                let audio = req.files['audio'];
+                                                req.body.audio = audio[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        audio: req.body.audio,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "VIDEO") {
+                                                let video = req.files['video'];
+                                                req.body.video = video[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        video: req.body.video,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "DOCS") {
+                                                let docs = req.files['docs'];
+                                                req.body.docs = docs[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        docs: req.body.docs,
+                                                        time: Date.now()
+                                                }
+                                        }
+                                        if (req.body.Type == "IMAGES") {
+                                                let image = req.files['image'];
+                                                req.body.image = image[0].path;
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        image: req.body.image,
+                                                        time: Date.now()
+                                                }
                                         }
                                         let obj = {
                                                 user1: userData._id,

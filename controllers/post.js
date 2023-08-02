@@ -2,17 +2,14 @@ const PostModel = require('../model/post');
 const activity = require('../model/activity');
 exports.createPost = async (req, res) => {
   try {
-    if (req.files['image_vedio']) {
-      let barRegist = req.files['image_vedio'];
-      req.body.image_vedio = barRegist[0].path;
-    }
-    if (req.files['document']) {
-      let barCert = req.files['document'];
-      req.body.document = barCert[0].path;
-    }
-    // if (req.file) {
-    //   image_vedio = req.file ? req.file.path : "";
-    // }
+    let audio = req.files['audio'];
+    req.body.audio = audio[0].path;
+    let video = req.files['video'];
+    req.body.video = video[0].path;
+    let docs = req.files['docs'];
+    req.body.docs = docs[0].path;
+    let image = req.files['image'];
+    req.body.image = image[0].path;
     req.body.userId = req.user._id;
     const newPost = new PostModel(req.body);
     const savedPost = await newPost.save();

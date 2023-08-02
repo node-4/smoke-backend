@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/post');
+const { authJwt } = require("../middlewares");
 const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
@@ -9,8 +10,7 @@ const storage = new CloudinaryStorage({
         cloudinary: cloudinary, params: { folder: "images/image", allowed_formats: ["jpg", "jpeg", "mp4", "mp3", "png", "PNG", "xlsx", "xls", "pdf", "PDF"], },
 });
 const upload = multer({ storage: storage });
-const { authJwt } = require('../middlewares');
-var cpUpload = upload.fields([{ name: 'image_vedio', maxCount: 1 }, { name: 'document', maxCount: 1 },]);
+var cpUpload = upload.fields([{ name: 'video', maxCount: 1 }, { name: 'image', maxCount: 1 }, { name: 'docs', maxCount: 1 }, { name: 'audio', maxCount: 1 },]);
 router.post('/createPost', cpUpload, [authJwt.verifyToken], postController.createPost);
 router.get('/all', postController.getAllPosts);
 router.get('/:id', postController.getPostById);

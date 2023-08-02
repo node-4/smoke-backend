@@ -2,18 +2,23 @@ const mongoose = require('mongoose');
 const objectId = mongoose.Types.ObjectId;
 
 const postSchema = mongoose.Schema({
-  image_vedio: {
+  Type: {
     type: String,
+    enum: ["TEXT", "AUDIO", "VIDEO", "DOCS", "IMAGES"],
   },
   video: {
-    type: String,
-    default: ""
+    type: String
   },
-  link: {
-    type: String,
-    default: ""
+  image: {
+    type: String
   },
   document: {
+    type: String
+  },
+  audio: {
+    type: String
+  },
+  link: {
     type: String,
     default: ""
   },
