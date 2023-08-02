@@ -3,11 +3,11 @@ const schema = mongoose.Schema;
 const DocumentSchema = schema({
         userId: {
                 type: schema.Types.ObjectId,
-                ref: "user"
+                ref: "userProfile"
         },
         otherUserId: {
                 type: schema.Types.ObjectId,
-                ref: "user"
+                ref: "userProfile"
         },
         inboxId: {
                 type: schema.Types.ObjectId,
