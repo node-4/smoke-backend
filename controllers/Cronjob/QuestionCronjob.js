@@ -4,7 +4,7 @@ let questions = require("../../model/questions");
 let user = require("../../model/user");
 async function CreateSession() {
     // new cronJob("*/20 * * * * *", async function () {
-    let hrs = new Date(Date.now()).getHours() + 1;
+    let hrs = new Date(Date.now()).getHours();
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
@@ -85,4 +85,4 @@ async function CreateSession() {
 }
 // ).start();
 // }).stop()
-// setInterval(CreateSession, 20000);
+setInterval(CreateSession, 20000);

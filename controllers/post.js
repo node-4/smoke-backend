@@ -13,7 +13,7 @@ exports.createPost = async (req, res) => {
     // if (req.file) {
     //   image_vedio = req.file ? req.file.path : "";
     // }
-     req.body.userId = req.user._id;
+    req.body.userId = req.user._id;
     const newPost = new PostModel(req.body);
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
@@ -166,7 +166,7 @@ exports.addComment = async (req, res) => {
 };
 exports.getAllActivity = async (req, res) => {
   try {
-    const post = await activity.find({ userId: req.user._id, hide: false });
+    const post = await activity.find({ userId: req.user._id, hide: false }).populate('userId otherUserId');
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
