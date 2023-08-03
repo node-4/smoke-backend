@@ -13,10 +13,9 @@ const storage = new CloudinaryStorage({
         cloudinary: cloudinary, params: { folder: "smoke/chat", allowed_formats: ["jpg", "jpeg", "mp4", "mp3", "png", "PNG", "xlsx", "xls", "pdf", "PDF"], },
 });
 const upload = multer({ storage: storage });
-var cpUpload = upload.fields([{ name: 'video', maxCount: 1 },
-{ name: 'image', maxCount: 1 },
-{ name: 'docs', maxCount: 1 },
-{ name: 'audio', maxCount: 1 },]);
+var cpUpload = upload.fields([
+        { name: 'image', maxCount: 1 },
+        { name: 'docs', maxCount: 1 },]);
 
 router.post('/userChat', [authJwt.verifyToken], cpUpload, userController.userChat);
 /**

@@ -2,14 +2,6 @@ const PostModel = require('../model/post');
 const activity = require('../model/activity');
 exports.createPost = async (req, res) => {
   try {
-    if (req.files['audio'] != (null || undefined)) {
-      let audio = req.files['audio'];
-      req.body.audio = audio[0].path;
-    }
-    if (req.files['video'] != (null || undefined)) {
-      let video = req.files['video'];
-      req.body.video = video[0].path;
-    }
     if (req.files['docs'] != (null || undefined)) {
       let docs = req.files['docs'];
       req.body.docs = docs[0].path;

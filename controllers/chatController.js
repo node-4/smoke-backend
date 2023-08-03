@@ -23,8 +23,6 @@ exports.userChat = async (req, res) => {
                                                 }
                                         }
                                         if (req.body.Type == "AUDIO") {
-                                                let audio = req.files['audio'];
-                                                req.body.audio = audio[0].path;
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
@@ -35,8 +33,6 @@ exports.userChat = async (req, res) => {
                                                 }
                                         }
                                         if (req.body.Type == "VIDEO") {
-                                                let video = req.files['video'];
-                                                req.body.video = video[0].path;
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
@@ -86,8 +82,6 @@ exports.userChat = async (req, res) => {
                                                 }
                                         }
                                         if (req.body.Type == "AUDIO") {
-                                                let audio = req.files['audio'];
-                                                req.body.audio = audio[0].path;
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
@@ -98,8 +92,6 @@ exports.userChat = async (req, res) => {
                                                 }
                                         }
                                         if (req.body.Type == "VIDEO") {
-                                                let video = req.files['video'];
-                                                req.body.video = video[0].path;
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
