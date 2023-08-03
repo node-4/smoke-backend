@@ -30,6 +30,7 @@ exports.userChat = async (req, res) => {
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
                                                         audio: req.body.audio,
+                                                        message: req.body.message,
                                                         time: Date.now()
                                                 }
                                         }
@@ -41,6 +42,7 @@ exports.userChat = async (req, res) => {
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
                                                         video: req.body.video,
+                                                        message: req.body.message,
                                                         time: Date.now()
                                                 }
                                         }
@@ -51,6 +53,7 @@ exports.userChat = async (req, res) => {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
+                                                        message: req.body.message,
                                                         docs: req.body.docs,
                                                         time: Date.now()
                                                 }
@@ -62,6 +65,7 @@ exports.userChat = async (req, res) => {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
+                                                        message: req.body.message,
                                                         image: req.body.image,
                                                         time: Date.now()
                                                 }
@@ -89,6 +93,7 @@ exports.userChat = async (req, res) => {
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
                                                         audio: req.body.audio,
+                                                        message: req.body.message,
                                                         time: Date.now()
                                                 }
                                         }
@@ -99,6 +104,7 @@ exports.userChat = async (req, res) => {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
+                                                        message: req.body.message,
                                                         video: req.body.video,
                                                         time: Date.now()
                                                 }
@@ -110,6 +116,7 @@ exports.userChat = async (req, res) => {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
+                                                        message: req.body.message,
                                                         docs: req.body.docs,
                                                         time: Date.now()
                                                 }
@@ -122,6 +129,7 @@ exports.userChat = async (req, res) => {
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
                                                         image: req.body.image,
+                                                        message: req.body.message,
                                                         time: Date.now()
                                                 }
                                         }

@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 var cpUpload = upload.fields([{ name: 'video', maxCount: 1 }, { name: 'image', maxCount: 1 }, { name: 'docs', maxCount: 1 }, { name: 'audio', maxCount: 1 },]);
-router.post('/createPost', cpUpload, [authJwt.verifyToken], postController.createPost);
+router.post('/createPost', [authJwt.verifyToken], cpUpload, postController.createPost);
 router.get('/all', postController.getAllPosts);
 router.get('/:id', postController.getPostById);
 router.get('/getAllPostUserId/user/:userId', postController.getAllPostUserId);
