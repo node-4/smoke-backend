@@ -4,7 +4,7 @@ exports.createPost = async (req, res) => {
   try {
     if (req.files['docs'] != (null || undefined)) {
       let docs = req.files['docs'];
-      req.body.docs = docs[0].path;
+      req.body.document = docs[0].path;
     }
     if (req.files['image'] != (null || undefined)) {
       let image = req.files['image'];
