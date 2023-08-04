@@ -10,7 +10,7 @@ cloudinary.config({
         api_secret: "3mkqkDDusI5Hf4flGNkJNz4PHYg",
 });
 const storage = new CloudinaryStorage({
-        cloudinary: cloudinary, params: { folder: "smoke/chat", allowed_formats: ["jpg", "jpeg", "mp4", "mp3", "png", "PNG", "xlsx", "xls", "pdf", "PDF"], },
+        cloudinary: cloudinary, params: { folder: "smoke/chat", allowed_formats: ["jpg", "jpeg", "webp", "mp4", "mp3", "png", "PNG", "xlsx", "xls", "pdf", "PDF"], },
 });
 const upload = multer({ storage: storage });
 var cpUpload = upload.fields([
