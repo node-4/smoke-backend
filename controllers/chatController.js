@@ -440,3 +440,33 @@ exports.deleteAllChat = async (req, res) => {
                 return res.status(500).json({ status: 500, message: 'Internal server error' });
         }
 };
+exports.deleteMessage = async (req, res) => {
+        try {
+                let userData = await userModel.findOne({ _id: req.user.id });
+                if (!userData) {
+                        return res.status(404).json({ status: 404, message: "User not found.", data: {} });
+                } else {
+                        let view = await chatModel.findOne({ _id: req.params.id });
+                        if (!view) {
+                                return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
+                        } else {
+                                let messageClear1,messageClear2;
+                                if ((userData._id).toString() == (view.user1).toString()) {
+                                        messageClear1 = true;
+                                        messageClear2 = false;
+                                }
+                                if ((userData._id).toString() == (view.user2).toString()) {
+                                        messageClear1 = false;
+                                        messageClear2 = true;
+                                }
+                                let update = await chatModel.findOneAndUpdate({ 'messageDetail._id': req.body.messageId }, { $set: { 'messageDetail.$.messageClear1': messageClear1, 'messageDetail.$.messageClear2': messageClear2 } }, { new: true })
+                                if (update) {
+                                        return res.status(200).json({ status: 200, message: "Message delete successfully.", data: update });
+                                }
+                        }
+                }
+        } catch (error) {
+                console.log(error);
+                return res.status(500).json({ status: 500, message: 'Internal server error' });
+        }
+};

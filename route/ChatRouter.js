@@ -154,4 +154,5 @@ router.put('/clearChat', [authJwt.verifyToken], userController.clearChat);
  *         description: Something went wrong!   
  */
 router.put('/deleteAllChat', [authJwt.verifyToken], userController.deleteAllChat);
+router.put('/deleteMessage/:id', [authJwt.verifyToken], userController.deleteMessage);
 module.exports = router;   
