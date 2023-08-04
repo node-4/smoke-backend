@@ -13,15 +13,6 @@ exports.userChat = async (req, res) => {
                                 let chatData = await chatModel.findOne({ $and: [{ $or: [{ user1: userData._id }, { user1: viewUser._id }] }, { $or: [{ user2: viewUser._id }, { user2: userData._id }] }] });
                                 if (chatData) {
                                         let messageDetail;
-                                        if (req.body.Type == "TEXT") {
-                                                messageDetail = {
-                                                        sender: userData._id,
-                                                        userName: `${userData.firstName} ${userData.lastName}`,
-                                                        Type: req.body.Type,
-                                                        message: req.body.message,
-                                                        time: Date.now()
-                                                }
-                                        }
                                         if (req.body.Type == "AUDIO") {
                                                 messageDetail = {
                                                         sender: userData._id,
@@ -31,8 +22,7 @@ exports.userChat = async (req, res) => {
                                                         message: req.body.message,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "VIDEO") {
+                                        } else if (req.body.Type == "VIDEO") {
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
@@ -41,8 +31,7 @@ exports.userChat = async (req, res) => {
                                                         message: req.body.message,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "DOCS") {
+                                        } else if (req.body.Type == "DOCS") {
                                                 let docs = req.files['docs'];
                                                 req.body.docs = docs[0].path;
                                                 messageDetail = {
@@ -53,8 +42,7 @@ exports.userChat = async (req, res) => {
                                                         docs: req.body.docs,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "IMAGES") {
+                                        } else if (req.body.Type == "IMAGES") {
                                                 let image = req.files['image'];
                                                 req.body.image = image[0].path;
                                                 messageDetail = {
@@ -63,6 +51,14 @@ exports.userChat = async (req, res) => {
                                                         Type: req.body.Type,
                                                         message: req.body.message,
                                                         image: req.body.image,
+                                                        time: Date.now()
+                                                }
+                                        } else {
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
+                                                        message: req.body.message,
                                                         time: Date.now()
                                                 }
                                         }
@@ -72,15 +68,6 @@ exports.userChat = async (req, res) => {
                                         }
                                 } else {
                                         let messageDetail;
-                                        if (req.body.Type == "TEXT") {
-                                                messageDetail = {
-                                                        sender: userData._id,
-                                                        userName: `${userData.firstName} ${userData.lastName}`,
-                                                        Type: req.body.Type,
-                                                        message: req.body.message,
-                                                        time: Date.now()
-                                                }
-                                        }
                                         if (req.body.Type == "AUDIO") {
                                                 messageDetail = {
                                                         sender: userData._id,
@@ -90,8 +77,7 @@ exports.userChat = async (req, res) => {
                                                         message: req.body.message,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "VIDEO") {
+                                        } else if (req.body.Type == "VIDEO") {
                                                 messageDetail = {
                                                         sender: userData._id,
                                                         userName: `${userData.firstName} ${userData.lastName}`,
@@ -100,8 +86,7 @@ exports.userChat = async (req, res) => {
                                                         video: req.body.video,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "DOCS") {
+                                        } else if (req.body.Type == "DOCS") {
                                                 let docs = req.files['docs'];
                                                 req.body.docs = docs[0].path;
                                                 messageDetail = {
@@ -112,8 +97,7 @@ exports.userChat = async (req, res) => {
                                                         docs: req.body.docs,
                                                         time: Date.now()
                                                 }
-                                        }
-                                        if (req.body.Type == "IMAGES") {
+                                        } else if (req.body.Type == "IMAGES") {
                                                 let image = req.files['image'];
                                                 req.body.image = image[0].path;
                                                 messageDetail = {
@@ -121,6 +105,14 @@ exports.userChat = async (req, res) => {
                                                         userName: `${userData.firstName} ${userData.lastName}`,
                                                         Type: req.body.Type,
                                                         image: req.body.image,
+                                                        message: req.body.message,
+                                                        time: Date.now()
+                                                }
+                                        } else {
+                                                messageDetail = {
+                                                        sender: userData._id,
+                                                        userName: `${userData.firstName} ${userData.lastName}`,
+                                                        Type: req.body.Type,
                                                         message: req.body.message,
                                                         time: Date.now()
                                                 }
