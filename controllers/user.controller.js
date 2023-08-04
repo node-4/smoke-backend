@@ -242,3 +242,22 @@ exports.getUser = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
         }
 }
+exports.getWhatAppNumber = async (req, res) => {
+        try {
+                let findUser = await userSchema.findById({ _id: req.user.id }).select('-flameUser');
+                if (findUser) {
+                        let findData = await whatAppContact.findOne({ phone: findUser.phone });
+                        if (!findData) {
+                                return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
+                        } else {
+                                return res.status(200).json({ status: 200, data: findData });
+                        }
+                } else {
+                        return res.status(404).json({ status: 404, message: "User not found.", data: {} });
+                }
+
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+}
