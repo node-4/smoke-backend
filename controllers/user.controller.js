@@ -257,7 +257,7 @@ exports.getUser = async (req, res) => {
 }
 exports.getWhatAppNumber = async (req, res) => {
         try {
-                let findData = await whatAppContact.findOne({ phone: findUser.phone });
+                let findData = await whatAppContact.findOne({ phone: req.params.phone });
                 if (!findData) {
                         return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
                 } else {
