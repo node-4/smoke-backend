@@ -191,7 +191,7 @@ exports.userUpdate = async (req, res) => {
 };
 exports.getUserflame = async (req, res) => {
         try {
-                let findUser = await userSchema.findById({ _id: req.user.id }).populate({ path: 'flameUser', select: '_id firstName lastName userName' });
+                let findUser = await userSchema.findById({ _id: req.user._id }).populate({ path: 'flameUser', select: '_id firstName lastName userName' });
                 if (findUser) {
                         return res.status(200).json({ msg: "profile details updated", data: { user: findUser.flameUser } });
                 } else {
@@ -204,7 +204,7 @@ exports.getUserflame = async (req, res) => {
 };
 exports.getUserFriends = async (req, res) => {
         try {
-                let findUser = await userSchema.findById({ _id: req.user.id }).populate({ path: 'friends', select: '_id firstName lastName userName' });
+                let findUser = await userSchema.findById({ _id: req.user._id }).populate({ path: 'friends', select: '_id firstName lastName userName' });
                 if (findUser) {
                         return res.status(200).json({ msg: "profile details updated", data: { user: findUser.friends } });
                 } else {
@@ -217,7 +217,7 @@ exports.getUserFriends = async (req, res) => {
 };
 exports.getProfile = async (req, res) => {
         try {
-                let findUser = await userSchema.findById({ _id: req.user.id }).populate('school state city district').select('-flameUser');
+                let findUser = await userSchema.findById({ _id: req.user._id }).populate('school state city district').select('-flameUser');
                 if (findUser) {
                         return res.status(200).json({ msg: "profile details updated", data: { user: findUser } });
                 } else {
@@ -257,7 +257,43 @@ exports.getUser = async (req, res) => {
 }
 exports.getWhatAppNumber = async (req, res) => {
         try {
-                let findUser = await userSchema.findOne({ phone: req.params.phone }).select('-flameUser');
+                let findData = await whatAppContact.findOne({ phone: findUser.phone });
+                if (!findData) {
+                        return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
+                } else {
+                        let userContacts = [];
+                        for (let i = 0; i < findData.userContacts.length; i++) {
+                                let obj1;
+                                const data = await userSchema.findOne({ phone: findData.userContacts[i].phone });
+                                if (data) {
+                                        obj1 = {
+                                                phone: findData.userContacts[i].phone,
+                                                firstName: findData.userContacts[i].firstName,
+                                                lastName: findData.userContacts[i].lastName,
+                                                appId: data._id,
+                                                onApp: true
+                                        };
+                                } else {
+                                        obj1 = {
+                                                phone: findData.userContacts[i].phone,
+                                                firstName: findData.userContacts[i].firstName,
+                                                lastName: findData.userContacts[i].lastName,
+                                                onApp: false
+                                        };
+                                }
+                                userContacts.push(obj1)
+                        }
+                        let update = await whatAppContact.findByIdAndUpdate({ _id: findData._id }, { $set: { userContacts: userContacts } }, { new: true })
+                        return res.status(200).json({ status: 200, data: update });
+                }
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+}
+exports.getWhatAppNumberafterLogin = async (req, res) => {
+        try {
+                let findUser = await userSchema.findOne({ _id: req.user._id }).select('-flameUser');
                 if (findUser) {
                         let findData = await whatAppContact.findOne({ phone: findUser.phone });
                         if (!findData) {

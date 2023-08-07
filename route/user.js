@@ -14,4 +14,5 @@ customerRouter.get('/getUserFriends', authJwt.verifyToken, getUserFriends)
 customerRouter.get('/getUserById/:id', getUserById)
 customerRouter.get('/getUser', getUser);
 customerRouter.get('/getWhatAppNumber/:phone', getWhatAppNumber)
+customerRouter.get('/getWhatAppNumber', authJwt.verifyToken, getWhatAppNumberafterLogin)
 module.exports = customerRouter;
