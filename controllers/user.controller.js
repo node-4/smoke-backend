@@ -217,7 +217,7 @@ exports.getUserFriends = async (req, res) => {
 };
 exports.getProfile = async (req, res) => {
         try {
-                let findUser = await userSchema.findById({ _id: req.user.id }).select('-flameUser');
+                let findUser = await userSchema.findById({ _id: req.user.id }).populate('school state city district').select('-flameUser');
                 if (findUser) {
                         return res.status(200).json({ msg: "profile details updated", data: { user: findUser } });
                 } else {
