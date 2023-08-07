@@ -1,6 +1,6 @@
 const express = require('express');
 const customerRouter = express.Router();
-const { createUser, verify, addWhatAppNumber, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber } = require('../controllers/user.controller');
+const { createUser, verify, addWhatAppNumber, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber, getWhatAppNumberafterLogin } = require('../controllers/user.controller');
 const authJwt = require('../middlewares/authJwt')
 
 customerRouter.post('/createUser', createUser);
