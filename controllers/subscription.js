@@ -93,7 +93,7 @@ exports.updateSubscription = async (req, res) => {
 };
 exports.getuserSubscription = async (req, res) => {
   try {
-    let findSubscription = await userSubscription.findById({ userId: req.user.id });
+    let findSubscription = await userSubscription.findOne({ userId: req.user._id });
     if (findSubscription) {
       res.status(200).json({ status: 200, message: "Subscription detail successfully.", data: findSubscription });
     } else {
