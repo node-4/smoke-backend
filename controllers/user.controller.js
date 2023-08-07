@@ -59,11 +59,24 @@ exports.addWhatAppNumber = async (req, res) => {
                                 for (let k = 0; k < req.body.contact[i].phone.length; k++) {
                                         let a = req.body.contact[i].phone[k].split(" ").join("");
                                         let b = a.split("+91").join("")
-                                        let obj1 = {
-                                                phone: b,
-                                                firstName: req.body.contact[i].firstName,
-                                                lastName: req.body.contact[i].lastName,
-                                        };
+                                        let obj1;
+                                        const data = await userSchema.findOne({ phone: b });
+                                        if (data) {
+                                                obj1 = {
+                                                        phone: b,
+                                                        firstName: req.body.contact[i].firstName,
+                                                        lastName: req.body.contact[i].lastName,
+                                                        appId: data._id,
+                                                        onApp: true
+                                                };
+                                        } else {
+                                                obj1 = {
+                                                        phone: b,
+                                                        firstName: req.body.contact[i].firstName,
+                                                        lastName: req.body.contact[i].lastName,
+                                                        onApp: false
+                                                };
+                                        }
                                         userContacts.push(obj1)
                                 }
                         }
@@ -250,7 +263,30 @@ exports.getWhatAppNumber = async (req, res) => {
                         if (!findData) {
                                 return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
                         } else {
-                                return res.status(200).json({ status: 200, data: findData });
+                                let userContacts = [];
+                                for (let i = 0; i < findData.userContacts.length; i++) {
+                                        let obj1;
+                                        const data = await userSchema.findOne({ phone: findData.userContacts[i].phone });
+                                        if (data) {
+                                                obj1 = {
+                                                        phone: findData.userContacts[i].phone,
+                                                        firstName: findData.userContacts[i].firstName,
+                                                        lastName: findData.userContacts[i].lastName,
+                                                        appId: data._id,
+                                                        onApp: true
+                                                };
+                                        } else {
+                                                obj1 = {
+                                                        phone: findData.userContacts[i].phone,
+                                                        firstName: findData.userContacts[i].firstName,
+                                                        lastName: findData.userContacts[i].lastName,
+                                                        onApp: false
+                                                };
+                                        }
+                                        userContacts.push(obj1)
+                                }
+                                let update = await whatAppContact.findByIdAndUpdate({ _id: findData._id }, { $set: { userContacts: userContacts } }, { new: true })
+                                return res.status(200).json({ status: 200, data: update });
                         }
                 } else {
                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });

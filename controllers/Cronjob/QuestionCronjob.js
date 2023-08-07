@@ -4,7 +4,7 @@ let questions = require("../../model/questions");
 let user = require("../../model/user");
 async function CreateSession() {
     // new cronJob("*/20 * * * * *", async function () {
-    let hrs = new Date(Date.now()).getHours();
+    let hrs = new Date(Date.now()).getHours() + 1;
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
@@ -39,7 +39,7 @@ async function CreateSession() {
     if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
         let findUser = await user.find({});
         findUser.map(async i => {
-            let totalQuestion = await questionAnswer.find({ userID: "64902ae7ff2e7a8d9c5355fa", questionTime: hrs3, questionDate: fullDate })
+            let totalQuestion = await questionAnswer.find({ userID: i._id, questionTime: hrs3, questionDate: fullDate })
             if (totalQuestion.length == 12) {
                 console.log("total 12 question created", fullDate, "hr+1    ", hrs3);
             } else {

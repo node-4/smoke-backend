@@ -17,6 +17,14 @@ const whatAppSchema = mongoose.Schema({
     lastName: {
       type: String,
     },
+    appId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userProfile",
+    },
+    onApp: {
+      type: Boolean,
+      default: false,
+    },
   }],
 });
 
