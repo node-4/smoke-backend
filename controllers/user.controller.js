@@ -257,7 +257,7 @@ exports.getUser = async (req, res) => {
 }
 exports.getWhatAppNumber = async (req, res) => {
         try {
-                let findUser = await userSchema.findById({ phone: req.params.phone }).select('-flameUser');
+                let findUser = await userSchema.findOne({ phone: req.params.phone }).select('-flameUser');
                 if (findUser) {
                         let findData = await whatAppContact.findOne({ phone: findUser.phone });
                         if (!findData) {
