@@ -104,3 +104,35 @@ exports.getuserSubscription = async (req, res) => {
     return res.status(500).json({ error: "An error occurred while updating the question." });
   }
 };
+exports.useSubscriptionvalue = async (req, res) => {
+  try {
+    let findSubscription = await userSubscription.findById({ userId: req.user.id });
+    if (findSubscription) {
+      let update = await userSubscription.findByIdAndUpdate({ _id: findSubscription._id }, { $set: { fullName: findSubscription.fullName - 1 } }, { new: true });
+      if (update) {
+        res.json({ status: 200, message: 'subscription first name successfully.', data: update });
+      }
+    } else {
+      res.json({ status: 404, message: 'subscription not found.', data: {} });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "An error occurred while updating the question." });
+  }
+};
+exports.updatevalue = async (req, res) => {
+  try {
+    let findSubscription = await userSubscription.findById({ userId: req.user.id });
+    if (findSubscription) {
+      let update = await userSubscription.findByIdAndUpdate({ _id: findSubscription._id }, { $set: { fullName: findSubscription.fullName + 1 } }, { new: true });
+      if (update) {
+        res.json({ status: 200, message: 'subscription first name count increasse successfully.', data: update });
+      }
+    } else {
+      res.json({ status: 404, message: 'subscription not found.', data: {} });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "An error occurred while updating the question." });
+  }
+};

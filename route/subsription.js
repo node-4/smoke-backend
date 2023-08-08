@@ -9,4 +9,6 @@ router.get('/getWeekSubscription', subscriptionController.getWeekSubscription);
 router.post('/takeSubscription/:id', authJwt.verifyToken, subscriptionController.takeSubscription);
 router.put('/updateSubscription', authJwt.verifyToken, subscriptionController.updateSubscription);
 router.get('/getuserSubscription', authJwt.verifyToken, subscriptionController.getuserSubscription);
+router.get('/updatevalue', authJwt.verifyToken, subscriptionController.updatevalue);
+router.get('/useSubscriptionvalue', authJwt.verifyToken, subscriptionController.useSubscriptionvalue);
 module.exports = router;
