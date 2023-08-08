@@ -106,7 +106,7 @@ exports.getuserSubscription = async (req, res) => {
 };
 exports.useSubscriptionvalue = async (req, res) => {
   try {
-    let findSubscription = await userSubscription.findById({ userId: req.user.id });
+    let findSubscription = await userSubscription.findOne({ userId: req.user.id });
     if (findSubscription) {
       let update = await userSubscription.findByIdAndUpdate({ _id: findSubscription._id }, { $set: { fullName: findSubscription.fullName - 1 } }, { new: true });
       if (update) {
@@ -122,7 +122,7 @@ exports.useSubscriptionvalue = async (req, res) => {
 };
 exports.updatevalue = async (req, res) => {
   try {
-    let findSubscription = await userSubscription.findById({ userId: req.user.id });
+    let findSubscription = await userSubscription.findOne({ userId: req.user.id });
     if (findSubscription) {
       let update = await userSubscription.findByIdAndUpdate({ _id: findSubscription._id }, { $set: { fullName: findSubscription.fullName + 1 } }, { new: true });
       if (update) {
