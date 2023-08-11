@@ -5,5 +5,5 @@ router.post("/createFaq", createFaq);
 router.get("/:id", getFaqById);
 router.put("/:id", updateFaq);
 router.delete("/:id", deleteFaq);
-router.get("/all", getAllFaqs);
+router.get("/all/faq", getAllFaqs);
 module.exports = router;

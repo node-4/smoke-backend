@@ -3,10 +3,10 @@ const Faq = require("../model/faq");
 exports.getAllFaqs = async (req, res) => {
     try {
         const faqs = await Faq.find().lean();
-        return createResponse(res, 200, " faqs retrieved successfully", faqs);
+        res.status(200).json({ message: "faqs retrieved successfully ", data: faqs });
     } catch (err) {
         console.log(err);
-        return createResponse(res, 500, "Error", err.message);
+        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.getFaqById = async (req, res) => {
@@ -19,7 +19,7 @@ exports.getFaqById = async (req, res) => {
         res.status(200).json({ message: "faqs retrieved successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        return createResponse(res, 500, "Error", err.message);
+        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.createFaq = async (req, res) => {
@@ -32,7 +32,7 @@ exports.createFaq = async (req, res) => {
         res.status(200).json({ message: "FAQ Added Successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: "Error ",status: 500,data:  err.message });
+        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.updateFaq = async (req, res) => {
@@ -45,7 +45,7 @@ exports.updateFaq = async (req, res) => {
         res.status(200).json({ message: "FAQ Updated Successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: "Something went wrong ",status: 500, data:  err.message });
+        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.deleteFaq = async (req, res) => {
@@ -58,6 +58,6 @@ exports.deleteFaq = async (req, res) => {
         res.status(200).json({ message: "FAQ Deleted Successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: "Something went wrong ",status: 500, data:  err.message });
+        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
