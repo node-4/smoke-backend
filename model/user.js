@@ -138,6 +138,11 @@ const userSchema = mongoose.Schema({
     enum: ["USER", "ADMIN"],
     default: "USER"
   },
+  status: {
+    type: String,
+    enum: ["Active", "Block", "Delete"],
+    default: "Active"
+  },
   photo: {
     type: String,
     default:

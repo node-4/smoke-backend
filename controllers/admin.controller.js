@@ -135,3 +135,26 @@ exports.getAllUsers = async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 }
+exports.blockUnblockUser = async (req, res) => {
+    try {
+        let result = await User.findOne({ _id: req.params.id, status: { $ne: "Delete" } });
+        if (!result) {
+            return res.status(404).json({ status: 404, message: "User not found" });
+        }
+        else {
+            if (result.status == "Active") {
+                let updateResult = await User.findOneAndUpdate({ _id: result._id }, { $set: { status: "Block" } }, { new: true });
+                if (updateResult) {
+                    return res.status(200).json({ status: 200, message: "User Block successfully.", data: updateResult, });
+                }
+            } else if (result.status == "BLOCK") {
+                let updateResult = await User.findOneAndUpdate({ _id: result._id }, { $set: { status: "Active" } }, { new: true });
+                if (updateResult) {
+                    return res.status(200).json({ status: 200, message: "User un Block successfully.", data: updateResult, });
+                }
+            }
+        }
+    } catch (error) {
+        response(res, ErrorCode.WENT_WRONG, {}, ErrorMessage.SOMETHING_WRONG);
+    }
+};

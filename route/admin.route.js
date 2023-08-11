@@ -26,4 +26,5 @@ router.get("/Banner/allBanner", auth.getBanner);
 router.get("/Banner/getBannerById/:id", auth.getBannerById);
 router.delete("/Banner/deleteBanner/:id", [authJwt.verifyToken], auth.DeleteBanner);
 router.get("/User/allUser", auth.getAllUsers);
+router.put("/User/blockUnblockUser/:id", [authJwt.verifyToken], auth.blockUnblockUser);
 module.exports = router;
