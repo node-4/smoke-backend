@@ -8,7 +8,9 @@ exports.createQuestion = async (req, res) => {
       res.status(409).json({ message: "This Question is Already Addded ", data: {} });
     } else {
       let data = {
-        question: req.body.question
+        question: req.body.question,
+        type: req.body.type,
+        emoji: req.body.emoji,
       }
       const Data = await Question.create(data);
       res.status(200).json({ message: "Question is Addded ", data: Data });
@@ -47,7 +49,16 @@ exports.updateQuestion = async (req, res) => {
     if (!question) {
       return res.status(400).json({ error: "Question are required." });
     }
-    const updatedQuestion = await Question.findByIdAndUpdate(questionId, { question: req.body.question }, { new: true });
+    const questions = await Question.findById(questionId);
+    if (!questions) {
+      return res.status(404).json({ error: "Question not found." });
+    }
+    let data = {
+      question: req.body.question || questions.question,
+      type: req.body.type || questions.question,
+      emoji: req.body.emoji || questions.question,
+    }
+    const updatedQuestion = await Question.findByIdAndUpdate(questionId, { $set: data }, { new: true });
     if (!updatedQuestion) {
       return res.status(404).json({ error: "Question not found." });
     }
