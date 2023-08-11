@@ -51,11 +51,12 @@ exports.updateFaq = async (req, res) => {
 exports.deleteFaq = async (req, res) => {
     const { id } = req.params;
     try {
-        const faq = await Faq.findByIdAndDelete(id);
+        const faq = await Faq.findById(id);
         if (!faq) {
             res.status(404).json({ message: "Not Found ", data: {} });
         }
-        res.status(200).json({ message: "FAQ Deleted Successfully ", data: faq });
+        const faq1 = await Faq.findByIdAndDelete(id);
+        res.status(200).json({ message: "FAQ Deleted Successfully ", data: faq1 });
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: 'An error occurred while fetching the faqs' });
