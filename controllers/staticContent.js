@@ -82,7 +82,7 @@ exports.updateTerms = async (req, res) => {
                         return res.status(404).json({ status: 404, message: "No data found", data: {} });
                 } else {
                         let terms = req.body.terms || data.terms;
-                        const data1 = await staticContent.findOneAndUpdate({ id: req.params.id }, { terms: terms, type: "TERMS" }, { new: true, });
+                        const data1 = await staticContent.findOneAndUpdate({ _id: req.params.id }, { terms: terms, type: "TERMS" }, { new: true, });
                         return res.status(200).json({ status: 200, message: "update successfully.", data: data1 });
                 }
         } catch (error) {
@@ -179,10 +179,11 @@ exports.getPrivacybyId = async (req, res) => {
 };
 exports.deletePrivacy = async (req, res) => {
         try {
-                const data = await staticContent.findByIdAndDelete(req.params.id);
-                if (!data) {
+                const data = await staticContent.findById(req.params.id);
+                if (!data || data.length === 0) {
                         return res.status(404).json({ status: 404, message: "No data found", data: {} });
                 }
+                const data1 = await staticContent.findByIdAndDelete(req.params.id);
                 res.status(200).json({ status: 200, message: "Deleted Successfully", });
         } catch (err) {
                 console.log(err.message);
