@@ -47,7 +47,7 @@ exports.createSchoolbyUser = async (req, res) => {
 };
 exports.getAllPendingSchool = async (req, res) => {
         try {
-                const schools = await schoolModel.find({ status: "Pending" }).populate('city districtId stateId');
+                const schools = await schoolModel.find({}).populate('city districtId stateId');
                 res.json({ status: 200, message: 'Pending School successfully', data: schools });
         } catch (err) {
                 res.status(500).json({ message: err.message });
