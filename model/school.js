@@ -25,11 +25,11 @@ const schoolSchema = mongoose.Schema({
         User: {
                 type: Array,
                 ref: "userProfile",
-              },
+        },
         status: {
                 type: String,
                 enum: ["Approved", "Reject", "Pending"],
         }
-});
+}, { timestamps: true });
 const schoolModel = mongoose.model("school", schoolSchema);
 module.exports = schoolModel;

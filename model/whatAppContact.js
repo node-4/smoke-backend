@@ -26,7 +26,7 @@ const whatAppSchema = mongoose.Schema({
       default: false,
     },
   }],
-});
+}, { timestamps: true });
 
 const quesModel = mongoose.model("whatAppContact", whatAppSchema);
 module.exports = quesModel;

@@ -9,7 +9,7 @@ const bannerSchema = mongoose.Schema({
         type: String,
         require: false,
     },
-});
+}, { timestamps: true });
 
 const banner = mongoose.model("banner", bannerSchema);
 

@@ -27,9 +27,13 @@ exports.acceptFriendRequest = async (req, res) => {
       const updatedFriendRequest = await FriendRequest.findByIdAndUpdate({ _id: friendRequest._id }, { $set: { status: 'accepted' } }, { new: true });
       if (updatedFriendRequest) {
         let findSender = await userSchema.findById({ _id: friendRequest.sender })
-        let updateSender = await userSchema.findByIdAndUpdate({ _id: findSender._id }, { $push: { friends: friendRequest.receiver }, $set: { friendCount: findSender.friendCount + 1 } }, { new: true });
+        if (findSender.friends.includes(friendRequest.receiver)) {
+          let updateSender = await userSchema.findByIdAndUpdate({ _id: findSender._id }, { $push: { friends: friendRequest.receiver }, $set: { friendCount: findSender.friendCount + 1 } }, { new: true });
+        }
         let findReceiver = await userSchema.findById({ _id: friendRequest.receiver })
-        let updateReceiver = await userSchema.findByIdAndUpdate({ _id: findReceiver._id }, { $push: { friends: friendRequest.sender }, $set: { friendCount: findReceiver.friendCount + 1 } }, { new: true })
+        if (findReceiver.friends.includes(friendRequest.sender)) {
+          let updateReceiver = await userSchema.findByIdAndUpdate({ _id: findReceiver._id }, { $push: { friends: friendRequest.sender }, $set: { friendCount: findReceiver.friendCount + 1 } }, { new: true })
+        }
         res.status(200).json(updatedFriendRequest);
       } else {
         return res.status(404).json({ error: 'User not found' });

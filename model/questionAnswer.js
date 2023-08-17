@@ -128,7 +128,7 @@ const quesSchema = mongoose.Schema({
     type: Number,
     default: 0
   }
-});
+}, { timestamps: true });
 quesSchema.plugin(mongoosePaginate);
 quesSchema.plugin(mongooseAggregatePaginate);
 const quesModel = mongoose.model("questionAnswer", quesSchema);

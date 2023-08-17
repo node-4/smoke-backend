@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 var newOTP = require("otp-generators");
 const User = require("../model/user");
 const banner = require('../model/banner');
-
+const FriendRequest = require('../model/add_request');
+const schoolModel = require('../model/school');
+const PostModel = require('../model/post');
+const activity = require('../model/activity');
 exports.registration = async (req, res) => {
     const { phone, email } = req.body;
     try {
@@ -14,16 +17,16 @@ exports.registration = async (req, res) => {
             req.body.userType = "ADMIN";
             req.body.accountVerification = true;
             const userCreate = await User.create(req.body);
-            res.status(200).send({
+            return res.status(200).send({
                 message: "registered successfully ",
                 data: userCreate,
             });
         } else {
-            res.status(409).send({ message: "Already Exist", data: [] });
+            return res.status(409).send({ message: "Already Exist", data: [] });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Server error" });
+        return res.status(500).json({ message: "Server error" });
     }
 };
 exports.signin = async (req, res) => {
@@ -42,10 +45,10 @@ exports.signin = async (req, res) => {
         const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, {
             expiresIn: '365d',
         });
-        res.status(201).send({ data: user, accessToken: accessToken });
+        return res.status(201).send({ data: user, accessToken: accessToken });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ message: "Server error" + error.message });
+        return res.status(500).send({ message: "Server error" + error.message });
     }
 };
 exports.update = async (req, res) => {
@@ -64,10 +67,10 @@ exports.update = async (req, res) => {
             user.password = bcrypt.hashSync(password, 8) || user.password;
         }
         const updated = await user.save();
-        res.status(200).send({ message: "updated", data: updated });
+        return res.status(200).send({ message: "updated", data: updated });
     } catch (err) {
         console.log(err);
-        res.status(500).send({
+        return res.status(500).send({
             message: "internal server error " + err.message,
         });
     }
@@ -80,10 +83,10 @@ exports.AddBanner = async (req, res) => {
         }
         const data = { image: fileUrl, desc: req.body.desc }
         const Data = await banner.create(data);
-        res.status(200).json({ status: 200, message: "Banner is Addded ", data: Data })
+        return res.status(200).json({ status: 200, message: "Banner is Addded ", data: Data })
     } catch (err) {
         console.log(err);
-        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };
 exports.getBanner = async (req, res) => {
@@ -92,10 +95,10 @@ exports.getBanner = async (req, res) => {
         if (Banner.length == 0) {
             return res.status(404).json({ status: 404, message: "No data found", data: {} });
         }
-        res.status(200).json({ status: 200, message: "All banner Data found successfully.", data: Banner })
+        return res.status(200).json({ status: 200, message: "All banner Data found successfully.", data: Banner })
     } catch (err) {
         console.log(err);
-        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };
 exports.getBannerById = async (req, res) => {
@@ -104,10 +107,10 @@ exports.getBannerById = async (req, res) => {
         if (!Banner) {
             return res.status(404).json({ status: 404, message: "No data found", data: {} });
         }
-        res.status(200).json({ status: 200, message: "Data found successfully.", data: Banner })
+        return res.status(200).json({ status: 200, message: "Data found successfully.", data: Banner })
     } catch (err) {
         console.log(err);
-        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };
 exports.DeleteBanner = async (req, res) => {
@@ -117,10 +120,10 @@ exports.DeleteBanner = async (req, res) => {
             return res.status(404).json({ status: 404, message: "No data found", data: {} });
         }
         await banner.findByIdAndDelete({ _id: req.params.id });
-        res.status(200).json({ status: 200, message: "Banner delete successfully.", data: {} })
+        return res.status(200).json({ status: 200, message: "Banner delete successfully.", data: {} })
     } catch (err) {
         console.log(err);
-        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };
 exports.getAllUsers = async (req, res) => {
@@ -165,9 +168,45 @@ exports.deleteUser = async (req, res) => {
             return res.status(404).json({ status: 404, message: "No data found", data: {} });
         }
         await User.findByIdAndDelete({ _id: req.params.id });
-        res.status(200).json({ status: 200, message: "user delete successfully.", data: {} })
+        return res.status(200).json({ status: 200, message: "user delete successfully.", data: {} })
     } catch (err) {
         console.log(err);
-        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
+    }
+};
+exports.dashboard = async (req, res) => {
+    try {
+
+        let totalUsers = await User.find().count({ userType: 'USER' });
+        let totalMale = await User.find({ gender: "male", userType: 'USER' }).count();
+        let totalFemale = await User.find({ gender: "female", userType: 'USER' }).count();
+        let totalPost = await PostModel.find({}).count({});
+        let obj = {
+            totalUsers: totalUsers,
+            totalMale: totalMale,
+            totalFemale: totalFemale,
+            totalPost: totalPost
+        }
+        return res.status(200).json({ status: 200, message: "Dashboard successfully.", data: obj })
+    } catch (error) {
+        console.log("380====================>", error);
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
+    }
+};
+exports.dashboardGraph = async (req, res) => {
+    try {
+
+        let totalUsers = await User.find().count({ userType: 'USER' });
+        let totalMale = await User.find({ gender: "male", userType: 'USER' })
+        let totalFemale = await User.find({ gender: "female", userType: 'USER' });
+        let obj = {
+            totalUsers: totalUsers,
+            totalMale: totalMale,
+            totalFemale: totalFemale,
+        }
+        return res.status(200).json({ status: 200, message: "Dashboard successfully.", data: obj })
+    } catch (error) {
+        console.log("380====================>", error);
+        return res.status(501).send({ status: 501, message: "server error.", data: {}, });
     }
 };

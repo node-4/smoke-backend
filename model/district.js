@@ -8,7 +8,7 @@ const districtSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "state",
   },
-});
+}, { timestamps: true });
 const districtModel = mongoose.model("district", districtSchema);
 
 module.exports = districtModel;

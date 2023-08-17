@@ -28,4 +28,6 @@ router.delete("/Banner/deleteBanner/:id", [authJwt.verifyToken], auth.DeleteBann
 router.get("/User/allUser", auth.getAllUsers);
 router.put("/User/blockUnblockUser/:id", [authJwt.verifyToken], auth.blockUnblockUser);
 router.delete("/User/deleteUser/:id", [authJwt.verifyToken], auth.deleteUser);
+router.get("/dashboard", auth.dashboard);
+router.get("/dashboardGraph", auth.dashboardGraph);
 module.exports = router;

@@ -148,7 +148,7 @@ const userSchema = mongoose.Schema({
     default:
       "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
   },
-});
+}, { timestamps: true });
 
 const userModel = mongoose.model("userProfile", userSchema);
 module.exports = userModel;

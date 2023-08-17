@@ -45,6 +45,6 @@ const subscriptionSchema = mongoose.Schema({
   subscriptionExpire: {
     type: Date,
   },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("userSubscription", subscriptionSchema);

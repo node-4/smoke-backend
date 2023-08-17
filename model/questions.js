@@ -14,6 +14,6 @@ const quesSchema = mongoose.Schema({
     enum: ["Active", "Block"],
   }
 
-});
+}, { timestamps: true });
 const quesModel = mongoose.model("question", quesSchema);
 module.exports = quesModel;

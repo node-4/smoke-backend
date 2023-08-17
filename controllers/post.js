@@ -13,19 +13,19 @@ exports.createPost = async (req, res) => {
     req.body.userId = req.user._id;
     const newPost = new PostModel(req.body);
     const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
+    return res.status(200).json(savedPost);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'An error occurred while creating the post' });
+    return res.status(500).json({ error: 'An error occurred while creating the post' });
   }
 };
 exports.getAllPosts = async (req, res) => {
   try {
     const posts = await PostModel.find().populate({ path: 'userId likeUser Comment.user', select: 'firstName lastName profileImage' });
-    res.status(200).json({ msg: posts });
+    return res.status(200).json({ msg: posts });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the posts' });
+    return res.status(500).json({ error: 'An error occurred while fetching the posts' });
   }
 };
 exports.getPostById = async (req, res) => {
@@ -37,10 +37,10 @@ exports.getPostById = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    res.status(200).json({ msg: post });
+    return res.status(200).json({ msg: post });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the post' });
+    return res.status(500).json({ error: 'An error occurred while fetching the post' });
   }
 };
 exports.getAllPostUserId = async (req, res) => {
@@ -52,10 +52,10 @@ exports.getAllPostUserId = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    res.status(200).json({ totalpost: post.length, msg: post });
+    return res.status(200).json({ totalpost: post.length, msg: post });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the post' });
+    return res.status(500).json({ error: 'An error occurred while fetching the post' });
   }
 };
 exports.updatePost = async (req, res) => {
@@ -73,10 +73,10 @@ exports.updatePost = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    res.status(200).json(updatedPost);
+    return res.status(200).json(updatedPost);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while updating the post' });
+    return res.status(500).json({ error: 'An error occurred while updating the post' });
   }
 };
 exports.deletePost = async (req, res) => {
@@ -89,10 +89,10 @@ exports.deletePost = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    res.status(200).json({ message: 'Post deleted successfully' });
+    return res.status(200).json({ message: 'Post deleted successfully' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while deleting the post' });
+    return res.status(500).json({ error: 'An error occurred while deleting the post' });
   }
 };
 exports.addLike = async (req, res) => {
@@ -109,17 +109,17 @@ exports.addLike = async (req, res) => {
       const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { likeUser: user }, $set: { likeCount: post.likeCount + 1 } }, { new: true });
       if (update) {
         if ((post.userId).toString() == user) {
-          res.status(200).json({ status: 200, message: "like add successfully", data: update });
+          return res.status(200).json({ status: 200, message: "like add successfully", data: update });
         } else {
           let obj = { userId: post.userId, otherUserId: user, description: "User like your post.", logType: "Like", }
           const savedFriendRequest = await activity.create(obj);
-          res.status(200).json({ status: 200, message: "like add successfully", data: update });
+          return res.status(200).json({ status: 200, message: "like add successfully", data: update });
         }
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while adding the like' });
+    return res.status(500).json({ error: 'An error occurred while adding the like' });
   }
 };
 exports.getLikeCount = async (req, res) => {
@@ -132,11 +132,11 @@ exports.getLikeCount = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     } else {
       const likeCount = post.likeCount;
-      res.status(200).json({ count: likeCount });
+      return res.status(200).json({ count: likeCount });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the like count' });
+    return res.status(500).json({ error: 'An error occurred while fetching the like count' });
   }
 }
 exports.addComment = async (req, res) => {
@@ -153,12 +153,12 @@ exports.addComment = async (req, res) => {
       }
       const update = await PostModel.findByIdAndUpdate({ _id: post._id }, { $push: { Comment: obj }, $set: { commentCount: post.commentCount + 1 } }, { new: true });
       if (update) {
-        res.status(200).json({ status: 200, message: "Comment add successfully", data: update });
+        return res.status(200).json({ status: 200, message: "Comment add successfully", data: update });
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while adding the comment' });
+    return res.status(500).json({ error: 'An error occurred while adding the comment' });
   }
 };
 exports.getAllActivity = async (req, res) => {
@@ -167,9 +167,9 @@ exports.getAllActivity = async (req, res) => {
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
-    res.status(200).json({ msg: "Data found successfully", data: post });
+    return res.status(200).json({ msg: "Data found successfully", data: post });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the post' });
+    return res.status(500).json({ error: 'An error occurred while fetching the post' });
   }
 };

@@ -17,7 +17,7 @@ const questionHistoryCoinSchema = mongoose.Schema({
     type: Number,
     default: 0
   }
-});
+}, { timestamps: true });
 
 const QuestionHistoryCoin = mongoose.model('questionHistoryCoin', questionHistoryCoinSchema);
 module.exports = QuestionHistoryCoin;

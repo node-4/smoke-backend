@@ -10,13 +10,13 @@ const helpandSupport = mongoose.Schema({
     },
     email: {
         type: String
-    }, 
+    },
     mobile: {
         type: String
-    }, 
+    },
     query: {
         type: String
     }
-})
+}, { timestamps: true })
 const help = mongoose.model('help&suuport', helpandSupport);
 module.exports = help

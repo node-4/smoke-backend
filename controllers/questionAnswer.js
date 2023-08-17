@@ -173,12 +173,19 @@ exports.getInboxById = async (req, res) => {
 };
 exports.getAllQuestionsByAdmin = async (req, res) => {
         try {
-                const { search, page, limit } = req.query;
+                const { search, questionTime, page, limit } = req.query;
                 let query = {};
                 if (search != (null || undefined)) {
                         query.$or = [
                                 { "questionDate": search },
                         ]
+                        questionTime
+                }
+                if (questionTime != (null || undefined)) {
+                        query.$or = [
+                                { "questionTime": questionTime },
+                        ]
+
                 }
                 let options = {
                         page: Number(page) || 1,

@@ -27,7 +27,7 @@ const inboxSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { timestamps: true });
 
 const Inbox = mongoose.model('inbox', inboxSchema);
 
