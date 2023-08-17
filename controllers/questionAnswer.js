@@ -180,12 +180,7 @@ exports.getAllQuestionsByAdmin = async (req, res) => {
                                 { "questionDate": search },
                         ]
                 }
-                if (search != (null || undefined)) {
-                        query.$or = [
-                                { "questionDate": search },
-                        ]
-                }
-                if (questionTime != (null || undefined)) {
+                if (questionTime != 'null') {
                         query.$or = [
                                 { "questionTime": questionTime },
                         ]

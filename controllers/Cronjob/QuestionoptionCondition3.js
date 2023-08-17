@@ -199,10 +199,14 @@ async function CreateSession() {
                                         } else {
                                             if (findUser.gender == 'female') {
                                                 let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'male' });
-                                                if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                } else {
+                                                if (findFriend == null) {
                                                     console.log("-----------------");
+                                                } else {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                        userArray.push(findUser.friends[j].toString())
+                                                    } else {
+                                                        console.log("-----------------");
+                                                    }
                                                 }
                                             }
                                             if (findUser.gender == 'male') {
@@ -2669,7 +2673,15 @@ async function CreateSession() {
                                             console.log("49==================================================");
                                         } else {
                                             let findFriend = await user.findById({ _id: findUser.friends[j].toString() });
-                                            if (findFriend.flameCount == 0) { userArray.push(findUser.friends[j].toString()) }
+                                            if (findFriend == null) {
+                                                console.log("-----------------");
+                                            } else {
+                                                if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                    userArray.push(findUser.friends[j].toString())
+                                                } if (findFriend.flameCount > 0) {
+                                                    console.log("-----------------");
+                                                }
+                                            }
                                         }
                                     }
                                     if (findSchoolMember.length > 0) {
