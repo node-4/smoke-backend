@@ -175,20 +175,24 @@ exports.getAllQuestionsByAdmin = async (req, res) => {
         try {
                 const { search, questionTime, page, limit } = req.query;
                 let query = {};
-                if (search != 'null') {
+                console.log(search);
+                if ((search != 'null') && (questionTime != 'null')) {
                         query.$or = [
-                                { "questionDate": search },
+                                { questionDate: search, questionTime: questionTime }
+                        ]
+                } else if ((search != 'null') && (questionTime == 'null')) {
+                        query.$or = [
+                                { questionDate: search },
+                        ]
+                } else if ((search == 'null') && (questionTime != 'null')) {
+                        query.$or = [
+                                { questionTime: questionTime }
                         ]
                 }
-                if (questionTime != 'null') {
-                        query.$or = [
-                                { "questionTime": questionTime },
-                        ]
-
-                }
+                console.log(query);
                 let options = {
-                        page: Number(page) || 1,
-                        limit: Number(limit) || 12,
+                        page: Number(page),
+                        limit: Number(limit),
                         sort: { createdAt: -1 },
                         populate: { path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12 option_13 option_14', select: 'question emoji type firstName lastName userName' }
                 };
