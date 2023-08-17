@@ -10,7 +10,8 @@ async function CreateSession() {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     console.log("12---------3------", fullDate)
-    let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: "17", })
+    // userID: '64902ae7ff2e7a8d9c5355fa', 
+    let totalQuestion = await questionAnswer.find({ questionDate: fullDate, })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })

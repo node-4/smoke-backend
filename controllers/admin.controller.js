@@ -158,3 +158,16 @@ exports.blockUnblockUser = async (req, res) => {
         response(res, ErrorCode.WENT_WRONG, {}, ErrorMessage.SOMETHING_WRONG);
     }
 };
+exports.deleteUser = async (req, res) => {
+    try {
+        const Banner = await User.findById({ _id: req.params.id });
+        if (!Banner) {
+            return res.status(404).json({ status: 404, message: "No data found", data: {} });
+        }
+        await User.findByIdAndDelete({ _id: req.params.id });
+        res.status(200).json({ status: 200, message: "user delete successfully.", data: {} })
+    } catch (err) {
+        console.log(err);
+        res.status(501).send({ status: 501, message: "server error.", data: {}, });
+    }
+};

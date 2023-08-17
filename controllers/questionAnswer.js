@@ -157,7 +157,9 @@ exports.getInboxById = async (req, res) => {
         try {
                 let findUser = await inbox.findById({ _id: req.params.id }).populate('flameUser questionId');
                 if (findUser) {
-                        let update = await inbox.findByIdAndUpdate({ _id: findUser._id }, { $set: { view: true } }, { new: true }).populate('flameUser questionId');
+                        let update = await inbox.findByIdAndUpdate({ _id: findUser._id }, { $set: { view: true } }, { new: true }).populate({ path: 'flameUser' }, {
+                                path: 'questionId', populate: [{ path: "option_1", model: "userProfile", select: "firstName lastName userName", }, { path: "option_2", model: "userProfile", select: "firstName lastName userName", }, { path: "option_3", model: "userProfile", select: "firstName lastName userName", }, { path: "option_4", model: "userProfile", select: "firstName lastName userName", }, { path: "option_5", model: "userProfile", select: "firstName lastName userName", }, { path: "option_6", model: "userProfile", select: "firstName lastName userName", }, { path: "option_7", model: "userProfile", select: "firstName lastName userName", }, { path: "option_8", model: "userProfile", select: "firstName lastName userName", }, { path: "option_9", model: "userProfile", select: "firstName lastName userName", }, { path: "option_10", model: "userProfile", select: "firstName lastName userName", }, { path: "option_11", model: "userProfile", select: "firstName lastName userName", }, { path: "option_12", model: "userProfile", select: "firstName lastName userName", }, { path: "option_13", model: "userProfile", select: "firstName lastName userName", }, { path: "option_14", model: "userProfile", select: "firstName lastName userName", },],
+                        });
                         return res.status(200).json({ msg: "Inbox detail fetch successfully.", data: update });
                 } else {
                         return res.status(404).json({ status: 404, message: "Inbox detail not found.", data: {} });
@@ -171,34 +173,24 @@ exports.getInboxById = async (req, res) => {
 };
 exports.getAllQuestionsByAdmin = async (req, res) => {
         try {
-                let hrs = new Date(Date.now()).getHours();
-                let date = new Date(Date.now()).getDate();
-                let month = new Date(Date.now()).getMonth() + 1;
-                let year = new Date(Date.now()).getFullYear();
-                let fullDate = (`${date}/${month}/${year}`).toString()
-                let min = new Date(Date.now()).getMinutes();
-                let hrs1, hr;
-                console.log(hrs);
-                if (hrs < 10) {
-                        hrs1 = '' + 0 + hrs;
-                } else {
-                        hrs1 = hrs
+                const { search, page, limit } = req.query;
+                let query = {};
+                if (search != (null || undefined)) {
+                        query.$or = [
+                                { "questionDate": search },
+                        ]
                 }
-                if (min) {
-                        if (min > 30) {
-                                hr = hrs1 + 6
-                        } else {
-                                hr = hrs1 + 5
-                        }
-                }
-                const questions = await questionAnswer.find({ questionDate: fullDate }).populate({ path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
-                if (questions.length == 0) {
-                        return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
-                }
-                return res.status(200).json({ status: 200, message: "Question found.", data: questions });
-        } catch (error) {
-                console.error(error);
-                return res.status(500).json({ error: "An error occurred while retrieving the questions." });
+                let options = {
+                        page: Number(page) || 1,
+                        limit: Number(limit) || 12,
+                        sort: { createdAt: -1 },
+                        populate: { path: 'userID question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12 option_13 option_14', select: 'question emoji type firstName lastName userName' }
+                };
+                let data = await questionAnswer.paginate(query, options);
+                return res.status(200).json({ status: 200, message: "Question data found.", data: data });
+
+        } catch (err) {
+                return res.status(500).send({ msg: "internal server error ", error: err.message, });
         }
 };
 exports.hideInboxFromActivity = async (req, res) => {
