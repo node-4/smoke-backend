@@ -199,7 +199,7 @@ async function CreateSession() {
                                         } else {
                                             if (findUser.gender == 'female') {
                                                 let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'male' });
-                                                if (findFriend.flameCount == 0) {
+                                                if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
                                                     userArray.push(findUser.friends[j].toString())
                                                 } else {
                                                     console.log("-----------------");
@@ -207,11 +207,14 @@ async function CreateSession() {
                                             }
                                             if (findUser.gender == 'male') {
                                                 let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'female' });
-                                                console.log(findFriend);
-                                                if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                } else {
+                                                if (findFriend == null) {
                                                     console.log("-----------------");
+                                                } else {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                        userArray.push(findUser.friends[j].toString())
+                                                    } if (findFriend.flameCount > 0) {
+                                                        console.log("-----------------");
+                                                    }
                                                 }
                                             }
                                         }
@@ -223,18 +226,26 @@ async function CreateSession() {
                                             } else {
                                                 if (findUser.gender == 'female') {
                                                     let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'male' });
-                                                    if (findFriend.flameCount == 0) {
-                                                        userArray.push((findSchoolMember[j]._id).toString())
-                                                    } else {
+                                                    if (findFriend == null) {
                                                         console.log("-----------------");
+                                                    } else {
+                                                        if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                            userArray.push((findSchoolMember[j]._id).toString())
+                                                        } if (findFriend.flameCount > 0) {
+                                                            console.log("-----------------");
+                                                        }
                                                     }
                                                 }
                                                 if (findUser.gender == 'male') {
                                                     let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'female' });
-                                                    if (findFriend.flameCount == 0) {
-                                                        userArray.push((findSchoolMember[j]._id).toString())
-                                                    } else {
+                                                    if (findFriend == null) {
                                                         console.log("-----------------");
+                                                    } else {
+                                                        if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                            userArray.push((findSchoolMember[j]._id).toString())
+                                                        } if (findFriend.flameCount > 0) {
+                                                            console.log("-----------------");
+                                                        }
                                                     }
                                                 }
                                             }
@@ -743,18 +754,26 @@ async function CreateSession() {
                                         } else {
                                             if (findUser.gender == 'female') {
                                                 let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'male' });
-                                                if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                } else {
+                                                if (findFriend == null) {
                                                     console.log("-----------------");
+                                                } else {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                        userArray.push(findUser.friends[j].toString())
+                                                    } else {
+                                                        console.log("-----------------");
+                                                    }
                                                 }
                                             }
                                             if (findUser.gender == 'male') {
                                                 let findFriend = await user.findById({ _id: findUser.friends[j].toString(), gender: 'female' });
-                                                if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
-                                                } else {
+                                                if (findFriend == null) {
                                                     console.log("-----------------");
+                                                } else {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                        userArray.push(findUser.friends[j].toString())
+                                                    } else {
+                                                        console.log("-----------------");
+                                                    }
                                                 }
                                             }
                                         }
@@ -1951,17 +1970,17 @@ async function CreateSession() {
                                             } else {
                                                 if (findUser.gender == 'female') {
                                                     let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'male' });
-                                                    if (findFriend.flameCount == 0) {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
                                                         userArray.push((findSchoolMember[j]._id).toString())
-                                                    } else {
+                                                    } if (findFriend.flameCount > 0) {
                                                         console.log("-----------------");
                                                     }
                                                 }
                                                 if (findUser.gender == 'male') {
                                                     let findFriend = await user.findById({ _id: (findSchoolMember[j]._id).toString(), gender: 'female' });
-                                                    if (findFriend.flameCount == 0) {
+                                                    if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
                                                         userArray.push((findSchoolMember[j]._id).toString())
-                                                    } else {
+                                                    } if (findFriend.flameCount > 0) {
                                                         console.log("-----------------");
                                                     }
                                                 }

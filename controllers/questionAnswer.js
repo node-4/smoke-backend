@@ -175,11 +175,15 @@ exports.getAllQuestionsByAdmin = async (req, res) => {
         try {
                 const { search, questionTime, page, limit } = req.query;
                 let query = {};
+                if (search != 'null') {
+                        query.$or = [
+                                { "questionDate": search },
+                        ]
+                }
                 if (search != (null || undefined)) {
                         query.$or = [
                                 { "questionDate": search },
                         ]
-                        questionTime
                 }
                 if (questionTime != (null || undefined)) {
                         query.$or = [
