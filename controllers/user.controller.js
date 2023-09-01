@@ -35,13 +35,15 @@ exports.createUser = async (req, res) => {
                                 if (updateData) {
                                         let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
                                         if (updateSchool) {
-                                                return res.status(201).json(newUser);
+                                                const accessToken = jwt.sign({ id: newUser._id }, process.env.SECRET, { expiresIn: '365d', });
+                                                return res.status(200).send({ message: "Registered successfully", data: newUser, accessToken: accessToken, });
                                         }
                                 }
                         } else {
                                 let updateSchool = await schoolModel.findByIdAndUpdate({ _id: findSchool._id }, { $set: { studentCount: findSchool.studentCount + 1 }, $push: { User: newUser._id } }, { new: true });
                                 if (updateSchool) {
-                                        return res.status(201).json(newUser);
+                                        const accessToken = jwt.sign({ id: newUser._id }, process.env.SECRET, { expiresIn: '365d', });
+                                        return res.status(200).send({ message: "Registered successfully", data: newUser, accessToken: accessToken, });
                                 }
                         }
                 }
@@ -117,7 +119,7 @@ exports.login = async (req, res) => {
                 }
                 const otp = newOTP.generate(4, { alphabets: false, upperCase: false, specialChar: false, });
                 let update = await userSchema.findByIdAndUpdate({ _id: data._id }, { $set: { otpVerification: false, otpExpire: new Date(Date.now() + 5 * 60 * 1000), otp: otp } }, { new: true });
-                res.status(200).send({ message: "OTP sent successfully", newUser: update });
+                return res.status(200).send({ message: "OTP sent successfully", newUser: update });
         } catch (err) {
                 console.log(err);
                 return res.status(400).send({ message: err.message });
@@ -136,10 +138,10 @@ exports.verify = async (req, res) => {
                 }
                 const updated = await userSchema.findByIdAndUpdate({ _id: user._id }, { accountVerification: true }, { new: true });
                 const accessToken = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '365d', });
-                res.status(200).send({ message: "logged in successfully", accessToken: accessToken, });
+                return res.status(200).send({ message: "logged in successfully", accessToken: accessToken, });
         } catch (err) {
                 console.log(err.message);
-                res.status(500).send({ error: "internal server error" + err.message });
+                return res.status(500).send({ error: "internal server error" + err.message });
         }
 };
 exports.socialLogin = async (req, res) => {
