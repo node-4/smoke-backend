@@ -168,22 +168,32 @@ exports.socialLogin = async (req, res) => {
 };
 exports.userUpdate = async (req, res) => {
         try {
-                const data = {
-                        name: req.body.name,
-                        email: req.body.email,
-                        phone: req.body.phone,
-                        profileImage: req.body.profileImage,
-                        age: req.body.age,
-                        address: req.body.address,
-                        language: req.body.language,
-                        location: req.body.location,
-                        password: bcrypt.hashSync(req.body.password, 8),
-                        confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 8),
-                        otp: req.body.otp,
-                        google_id: req.body.google_id,
+                let findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.editProfile == 1) {
+                                return res.status(200).json({ msg: "profile details not updated, you already updated", user: findUser });
+                        } else {
+                                const data = {
+                                        name: req.body.name,
+                                        email: req.body.email,
+                                        phone: req.body.phone,
+                                        profileImage: req.body.profileImage,
+                                        age: req.body.age,
+                                        address: req.body.address,
+                                        language: req.body.language,
+                                        location: req.body.location,
+                                        password: bcrypt.hashSync(req.body.password, 8),
+                                        confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 8),
+                                        otp: req.body.otp,
+                                        google_id: req.body.google_id,
+                                        editProfile: 1
+                                }
+                                const user = await userSchema.findByIdAndUpdate({ _id: req.user._id }, data, { new: true, });
+                                return res.status(200).json({ msg: "profile details updated", user: user });
+                        }
+                } else {
+                        return res.status(404).json({ status: 404, message: "User not found.", data: {} });
                 }
-                const user = await userSchema.findByIdAndUpdate({ _id: req.user._id }, data, { new: true, });
-                return res.status(200).json({ msg: "profile details updated", user: user });
         } catch (err) {
                 console.log(err);
                 return res.status(400).json({

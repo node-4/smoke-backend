@@ -143,6 +143,10 @@ const userSchema = mongoose.Schema({
     enum: ["Active", "Block", "Delete"],
     default: "Active"
   },
+  editProfile: {
+    type: Number,
+    default: 0
+  },
   photo: {
     type: String,
     default:
