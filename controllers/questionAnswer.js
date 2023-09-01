@@ -163,6 +163,7 @@ exports.getInboxById = async (req, res) => {
                                 {
                                         path: 'questionId',
                                         populate: [
+                                                { path: "question", model: "question" },
                                                 { path: "option_1", model: "userProfile", select: "firstName lastName userName", },
                                                 { path: "option_2", model: "userProfile", select: "firstName lastName userName", },
                                                 { path: "option_3", model: "userProfile", select: "firstName lastName userName", },
