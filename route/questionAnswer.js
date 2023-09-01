@@ -10,4 +10,8 @@ router.get("/getInbox/All", [authJwt.verifyToken], questionController.getInbox);
 router.get("/getInboxById/:id", [authJwt.verifyToken], questionController.getInboxById);
 router.get("/admin/getAllQuestionsByAdmin", questionController.getAllQuestionsByAdmin);
 router.put("/hideInboxFromActivity/:id", [authJwt.verifyToken], questionController.hideInboxFromActivity);
+router.post("/createQuestion", [authJwt.verifyToken], questionController.createQuestion);
+router.post("/option1Condition", [authJwt.verifyToken], questionController.option1Condition);
+router.post("/option2Condition", [authJwt.verifyToken], questionController.option2Condition);
+router.post("/option3Condition", [authJwt.verifyToken], questionController.option3Condition);
 module.exports = router;

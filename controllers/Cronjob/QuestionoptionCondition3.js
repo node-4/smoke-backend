@@ -3198,8 +3198,14 @@ async function CreateSession() {
                                             console.log("49==================================================");
                                         } else {
                                             let findFriend = await user.findById({ _id: findUser.friends[j].toString() });
-                                            if (findFriend.flameCount > 0) {
-                                                userArray.push(findUser.friends[j].toString())
+                                            if (findFriend == null) {
+                                                console.log("-----------------");
+                                            } else {
+                                                if ((findFriend.flameCount == 0) || (findFriend.flameCount == null)) {
+                                                    userArray.push(findUser.friends[j].toString())
+                                                } if (findFriend.flameCount > 0) {
+                                                    console.log("-----------------");
+                                                }
                                             }
                                         }
                                     }
