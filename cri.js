@@ -32,3 +32,72 @@
 //         "This message will be sent through our company business account
 //         "After this search bar will disappear and it will show Tap to Continue"
 // }
+
+
+function displayNames(person, pollParticipants) {
+    const result = [];
+  
+    // If the person has less than 4 friends and less than 4 schoolmates, but greater than 0
+    if (
+      person.friends.length < 4 &&
+      person.schoolmates.length < 4 &&
+      person.friends.length > 0
+    ) {
+      // a. Display the friends they have added
+      result.push(...person.friends);
+  
+      // b. Display Schoolmates / college mates on app
+      result.push(...person.schoolmates);
+  
+      // c. Priority 1 - 6 will remain the same, but you can customize the order if needed
+  
+      // d. If we are not able to find 4 names, fill as many names as we get and grey out other options
+      const remainingSlots = 4 - result.length;
+      if (remainingSlots > 0) {
+        // Priority 1: User coins and selected names
+        // Implement your logic to add Priority 1 names here
+  
+        // Priority 2: Names not picked by anyone from friends or schoolmates
+        person.friends.forEach((friend) => {
+          if (!pollParticipants.includes(friend) && result.length < 4) {
+            result.push(friend);
+          }
+        });
+        person.schoolmates.forEach((schoolmate) => {
+          if (!pollParticipants.includes(schoolmate) && result.length < 4) {
+            result.push(schoolmate);
+          }
+        });
+  
+        // Priority 3: Populate friends they have added
+        // This is already added above.
+  
+        // Priority 4: Populate names from contacts who are already on the app
+        // Implement your logic to add Priority 4 names here
+  
+        // Priority 5: Populate school / college members' names
+        // Implement your logic to add Priority 5 names here
+  
+        // Priority 6: If the user has invited any friend, populate their names
+        // Implement your logic to add Priority 6 names here
+      }
+    } else {
+      // Handle other cases or conditions here if needed
+    }
+  
+    // Return the result with a maximum of 4 names
+    return result.slice(0, 4);
+  }
+  
+  // Example usage:
+  const person = {
+    friends: ["Friend1", "Friend2", "Friend3"],
+    schoolmates: ["Schoolmate1", "Schoolmate2"],
+  };
+  
+  const pollParticipants = ["User", "Friend1"];
+  
+  const displayedNames = displayNames(person, pollParticipants);
+  
+  console.log(displayedNames);
+  
