@@ -27,7 +27,7 @@ exports.getAllQuestions = async (req, res) => {
                         }
                 }
                 console.log({ userID: req.user._id, serverTime: hr, questionTime: hr, questionDate: fullDate });
-                const questions = await questionAnswer.find({ userID: req.user._id, questionTime: "15", questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12 option_13 option_14', select: 'question emoji type firstName lastName userName' },);
+                const questions = await questionAnswer.find({ userID: req.user._id, questionTime: "19", questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12 option_13 option_14', select: 'question emoji type firstName lastName userName' },);
                 // const questions = await questionAnswer.find({ userID: req.user._id, questionDate: fullDate }).populate({ path: 'question option_1 option_2 option_3 option_4 option_5 option_6 option_7 option_8 option_9 option_10 option_11 option_12', select: 'question emoji type firstName lastName userName' },);
                 if (questions.length == 0) {
                         return res.status(404).json({ status: 404, message: "Question not found.", data: {} });
@@ -240,59 +240,59 @@ exports.hideInboxFromActivity = async (req, res) => {
                 });
         }
 };
-exports.createQuestion = async (req, res) => {
-        try {
-                let date = new Date(Date.now()).getDate();
-                let month = new Date(Date.now()).getMonth() + 1;
-                let year = new Date(Date.now()).getFullYear();
-                let fullDate = (`${date}/${month}/${year}`).toString();
-                let findUser = await user.findById({ _id: req.user._id });
-                if (findUser) {
-                        let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
-                        if (totalQuestion.length == 12) {
-                                console.log("total 12 question created", fullDate, "hr+1    ", req.body.hr);
-                        } else {
-                                let findQuestion = await questions.find({});
-                                let QuesRandom = findQuestion.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 12);
-                                QuesRandom.map(async k => {
-                                        let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
-                                        if (totalQuestion.length == 12) {
-                                                return res.status(200).json({ msg: "All question create.", data: totalQuestion });
-                                        } else {
-                                                let findSchoolMember = await user.find({ _id: { $ne: findUser._id }, school: findUser.school });
-                                                let condition1, condition2, condition3;
-                                                if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
-                                                        condition1 = true; condition2 = false; condition3 = false;
-                                                }
-                                                if (((0 < findSchoolMember.length) && (findSchoolMember.length < 4)) && ((0 < findUser.friends.length) && (findUser.friends.length < 4))) {
-                                                        condition1 = false; condition2 = true; condition3 = false;
-                                                }
-                                                let obj = {
-                                                        userID: findUser._id,
-                                                        questionTime: req.body.hr,
-                                                        questionDate: fullDate,
-                                                        question: k._id,
-                                                        type: k.type,
-                                                        condition1: condition1,
-                                                        condition2: condition2,
-                                                        condition3: condition3
-                                                }
-                                                const Data = await questionAnswer.create(obj);
-                                                let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
-                                                if (totalQuestion.length == 12) {
-                                                        return res.status(200).json({ msg: "All question create.", data: totalQuestion });
-                                                }
-                                        }
-                                })
-                        }
-                } else {
-                        return res.status(404).json({ status: 404, message: "User not found.", data: {} });
-                }
-        } catch (error) {
-                console.error(error);
-                return res.status(500).json({ error: "An error occurred while creating the question." });
-        }
-};
+// exports.createQuestion = async (req, res) => {
+//         try {
+//                 let date = new Date(Date.now()).getDate();
+//                 let month = new Date(Date.now()).getMonth() + 1;
+//                 let year = new Date(Date.now()).getFullYear();
+//                 let fullDate = (`${date}/${month}/${year}`).toString();
+//                 let findUser = await user.findById({ _id: req.user._id });
+//                 if (findUser) {
+//                         let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
+//                         if (totalQuestion.length == 12) {
+//                                 console.log("total 12 question created", fullDate, "hr+1    ", req.body.hr);
+//                         } else {
+//                                 let findQuestion = await questions.find({});
+//                                 let QuesRandom = findQuestion.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 12);
+//                                 QuesRandom.map(async k => {
+//                                         let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
+//                                         if (totalQuestion.length == 12) {
+//                                                 return res.status(200).json({ msg: "All question create.", data: totalQuestion });
+//                                         } else {
+//                                                 let findSchoolMember = await user.find({ _id: { $ne: findUser._id }, school: findUser.school });
+//                                                 let condition1, condition2, condition3;
+//                                                 if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
+//                                                         condition1 = true; condition2 = false; condition3 = false;
+//                                                 }
+//                                                 if (((0 < findSchoolMember.length) && (findSchoolMember.length < 4)) && ((0 < findUser.friends.length) && (findUser.friends.length < 4))) {
+//                                                         condition1 = false; condition2 = true; condition3 = false;
+//                                                 }
+//                                                 let obj = {
+//                                                         userID: findUser._id,
+//                                                         questionTime: req.body.hr,
+//                                                         questionDate: fullDate,
+//                                                         question: k._id,
+//                                                         type: k.type,
+//                                                         condition1: condition1,
+//                                                         condition2: condition2,
+//                                                         condition3: condition3
+//                                                 }
+//                                                 const Data = await questionAnswer.create(obj);
+//                                                 let totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate })
+//                                                 if (totalQuestion.length == 12) {
+//                                                         return res.status(200).json({ msg: "All question create.", data: totalQuestion });
+//                                                 }
+//                                         }
+//                                 })
+//                         }
+//                 } else {
+//                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
+//                 }
+//         } catch (error) {
+//                 console.error(error);
+//                 return res.status(500).json({ error: "An error occurred while creating the question." });
+//         }
+// };
 exports.option1Condition = async (req, res) => {
         try {
                 let date = new Date(Date.now()).getDate();
@@ -307,18 +307,18 @@ exports.option1Condition = async (req, res) => {
                                         let findUser = await user.findById({ _id: totalQuestion[i].userID })
                                         if (findUser) {
                                                 let findSchoolMember = await user.find({ _id: { $ne: findUser._id }, school: findUser.school });
-                                                if (totalQuestion[i].condition1 == true) {
-                                                        if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
+                                                // if (totalQuestion[i].condition1 == true) {
+                                                if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
 
-                                                        } else if ((0 < findSchoolMember.length) && (findSchoolMember.length < 4) && (0 < findUser.friends.length) && (findUser.friends.length < 4)) {
-                                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition2: true } }, { new: true })
-                                                        }
-                                                        else if (findUser.friends.length >= 4) {
-                                                                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
-                                                        } else {
-
-                                                        }
+                                                } else if ((0 < findSchoolMember.length) && (findSchoolMember.length < 4) && (0 < findUser.friends.length) && (findUser.friends.length < 4)) {
+                                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition2: true } }, { new: true })
                                                 }
+                                                else if (findUser.friends.length >= 4) {
+                                                        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
+                                                } else {
+
+                                                }
+                                                // }
                                         }
                                 }
                                 return res.status(200).json({ msg: "All option contion 1 done.", data: totalQuestion });
@@ -7387,3 +7387,96 @@ exports.option3Condition = async (req, res) => {
                 return res.status(500).json({ error: "An error occurred while creating the question." });
         }
 };
+exports.createQuestion = async (req, res) => {
+        try {
+                const findUser = await user.findById(req.user._id);
+                if (!findUser) {
+                        return res.status(404).json({ status: 404, message: "User not found.", data: {} });
+                }
+                const date = new Date();
+                const fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+                const totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate });
+                if (totalQuestion.length === 12) {
+                        return res.status(200).json({ msg: "All questions created.", data: totalQuestion });
+                }
+                const findQuestion = await questions.find({});
+                const QuesRandom = shuffleArray(findQuestion).slice(0, 12);
+                for (const k of QuesRandom) {
+                        const totalQuestion = await questionAnswer.find({ userID: findUser._id, questionTime: req.body.hr, questionDate: fullDate });
+                        if (totalQuestion.length === 12) {
+                                return res.status(200).json({ msg: "All questions created.", data: totalQuestion });
+                        }
+                        let condition1, condition2, condition3;
+                        const findSchoolMember = await user.find({ _id: { $ne: findUser._id }, school: findUser.school });
+                        const co = findUser.friends.length === 0 && findSchoolMember.length === 0;
+                        if (co) {
+                                condition1 = true; condition2 = false; condition3 = false;
+                        }
+                        const co1 = (0 < findSchoolMember.length && findSchoolMember.length < 4) && (0 < findUser.friends.length && findUser.friends.length < 4);
+                        if (co1) {
+                                condition1 = false; condition2 = true; condition3 = false;
+                        }
+                        const obj = {
+                                userID: findUser._id,
+                                questionTime: req.body.hr,
+                                questionDate: fullDate,
+                                question: k._id,
+                                type: k.type,
+                                condition1: condition1,
+                                condition2: condition2,
+                                condition3: condition3
+                        };
+                        await questionAnswer.create(obj);
+                }
+                return res.status(200).json({ msg: "All questions created.", data: totalQuestion });
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ error: "An error occurred while creating the question." });
+        }
+};
+// exports.option1Condition = async (req, res) => {
+//         try {
+//                 const date = new Date();
+//                 const fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+//                 const findUser = await user.findById(req.user._id);
+//                 if (!findUser) {
+//                         return res.status(404).json({ status: 404, message: "User not found.", data: {} });
+//                 }
+//                 const totalQuestion = await questionAnswer.find({
+//                         userID: findUser._id,
+//                         questionTime: req.body.hr,
+//                         questionDate: fullDate,
+//                 });
+//                 if (totalQuestion.length === 0) {
+//                         return res.status(200).json({ msg: "Question not found.", data: [] });
+//                 }
+//                 for (const question of totalQuestion) {
+//                         const userQuestion = await user.findById(question.userID);
+//                         if (userQuestion) {
+//                                 const findSchoolMember = await user.find({ _id: { $ne: userQuestion._id }, school: userQuestion.school });
+//                                 if (question.condition1) {
+//                                         if (userQuestion.friends.length === 0 && findSchoolMember.length === 0) {
+//                                                 // Do nothing
+//                                         } else if (findSchoolMember.length < 4 && userQuestion.friends.length < 4) {
+//                                                 await questionAnswer.findByIdAndUpdate(question._id, { $set: { condition1: false, condition2: true } }, { new: true });
+//                                         } else if (userQuestion.friends.length >= 4) {
+//                                                 await questionAnswer.findByIdAndUpdate(question._id, { $set: { condition1: false, condition3: true } }, { new: true });
+//                                         }
+//                                 }
+//                         }
+//                 }
+//                 return res.status(200).json({ msg: "All option condition 1 done.", data: totalQuestion });
+//         } catch (error) {
+//                 console.error(error);
+//                 return res.status(500).json({ error: "An error occurred while processing the condition." });
+//         }
+// };
+function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+}
+
