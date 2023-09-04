@@ -95,12 +95,16 @@ exports.getfriendsofFriend = async (req, res) => {
       let Friends = [], storeData = []
       for (let j = 0; j < findUser.friends.length; j++) {
         let data = await userSchema.findById({ _id: findUser.friends[j] });
-        for (let i = 0; i < data.friends.length; i++) {
-          let id = (data.friends[i]).toString();
-          if (!Friends.includes(id) && !findUser.hideUser.includes(id)) {
-            Friends.push(id);
-            let FindData = await userSchema.findById({ _id: id });
-            storeData.push(FindData)
+        if (data != (null || undefined)) {
+          if (data.friends.length > 0) {
+            for (let i = 0; i < data.friends.length; i++) {
+              let id = (data.friends[i]).toString();
+              if (!Friends.includes(id) && !findUser.hideUser.includes(id)) {
+                Friends.push(id);
+                let FindData = await userSchema.findById({ _id: id });
+                storeData.push(FindData)
+              }
+            }
           }
         }
       }
