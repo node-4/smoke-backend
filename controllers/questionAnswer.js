@@ -22,9 +22,9 @@ exports.getAllQuestions = async (req, res) => {
                 }
                 if (min) {
                         if (min > 30) {
-                                hr = hrs1 + 6
+                                hr = Number(hrs1) + 6
                         } else {
-                                hr = hrs1 + 5
+                                hr = Number(hrs1) + 5
                         }
                 }
                 console.log({ userID: req.user._id, serverTime: hr, questionTime: hr, questionDate: fullDate });
