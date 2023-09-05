@@ -1,6 +1,6 @@
 const express = require('express');
 const customerRouter = express.Router();
-const { createUser, verify, addWhatAppNumber, updateModeStatus, resetBlockUser, purchaseHistory1, crushPoll, resetHideUser, updatehideFlameStatus, updatetakeAbreakStatus, updateNotifactionStatus, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber, getWhatAppNumberafterLogin } = require('../controllers/user.controller');
+const { createUser, verify, addWhatAppNumber, updateModeStatus, resetBlockUser, crush, purchaseHistory1, crushPoll, resetHideUser, updatehideFlameStatus, updatetakeAbreakStatus, updateNotifactionStatus, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber, getWhatAppNumberafterLogin } = require('../controllers/user.controller');
 const authJwt = require('../middlewares/authJwt')
 
 customerRouter.post('/createUser', createUser);
@@ -23,4 +23,5 @@ customerRouter.put('/resetHideUser', authJwt.verifyToken, resetHideUser);
 customerRouter.put('/resetBlockUser', authJwt.verifyToken, resetBlockUser);
 customerRouter.put('/purchaseHistory1', authJwt.verifyToken, purchaseHistory1)
 customerRouter.put('/crushPoll/:id', authJwt.verifyToken, crushPoll)
+customerRouter.get('/crush', authJwt.verifyToken, crush)
 module.exports = customerRouter;

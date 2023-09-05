@@ -552,3 +552,37 @@ exports.crushPoll = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
         }
 };
+exports.crush = async (req, res) => {
+        try {
+                const user = await userSchema.findById({ _id: req.user._id });
+                if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                } else {
+                        let userArray = []
+                        if ((user.gender == "female") == true) {
+                                for (let j = 0; j < user.friends.length; j++) {
+                                        let findFriend = await userSchema.findById({ _id: user.friends[j].toString(), gender: 'male' });
+                                        if (findFriend != (null || undefined)) {
+                                                if ((findFriend.gender == "male") == true) {
+                                                        userArray.push(findFriend)
+                                                }
+                                        }
+                                }
+                        }
+                        if ((user.gender == "male") == true) {
+                                for (let j = 0; j < user.friends.length; j++) {
+                                        let findFriend = await userSchema.findById({ _id: user.friends[j].toString(), gender: 'female' });
+                                        if (findFriend != (null || undefined)) {
+                                                if ((findFriend.gender == "female") == true) {
+                                                        userArray.push(findFriend)
+                                                }
+                                        }
+                                }
+                        }
+                        return res.status(200).json({ success: true, details: userArray })
+                }
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+};

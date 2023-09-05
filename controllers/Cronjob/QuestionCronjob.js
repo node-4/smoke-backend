@@ -31,8 +31,8 @@ async function CreateSession() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    hrs3 = hrs2; /// server
-    // hrs3 = hrs;  //local
+    // hrs3 = hrs2; /// server
+    hrs3 = hrs;  //local
     console.log("*****************************************************************************");
     console.log("Question cron job  Full Date ===>", fullDate);
     console.log("Question cron job  Min ===>", min);
