@@ -179,7 +179,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/smokeApp/dev/1693912805521-2023-09-05T11:20:05.521Z/smokeApp.zip"
+                "S3Key": "serverless/smokeApp/dev/1693915121391-2023-09-05T11:58:41.391Z/smokeApp.zip"
               },
               "Handler": "server.handler",
               "Runtime": "nodejs18.x",
@@ -197,14 +197,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionY88G98r5CAr8KAikPCvSxb0vu7vNEFsUXlsmyt8AMoo": {
+          "AppLambdaVersionowSadLSonnZ1Z8cLdlj0VphgtaDij2VREO88TeNfc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "kzyH9pFb6mMP3FJchIFPkSw44WYyNP1tCyAl+X8yiwE="
+              "CodeSha256": "j2dm7oqF8CLOrTuvhJDJNrhFD7zq6o8Ny3zt+BmuYF8="
             }
           },
           "ApiGatewayRestApi": {
@@ -425,7 +425,7 @@
               "AppLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1693912734706": {
+          "ApiGatewayDeployment1693915056522": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -490,7 +490,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionY88G98r5CAr8KAikPCvSxb0vu7vNEFsUXlsmyt8AMoo"
+              "Ref": "AppLambdaVersionowSadLSonnZ1Z8cLdlj0VphgtaDij2VREO88TeNfc"
             },
             "Export": {
               "Name": "sls-smokeApp-dev-AppLambdaFunctionQualifiedArn"
@@ -671,7 +671,7 @@
         "timeout": 6,
         "runtime": "nodejs18.x",
         "vpc": {},
-        "versionLogicalId": "AppLambdaVersionY88G98r5CAr8KAikPCvSxb0vu7vNEFsUXlsmyt8AMoo"
+        "versionLogicalId": "AppLambdaVersionowSadLSonnZ1Z8cLdlj0VphgtaDij2VREO88TeNfc"
       }
     },
     "configValidationMode": "warn",
@@ -693,7 +693,7 @@
     "artifact": "C:\\Users\\FLUTTER\\Desktop\\varun\\2 company perrepo\\smoke-backend\\.serverless\\smokeApp.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/smokeApp/dev/1693912805521-2023-09-05T11:20:05.521Z",
+    "artifactDirectoryName": "serverless/smokeApp/dev/1693915121391-2023-09-05T11:58:41.391Z",
     "artifact": "smokeApp.zip"
   }
 }

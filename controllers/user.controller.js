@@ -474,7 +474,7 @@ exports.purchaseHistory1 = async (req, res) => {
                         return res.status(404).json({ message: 'User not found' });
                 } else {
                         const sample = user.friends.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 3);
-                        if (user.coin = 100) {
+                        if (user.coin >= 100) {
                                 for (let i = 0; i < sample.length; i++) {
                                         const user1 = await userSchema.findById({ _id: sample[i]._id })
                                         if (!user1) {
@@ -483,7 +483,7 @@ exports.purchaseHistory1 = async (req, res) => {
                                                 if (user1.poleUser.length > 0) {
                                                         for (let j = 0; j < user1.poleUser.length; j++) {
                                                                 if (((user1.poleUser[j].user).toString() == (user._id).toString()) == true) {
-                                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': findUser.poleUser[k].count + 1 } }, { new: true })
+                                                                        let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': user1.poleUser[j].count + 1 } }, { new: true })
                                                                 } else {
                                                                         let obj = {
                                                                                 user: user._id,
@@ -518,7 +518,7 @@ exports.crushPoll = async (req, res) => {
                 if (!user) {
                         return res.status(404).json({ message: 'User not found' });
                 } else {
-                        if (user.coin = 300) {
+                        if (user.coin >= 300) {
                                 const user1 = await userSchema.findById({ _id: req.params.id })
                                 if (!user1) {
                                         return res.status(404).json({ message: 'User not found' });
@@ -526,13 +526,13 @@ exports.crushPoll = async (req, res) => {
                                         if (user1.poleUser.length > 0) {
                                                 for (let j = 0; j < user1.poleUser.length; j++) {
                                                         if (((user1.poleUser[j].user).toString() == (user._id).toString()) == true) {
-                                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': findUser.poleUser[k].count + 1 } }, { new: true })
+                                                                let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': user1.poleUser[j].count + 1 } }, { new: true })
                                                         } else {
                                                                 let obj = {
                                                                         user: user._id,
                                                                         count: 1,
                                                                 }
-                                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                                let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
                                                         }
                                                 }
                                         } else {
@@ -540,7 +540,7 @@ exports.crushPoll = async (req, res) => {
                                                         user: user._id,
                                                         count: 1,
                                                 }
-                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
                                         }
                                         const user2 = await userSchema.findByIdAndUpdate({ _id: user._id }, { $set: { coin: user.coin - 300 } }, { new: true });
                                         return res.status(200).json({ success: true, details: user2 })
