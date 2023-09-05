@@ -288,6 +288,36 @@ exports.createQuestion = async (req, res) => {
                 return res.status(500).json({ error: "An error occurred while creating the question." });
         }
 };
+exports.createQuestion1 = async (req, res) => {
+        try {
+                let hrs = new Date(Date.now()).getHours();
+                let date = new Date(Date.now()).getDate();
+                let month = new Date(Date.now()).getMonth() + 1;
+                let year = new Date(Date.now()).getFullYear();
+                let fullDate = (`${date}/${month}/${year}`).toString();
+                let hr;
+                let min = new Date(Date.now()).getMinutes();
+                if (min) {
+                        if (min > 30) {
+                                hr = hrs + 6
+                        } else {
+                                hr = hrs + 5
+                        }
+                }
+                let obj = {
+                        serverhrs: hrs,
+                        localhrs: hr,
+                        date: date,
+                        month: month,
+                        fullDate: fullDate,
+                        min: min
+                }
+                return res.status(200).json({ msg: "Server time.", data: obj });
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ error: "An error occurred while creating the question." });
+        }
+};
 // exports.option1Condition = async (req, res) => {
 //         try {
 //                 let date = new Date(Date.now()).getDate();

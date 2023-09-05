@@ -35,8 +35,8 @@ async function CreateSession() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    hrs3 = hrs2; /// server
-    // hrs3 = hrs;  //local
+    // hrs3 = hrs2; /// server
+    hrs3 = hrs;  //local
     // userID: '64902ae7ff2e7a8d9c5355fa'
     console.log(hrs3);
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: hrs3 })
