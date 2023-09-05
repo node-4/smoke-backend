@@ -173,6 +173,17 @@ exports.userUpdate = async (req, res) => {
                         if (findUser.editProfile == 1) {
                                 return res.status(200).json({ msg: "profile details not updated, you already updated", user: findUser });
                         } else {
+                                let password, confirmPassword;
+                                if (req.body.password != (null || undefined)) {
+                                        password = bcrypt.hashSync(req.body.password, 8);
+                                } else {
+                                        password = findUser.password;
+                                }
+                                if (req.body.confirmPassword != (null || undefined)) {
+                                        confirmPassword = bcrypt.hashSync(req.body.confirmPassword, 8);
+                                } else {
+                                        confirmPassword = findUser.confirmPassword;
+                                }
                                 const data = {
                                         firstName: req.body.firstName,
                                         lastName: req.body.lastName,
@@ -185,8 +196,8 @@ exports.userUpdate = async (req, res) => {
                                         address: req.body.address,
                                         language: req.body.language,
                                         location: req.body.location,
-                                        password: bcrypt.hashSync(req.body.password, 8),
-                                        confirmPassword: bcrypt.hashSync(req.body.confirmPassword, 8),
+                                        password: password,
+                                        confirmPassword: confirmPassword,
                                         otp: req.body.otp,
                                         google_id: req.body.google_id,
                                         editProfile: 1
@@ -456,14 +467,30 @@ exports.resetBlockUser = async (req, res) => {
                 return res.status(400).json({ message: err.message })
         }
 }
-exports.purcha = async (req, res) => {
+exports.purchaseHistory = async (req, res) => {
         try {
-                const userId = req.params.id;
-                const user = await userSchema.findById(userId).populate("city state district")
+                const user = await userSchema.findById({ _id: req.user._id });
                 if (!user) {
                         return res.status(404).json({ message: 'User not found' });
+                } else {
+                        const sample = user.friends.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, 3);
+                        if (user.coin = 100) {
+                                for (let i = 0; i < sample.length; i++) {
+                                        const user1 = await userSchema.findById({ _id: sample[i]._id })
+                                        if (!user1) {
+                                                return res.status(404).json({ message: 'User not found' });
+                                        } else {
+                                                if (user1.poleUser.length > 0) {
+
+                                                } else {
+
+                                                }
+                                        }
+                                }
+                        } else {
+                                return res.status(201).json({ message: 'Insufficent funds' });
+                        }
                 }
-                return res.status(200).json({ msg: user });
         } catch (error) {
                 console.error(error);
                 return res.status(500).json({ message: 'Internal server error' });

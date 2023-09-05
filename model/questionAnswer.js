@@ -8,7 +8,7 @@ const quesSchema = mongoose.Schema({
   },
   questionTime: {
     type: String,
-    enum: ["07", "09", "11", "13", "15", "17", "19", "21", "23"]
+    // enum: ["07", "09", "11", "13", "15", "17", "19", "21", "23"]
   },
   questionDate: {
     type: String
