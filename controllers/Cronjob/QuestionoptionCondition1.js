@@ -9,8 +9,6 @@ async function CreateSession() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    console.log("8---------------", fullDate)
-    // let hrs = new Date(Date.now()).getHours() + 1;
     let hrs = new Date(Date.now()).getHours()
     let min = new Date(Date.now()).getMinutes();
     let hrs1, hr, hrs2, hrs3;
@@ -29,15 +27,18 @@ async function CreateSession() {
             hr = parseInt(hrs1) + 5
         }
     }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
     if (hr < 10) {
         hrs2 = '' + 0 + parseInt(hr + 1);
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    console.log(hrs3);
+    hrs3 = hrs2; /// server
+    // hrs3 = hrs;  //local
+    console.log("*****************************************************************************");
+    console.log("Question Condition  Full Date ===>", fullDate);
+    console.log("Question Condition Min ===>", min);
+    console.log("Question Condition Befor create time + 5:30  ===>", hrs,);
+    console.log("Question Condition after create time + 5:30  ===>", hrs3);
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: hrs3, })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -47,17 +48,17 @@ async function CreateSession() {
                 if (totalQuestion[i].condition1 == true) {
                     if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
                         console.log("Enter into Condition 1", findUser.firstName);
-                        CreateSession0(totalQuestion[i].userID)
+                        CreateSession0(totalQuestion[i].userID, fullDate, hrs3)
                     } else if ((0 < findSchoolMember.length) && (findSchoolMember.length < 4) && (0 < findUser.friends.length) && (findUser.friends.length < 4)) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition2: true } }, { new: true })
                         console.log("52----------------");
                         if (update.condition2 == true) {
-                            CreateSession1(totalQuestion[i].userID)
+                            CreateSession1(totalQuestion[i].userID, fullDate, hrs3)
                         }
                     } else if (findUser.friends.length >= 4) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
                         if (update.condition3 == true) {
-                            CreateSession2(totalQuestion[i].userID)
+                            CreateSession2(totalQuestion[i].userID, fullDate, hrs3)
                         }
                         console.log(i, "----------------56-");
                     } else {
@@ -65,54 +66,21 @@ async function CreateSession() {
                     }
                 }
                 if (totalQuestion[i].condition2 == true) {
-                    CreateSession1(totalQuestion[i].userID)
+                    CreateSession1(totalQuestion[i].userID, fullDate, hrs3)
                 }
                 if (totalQuestion[i].condition3 == true) {
-                    CreateSession2(totalQuestion[i].userID)
+                    CreateSession2(totalQuestion[i].userID, fullDate, hrs3)
                 }
             }
         }
 
     } else {
         console.log('Question Condition 1 cron job  No data found');
+        console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 }
 setInterval(CreateSession, 50000);
-async function CreateSession0(userId) {
-    // new cronJob("*/60 * * * * *", async function () {
-    let date = new Date(Date.now()).getDate();
-    let month = new Date(Date.now()).getMonth() + 1;
-    let year = new Date(Date.now()).getFullYear();
-    let fullDate = (`${date}/${month}/${year}`).toString();
-    console.log("8---------------", fullDate)
-    // let hrs = new Date(Date.now()).getHours() + 1;
-    let hrs = new Date(Date.now()).getHours()
-    let min = new Date(Date.now()).getMinutes();
-    let hrs1, hr, hrs2, hrs3;
-    if (hrs < 10) {
-        hrs1 = '' + 0 + parseInt(hrs);
-    } else {
-        hrs1 = parseInt(hrs);
-    }
-    if (min < 0) {
-        min = 0
-    }
-    if (min) {
-        if (min > 30) {
-            hr = parseInt(hrs1) + 6
-        } else {
-            hr = parseInt(hrs1) + 5
-        }
-    }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
-    if (hr < 10) {
-        hrs2 = '' + 0 + parseInt(hr + 1);
-    } else {
-        hrs2 = parseInt(hr + 1);
-    }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    console.log(hrs3);
+async function CreateSession0(userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: hrs3, userID: userId })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -127,13 +95,13 @@ async function CreateSession0(userId) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition2: true } }, { new: true })
                         console.log("52----------------");
                         if (update.condition2 == true) {
-                            CreateSession1(totalQuestion[i].userID)
+                            CreateSession1(totalQuestion[i].userID, fullDate, hrs3)
                         }
                     }
                     else if (findUser.friends.length >= 4) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition1: false, condition3: true } }, { new: true })
                         if (update.condition3 == true) {
-                            CreateSession2(totalQuestion[i].userID)
+                            CreateSession2(totalQuestion[i].userID, fullDate, hrs3)
                         }
                         console.log(i, "----------------56-");
                     } else {
@@ -141,10 +109,10 @@ async function CreateSession0(userId) {
                     }
                 }
                 if (totalQuestion[i].condition2 == true) {
-                    CreateSession1(totalQuestion[i].userID)
+                    CreateSession1(totalQuestion[i].userID, fullDate, hrs3)
                 }
                 if (totalQuestion[i].condition3 == true) {
-                    CreateSession2(totalQuestion[i].userID)
+                    CreateSession2(totalQuestion[i].userID, fullDate, hrs3)
                 }
             }
         }
@@ -153,42 +121,7 @@ async function CreateSession0(userId) {
         console.log('Question Condition 1 cron job  No data found');
     }
 }
-async function CreateSession1(userId) {
-    console.log("-------8----------------------------------------------79---------------------------------", userId);
-    let date = new Date(Date.now()).getDate();
-    let month = new Date(Date.now()).getMonth() + 1;
-    let year = new Date(Date.now()).getFullYear();
-    let fullDate = (`${date}/${month}/${year}`).toString();
-    console.log("8---------2------", fullDate)
-    // let hrs = new Date(Date.now()).getHours() + 1;
-    let hrs = new Date(Date.now()).getHours()
-    let min = new Date(Date.now()).getMinutes();
-    let hrs1, hr, hrs2, hrs3;
-    if (hrs < 10) {
-        hrs1 = '' + 0 + parseInt(hrs);
-    } else {
-        hrs1 = parseInt(hrs);
-    }
-    if (min < 0) {
-        min = 0
-    }
-    if (min) {
-        if (min > 30) {
-            hr = parseInt(hrs1) + 6
-        } else {
-            hr = parseInt(hrs1) + 5
-        }
-    }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
-    if (hr < 10) {
-        hrs2 = '' + 0 + parseInt(hr + 1);
-    } else {
-        hrs2 = parseInt(hr + 1);
-    }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    // userID: '64902ae7ff2e7a8d9c5355fa'
-    console.log(hrs3);
+async function CreateSession1(userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: hrs3, userID: userId })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -2228,8 +2161,10 @@ async function CreateSession1(userId) {
                         }
                     } else if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition1: true } }, { new: true })
+                        CreateSession0(totalQuestion[i].userID, fullDate, hrs3)
                     } else if (findUser.friends.length >= 4) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition2: false, condition3: true } }, { new: true })
+                        CreateSession2(totalQuestion[i].userID, fullDate, hrs3)
                     } else {
                         console.log("40----------------------------");
                     }
@@ -2240,42 +2175,8 @@ async function CreateSession1(userId) {
         console.log('Question Condition 2 cron job  No data found');
     }
 }
-async function CreateSession2(userId) {
+async function CreateSession2(userId, fullDate, hrs3) {
     console.log("----------------------------------------------------------------------------------2165----------------------------------", userId);
-    let date = new Date(Date.now()).getDate();
-    let month = new Date(Date.now()).getMonth() + 1;
-    let year = new Date(Date.now()).getFullYear();
-    let fullDate = (`${date}/${month}/${year}`).toString();
-    console.log("12---------3------", fullDate)
-    // let hrs = new Date(Date.now()).getHours() + 1;
-    let hrs = new Date(Date.now()).getHours()
-    let min = new Date(Date.now()).getMinutes();
-    let hrs1, hr, hrs2, hrs3;
-    if (hrs < 10) {
-        hrs1 = '' + 0 + parseInt(hrs);
-    } else {
-        hrs1 = parseInt(hrs);
-    }
-    if (min < 0) {
-        min = 0
-    }
-    if (min) {
-        if (min > 30) {
-            hr = parseInt(hrs1) + 6
-        } else {
-            hr = parseInt(hrs1) + 5
-        }
-    }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
-    if (hr < 10) {
-        hrs2 = '' + 0 + parseInt(hr + 1);
-    } else {
-        hrs2 = parseInt(hr + 1);
-    }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    // userID: '', 
-    console.log(hrs3);
     let totalQuestion = await questionAnswer.find({ questionTime: hrs3, questionDate: fullDate, userID: userId })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
@@ -7246,7 +7147,7 @@ async function CreateSession2(userId) {
                         CreateSession1(userId)
                     } else if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion[i]._id }, { $set: { condition3: false, condition1: true } }, { new: true })
-                        CreateSession0(userId)
+                        CreateSession0(totalQuestion[i].userID, fullDate, hrs3)
                     } else {
                         console.log("40----------------------------");
                     }

@@ -10,7 +10,6 @@ async function CreateSession() {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     let min = new Date(Date.now()).getMinutes();
-    console.log("server time ===>", hrs, ":", min);
     let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {
         hrs1 = '' + 0 + parseInt(hrs);
@@ -27,15 +26,18 @@ async function CreateSession() {
             hr = parseInt(hrs1) + 5
         }
     }
-    console.log("after create time + 5:30  ===>", hr, ":", min);
     if (hr < 10) {
         hrs2 = '' + 0 + parseInt(hr + 1);
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    console.log(fullDate, "------26------question cronjob----------", hrs3);
+    hrs3 = hrs2; /// server
+    // hrs3 = hrs;  //local
+    console.log("*****************************************************************************");
+    console.log("Question cron job  Full Date ===>", fullDate);
+    console.log("Question cron job  Min ===>", min);
+    console.log("Question cron job  Befor create time + 5:30  ===>", hrs,);
+    console.log("Question cron job  after create time + 5:30  ===>", hrs3);
     if (['07', '09', '11', '13', '15', '17', '19', '21', '23'].includes(hrs3.toString())) {
         const findUser = await user.find({});
         for (const i of findUser) {
@@ -79,7 +81,8 @@ async function CreateSession() {
             }
         }
     } else {
-        console.log("Question cron job hour is ", hrs3);
+        console.log("Question cron job hour is not Currently ", hrs3);
+        console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
 
     // if ((hrs3 == '07') || (hrs3 == '09') || (hrs3 == '11') || (hrs3 == '13') || (hrs3 == '15') || (hrs3 == '17') || (hrs3 == '19') || (hrs3 == '21') || (hrs3 == '23')) {
