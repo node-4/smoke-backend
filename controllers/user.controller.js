@@ -467,7 +467,7 @@ exports.resetBlockUser = async (req, res) => {
                 return res.status(400).json({ message: err.message })
         }
 }
-exports.purchaseHistory = async (req, res) => {
+exports.purchaseHistory1 = async (req, res) => {
         try {
                 const user = await userSchema.findById({ _id: req.user._id });
                 if (!user) {
@@ -481,11 +481,69 @@ exports.purchaseHistory = async (req, res) => {
                                                 return res.status(404).json({ message: 'User not found' });
                                         } else {
                                                 if (user1.poleUser.length > 0) {
-
+                                                        for (let j = 0; j < user1.poleUser.length; j++) {
+                                                                if (((user1.poleUser[j].user).toString() == (user._id).toString()) == true) {
+                                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': findUser.poleUser[k].count + 1 } }, { new: true })
+                                                                } else {
+                                                                        let obj = {
+                                                                                user: user._id,
+                                                                                count: 1,
+                                                                        }
+                                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                                }
+                                                        }
                                                 } else {
-
+                                                        let obj = {
+                                                                user: user._id,
+                                                                count: 1,
+                                                        }
+                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
                                                 }
                                         }
+                                }
+                                const user2 = await userSchema.findByIdAndUpdate({ _id: user._id }, { $set: { coin: user.coin - 100 } }, { new: true });
+                                return res.status(200).json({ success: true, details: user2 })
+                        } else {
+                                return res.status(201).json({ message: 'Insufficent funds' });
+                        }
+                }
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+};
+exports.crushPoll = async (req, res) => {
+        try {
+                const user = await userSchema.findById({ _id: req.user._id });
+                if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                } else {
+                        if (user.coin = 300) {
+                                const user1 = await userSchema.findById({ _id: req.params.id })
+                                if (!user1) {
+                                        return res.status(404).json({ message: 'User not found' });
+                                } else {
+                                        if (user1.poleUser.length > 0) {
+                                                for (let j = 0; j < user1.poleUser.length; j++) {
+                                                        if (((user1.poleUser[j].user).toString() == (user._id).toString()) == true) {
+                                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, 'poleUser.user': user._id }, { $set: { 'poleUser.$.count': findUser.poleUser[k].count + 1 } }, { new: true })
+                                                        } else {
+                                                                let obj = {
+                                                                        user: user._id,
+                                                                        count: 1,
+                                                                }
+                                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                        }
+                                                }
+                                        } else {
+                                                let obj = {
+                                                        user: user._id,
+                                                        count: 1,
+                                                }
+                                                let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                        }
+                                        const user2 = await userSchema.findByIdAndUpdate({ _id: user._id }, { $set: { coin: user.coin - 300 } }, { new: true });
+                                        return res.status(200).json({ success: true, details: user2 })
                                 }
                         } else {
                                 return res.status(201).json({ message: 'Insufficent funds' });
