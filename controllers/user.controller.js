@@ -477,9 +477,7 @@ exports.purchaseHistory1 = async (req, res) => {
                         if (user.coin >= 100) {
                                 for (let i = 0; i < sample.length; i++) {
                                         const user1 = await userSchema.findById({ _id: sample[i]._id })
-                                        if (!user1) {
-                                                return res.status(404).json({ message: 'User not found' });
-                                        } else {
+                                        if (user1) {
                                                 if (user1.poleUser.length > 0) {
                                                         for (let j = 0; j < user1.poleUser.length; j++) {
                                                                 if (((user1.poleUser[j].user).toString() == (user._id).toString()) == true) {
@@ -489,7 +487,7 @@ exports.purchaseHistory1 = async (req, res) => {
                                                                                 user: user._id,
                                                                                 count: 1,
                                                                         }
-                                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                                        let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
                                                                 }
                                                         }
                                                 } else {
@@ -497,7 +495,7 @@ exports.purchaseHistory1 = async (req, res) => {
                                                                 user: user._id,
                                                                 count: 1,
                                                         }
-                                                        let update1 = await userSchema.findOneAndeUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
+                                                        let update1 = await userSchema.findOneAndUpdate({ _id: user1._id, }, { $push: { poleUser: obj } }, { new: true })
                                                 }
                                         }
                                 }
