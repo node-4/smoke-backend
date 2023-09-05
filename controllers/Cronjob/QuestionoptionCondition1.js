@@ -11,8 +11,33 @@ async function CreateSession() {
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
     console.log("8---------------", fullDate)
-    // userID: '64902ae7ff2e7a8d9c5355fa'
-    let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: "13", userID: '64902ae7ff2e7a8d9c5355fa' })
+    let hrs = new Date(Date.now()).getHours() + 1;
+    let min = new Date(Date.now()).getMinutes();
+    let hrs1, hr, hrs2, hrs3;
+    if (hrs < 10) {
+        hrs1 = '' + 0 + parseInt(hrs);
+    } else {
+        hrs1 = parseInt(hrs);
+    }
+    if (min < 0) {
+        min = 0
+    }
+    if (min) {
+        if (min > 30) {
+            hr = parseInt(hrs1) + 6
+        } else {
+            hr = parseInt(hrs1) + 5
+        }
+    }
+    console.log("after create time + 5:30  ===>", hr, ":", min);
+    if (hr < 10) {
+        hrs2 = '' + 0 + parseInt(hr + 1);
+    } else {
+        hrs2 = parseInt(hr + 1);
+    }
+    hrs3 = hrs2; /// server
+    // hrs3 = hrs;  //local
+    let totalQuestion = await questionAnswer.find({ questionDate: fullDate, questionTime: hrs3, userID: '64902ae7ff2e7a8d9c5355fa' })
     if (totalQuestion.length > 0) {
         for (let i = 0; i < totalQuestion.length; i++) {
             let findUser = await user.findById({ _id: totalQuestion[i].userID })
