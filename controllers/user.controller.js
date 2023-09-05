@@ -174,10 +174,13 @@ exports.userUpdate = async (req, res) => {
                                 return res.status(200).json({ msg: "profile details not updated, you already updated", user: findUser });
                         } else {
                                 const data = {
-                                        name: req.body.name,
+                                        firstName: req.body.firstName,
+                                        lastName: req.body.lastName,
+                                        userName: req.body.userName,
                                         email: req.body.email,
+                                        gender: req.body.gender,
                                         phone: req.body.phone,
-                                        profileImage: req.body.profileImage,
+                                        profileImage: req.body.photo,
                                         age: req.body.age,
                                         address: req.body.address,
                                         language: req.body.language,
@@ -345,3 +348,124 @@ exports.getWhatAppNumberafterLogin = async (req, res) => {
                 return res.status(500).json({ message: 'Internal server error' });
         }
 }
+exports.updatetakeAbreakStatus = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.takeAbreak == true) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { takeAbreak: false } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { takeAbreak: true } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.updateNotifactionStatus = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.notification == true) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { notification: false } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { notification: true } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.updateModeStatus = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.anonymousMode == true) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { anonymousMode: false } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { anonymousMode: true } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.updatehideFlameStatus = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.hideTopFlame == true) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { hideTopFlame: false } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { hideTopFlame: true } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.resetHideUser = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.hideUser.length == 0) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { hideUser: [] } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { hideUser: [] } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.resetBlockUser = async (req, res) => {
+        try {
+                const findUser = await userSchema.findById({ _id: req.user._id });
+                if (findUser) {
+                        if (findUser.blockUser.length == 0) {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { blockUser: [] } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        } else {
+                                const data = await userSchema.findOneAndUpdate({ _id: req.user._id }, { $set: { blockUser: [] } }, { new: true });
+                                return res.status(200).json({ success: true, details: data })
+                        }
+                } else {
+                        return res.status(201).json({ status: 404, message: "User not found" })
+                }
+        } catch (err) {
+                return res.status(400).json({ message: err.message })
+        }
+}
+exports.purcha = async (req, res) => {
+        try {
+                const userId = req.params.id;
+                const user = await userSchema.findById(userId).populate("city state district")
+                if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                }
+                return res.status(200).json({ msg: user });
+        } catch (error) {
+                console.error(error);
+                return res.status(500).json({ message: 'Internal server error' });
+        }
+};

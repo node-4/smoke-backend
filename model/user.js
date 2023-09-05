@@ -152,6 +152,22 @@ const userSchema = mongoose.Schema({
     default:
       "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
   },
+  notification: {
+    type: Boolean,
+    default: false,
+  },
+  takeAbreak: {
+    type: Boolean,
+    default: false,
+  },
+  anonymousMode: {
+    type: Boolean,
+    default: false,
+  },
+  hideTopFlame: {
+    type: Boolean,
+    default: false,
+  },
 }, { timestamps: true });
 
 const userModel = mongoose.model("userProfile", userSchema);

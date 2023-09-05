@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 // require('./controllers/Cronjob/QuestionCronjob copy')
 // require('./controllers/Cronjob/QuestionoptionCondition1')
 // require('./controllers/Cronjob/QuestionoptionCondition2')
-require('./controllers/Cronjob/QuestionoptionCondition3')
+// require('./controllers/Cronjob/QuestionoptionCondition3')
 app.use("/api/v1/", require("./route/user"));
 app.use("/api/v1/request", require("./route/add_request"));
 app.use("/api/v1/question", require("./route/question"))

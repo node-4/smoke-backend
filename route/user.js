@@ -1,6 +1,6 @@
 const express = require('express');
 const customerRouter = express.Router();
-const { createUser, verify, addWhatAppNumber, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber, getWhatAppNumberafterLogin } = require('../controllers/user.controller');
+const { createUser, verify, addWhatAppNumber, updateModeStatus, resetBlockUser, resetHideUser, updatehideFlameStatus, updatetakeAbreakStatus, updateNotifactionStatus, login, userUpdate, getUserflame, getUser, getUserById, getUserFriends, socialLogin, getWhatAppNumber, getWhatAppNumberafterLogin } = require('../controllers/user.controller');
 const authJwt = require('../middlewares/authJwt')
 
 customerRouter.post('/createUser', createUser);
@@ -15,4 +15,10 @@ customerRouter.get('/getUserById/:id', getUserById)
 customerRouter.get('/getUser', getUser);
 customerRouter.get('/getWhatAppNumber/:phone', getWhatAppNumber)
 customerRouter.get('/getWhatAppNumber', authJwt.verifyToken, getWhatAppNumberafterLogin)
+customerRouter.put('/updatetakeAbreakStatus', authJwt.verifyToken, updatetakeAbreakStatus);
+customerRouter.put('/updateNotifactionStatus', authJwt.verifyToken, updateNotifactionStatus);
+customerRouter.put('/updateModeStatus', authJwt.verifyToken, updateModeStatus);
+customerRouter.put('/updatehideFlameStatus', authJwt.verifyToken, updatehideFlameStatus);
+customerRouter.put('/resetHideUser', authJwt.verifyToken, resetHideUser);
+customerRouter.put('/resetBlockUser', authJwt.verifyToken, resetBlockUser);
 module.exports = customerRouter;

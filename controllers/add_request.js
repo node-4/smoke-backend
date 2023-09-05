@@ -3,18 +3,15 @@ const userSchema = require("../model/user");
 exports.sendFriendRequest = async (req, res) => {
   try {
     const { senderId, receiverId } = req.body;
-
     const friendRequest = new FriendRequest({
       sender: senderId,
       receiver: receiverId,
     });
-
     const savedFriendRequest = await friendRequest.save();
-
-    res.status(200).json(savedFriendRequest);
+    return res.status(200).json(savedFriendRequest);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while sending the friend request' });
+    return res.status(500).json({ error: 'An error occurred while sending the friend request' });
   }
 };
 exports.acceptFriendRequest = async (req, res) => {
@@ -27,21 +24,21 @@ exports.acceptFriendRequest = async (req, res) => {
       const updatedFriendRequest = await FriendRequest.findByIdAndUpdate({ _id: friendRequest._id }, { $set: { status: 'accepted' } }, { new: true });
       if (updatedFriendRequest) {
         let findSender = await userSchema.findById({ _id: friendRequest.sender })
-        if (findSender.friends.includes(friendRequest.receiver)) {
+        if (!findSender.friends.includes(friendRequest.receiver)) {
           let updateSender = await userSchema.findByIdAndUpdate({ _id: findSender._id }, { $push: { friends: friendRequest.receiver }, $set: { friendCount: findSender.friendCount + 1 } }, { new: true });
         }
         let findReceiver = await userSchema.findById({ _id: friendRequest.receiver })
-        if (findReceiver.friends.includes(friendRequest.sender)) {
+        if (!findReceiver.friends.includes(friendRequest.sender)) {
           let updateReceiver = await userSchema.findByIdAndUpdate({ _id: findReceiver._id }, { $push: { friends: friendRequest.sender }, $set: { friendCount: findReceiver.friendCount + 1 } }, { new: true })
         }
-        res.status(200).json(updatedFriendRequest);
+        return res.status(200).json(updatedFriendRequest);
       } else {
         return res.status(404).json({ error: 'User not found' });
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while accepting the friend request' });
+    return res.status(500).json({ error: 'An error occurred while accepting the friend request' });
   }
 };
 exports.rejectFriendRequest = async (req, res) => {
@@ -57,10 +54,10 @@ exports.rejectFriendRequest = async (req, res) => {
     friendRequest.status = 'rejected';
     const updatedFriendRequest = await friendRequest.save();
 
-    res.status(200).json(updatedFriendRequest);
+    return res.status(200).json(updatedFriendRequest);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while rejecting the friend request' });
+    return res.status(500).json({ error: 'An error occurred while rejecting the friend request' });
   }
 };
 exports.getAllFriendRequest = async (req, res) => {
@@ -68,7 +65,7 @@ exports.getAllFriendRequest = async (req, res) => {
     const cities = await FriendRequest.find({ receiver: req.params.userId, status: "pending" }).populate('sender receiver');
     res.json({ total: cities.length, msg: cities });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 exports.getByIdFriendRequest = async (req, res) => {
@@ -76,7 +73,7 @@ exports.getByIdFriendRequest = async (req, res) => {
     const cities = await FriendRequest.find({ _id: req.params.id }).populate('sender receiver');
     res.json({ msg: cities });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 exports.deleteFriendRequest = async (req, res) => {
@@ -85,7 +82,7 @@ exports.deleteFriendRequest = async (req, res) => {
     await FriendRequest.findByIdAndDelete(id);
     res.json({ message: 'City deleted successfully' });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 exports.getfriendsofFriend = async (req, res) => {
@@ -156,7 +153,7 @@ exports.blockUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while accepting the friend request' });
+    return res.status(500).json({ error: 'An error occurred while accepting the friend request' });
   }
 };
 exports.unblockUser = async (req, res) => {
@@ -179,7 +176,7 @@ exports.unblockUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while accepting the friend request' });
+    return res.status(500).json({ error: 'An error occurred while accepting the friend request' });
   }
 };
 exports.hideUser = async (req, res) => {
@@ -202,7 +199,7 @@ exports.hideUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while sending the friend request' });
+    return res.status(500).json({ error: 'An error occurred while sending the friend request' });
   }
 };
 exports.unFriend = async (req, res) => {
@@ -215,16 +212,18 @@ exports.unFriend = async (req, res) => {
       if (!getUser) {
         return res.status(404).json({ msg: "user not found", data: {} });
       } else {
+        let update;
         if (findUser.friends.includes(getUser._id)) {
-          let update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { friends: req.params.id } }, { new: true })
+          update = await userSchema.findByIdAndUpdate({ _id: findUser._id }, { $pull: { friends: req.params.id } }, { new: true })
+          if (getUser.friends.includes(findUser._id)) {
+            await userSchema.findByIdAndUpdate({ _id: getUser._id }, { $pull: { friends: findUser._id } }, { new: true })
+          }
           return res.status(200).json({ msg: "User unfriend successfully.", data: update });
-        } else {
-          return res.status(404).json({ msg: "user not found", data: {} });
         }
       }
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while accepting the friend request' });
+    return res.status(500).json({ error: 'An error occurred while accepting the friend request' });
   }
 };
