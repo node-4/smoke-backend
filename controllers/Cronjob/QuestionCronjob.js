@@ -82,7 +82,7 @@ async function CreateSession() {
         console.log("Question cron job hour is ", hrs3);
     }
 }
-setInterval(CreateSession, 60000);
+setInterval(CreateSession, 30000);
 
 
 

@@ -32,8 +32,8 @@ async function CreateSession() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
+    hrs3 = hrs2; /// server
+    // hrs3 = hrs;  //local
     console.log("*****************************************************************************");
     console.log("Question Condition  Full Date ===>", fullDate);
     console.log("Question Condition Min ===>", min);
