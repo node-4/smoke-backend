@@ -3,7 +3,7 @@ let questionAnswer = require("../../model/questionAnswer");
 let questions = require("../../model/questions");
 let user = require("../../model/user");
 async function CreateSession() {
-    let hrs = new Date(Date.now()).getHours();
+    let hrs = new Date(Date.now()).getHours() + 1;
     let date = new Date(Date.now()).getDate();
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
@@ -30,8 +30,8 @@ async function CreateSession() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    hrs3 = hrs2; /// server
-    // hrs3 = hrs;  //local/
+    // hrs3 = hrs2; /// server
+    hrs3 = hrs;  //local/
     console.log("*****************************************************************************");
     console.log("Question cron job  Full Date ===>", fullDate);
     console.log("Question cron job  Min ===>", min);

@@ -9,7 +9,7 @@ async function CreateSession() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    let hrs = new Date(Date.now()).getHours();
+    let hrs = new Date(Date.now()).getHours() + 1;
     let min = new Date(Date.now()).getMinutes();
     let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {
@@ -32,8 +32,8 @@ async function CreateSession() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    hrs3 = hrs2; /// server
-    // hrs3 = hrs;  //local
+    // hrs3 = hrs2; /// sersver
+    hrs3 = hrs;  //local
     console.log("*****************************************************************************");
     console.log("Question Condition  Full Date ===>", fullDate);
     console.log("Question Condition Min ===>", min);
