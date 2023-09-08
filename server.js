@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 2006;
 mongoose
-  .connect("mongodb+srv://SMOKE_:y6osGJH0KyVRkLpU@smoke.m3ou369.mongodb.net/")
+  .connect("mongodb+srv://SMOKE_:y6osGJH0KyVRkLpU@smoke.m3ou369.mongodb.net/smokeApp?retryWrites=true&w=majority")
   .then(() => {
     console.log("Db conneted succesfully");
   })
@@ -23,8 +23,9 @@ app.get("/", (req, res) => {
   res.status(200).send({ msg: "Working App" });
 });
 // require('./controllers/SubscriptionCronjob')
-// require('./controllers/Cronjob/QuestionCronjob')
-// require('./controllers/Cronjob/QuestionoptionCondition1')
+require('./controllers/Cronjob/QuestionCronjob')
+require('./controllers/Cronjob/QuestionoptionCondition1')
+require('./controllers/Cronjob/whatAppContact')
 app.use("/api/v1/", require("./route/user"));
 app.use("/api/v1/request", require("./route/add_request"));
 app.use("/api/v1/question", require("./route/question"))

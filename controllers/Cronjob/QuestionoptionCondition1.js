@@ -9,7 +9,7 @@ async function CreateSession() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    let hrs = new Date(Date.now()).getHours()+1;
+    let hrs = new Date(Date.now()).getHours();
     let min = new Date(Date.now()).getMinutes();
     let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {

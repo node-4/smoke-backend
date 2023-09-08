@@ -283,34 +283,11 @@ exports.getUser = async (req, res) => {
 }
 exports.getWhatAppNumber = async (req, res) => {
         try {
-                let findData = await whatAppContact.findOne({ phone: req.params.phone });
+                let findData = await whatAppContact.findOne({ phone: req.params.phone }).lean();
                 if (!findData) {
                         return res.status(404).json({ status: 404, message: "Data not found.", data: {} });
                 } else {
-                        let userContacts = [];
-                        for (let i = 0; i < findData.userContacts.length; i++) {
-                                let obj1;
-                                const data = await userSchema.findOne({ phone: findData.userContacts[i].phone });
-                                if (data) {
-                                        obj1 = {
-                                                phone: findData.userContacts[i].phone,
-                                                firstName: findData.userContacts[i].firstName,
-                                                lastName: findData.userContacts[i].lastName,
-                                                appId: data._id,
-                                                onApp: true
-                                        };
-                                } else {
-                                        obj1 = {
-                                                phone: findData.userContacts[i].phone,
-                                                firstName: findData.userContacts[i].firstName,
-                                                lastName: findData.userContacts[i].lastName,
-                                                onApp: false
-                                        };
-                                }
-                                userContacts.push(obj1)
-                        }
-                        let update = await whatAppContact.findByIdAndUpdate({ _id: findData._id }, { $set: { userContacts: userContacts } }, { new: true })
-                        return res.status(200).json({ status: 200, data: update });
+                        return res.status(200).json({ status: 200, data: findData });
                 }
         } catch (error) {
                 console.error(error);
