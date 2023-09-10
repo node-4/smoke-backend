@@ -33,8 +33,8 @@ async function startCondition1() {
         hrs2 = parseInt(hr + 1);
     }
     // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
-    // hrs3 = "11"
+    // hrs3 = hrs;  //local
+    hrs3 = "11"
     console.log("*****************************************************************************");
     console.log("startCondition1  Full Date ===>", fullDate);
     console.log("startCondition1 Min ===>", min);
@@ -87,7 +87,7 @@ async function startCondition1() {
     }
 }
 async function condition1Function(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("94-----------------------------", totalQuestion.optionCount);
@@ -98,8 +98,8 @@ async function condition1Function(questionId, userId, fullDate, hrs3) {
                 if (totalQuestion.condition1 == true) {
                     if (((findUser.friends.length) == 0) && (findSchoolMember.length == 0)) {
                         console.log("93-------------condition1Function", findUser.firstName);
-                    }
-                    else if ((0 <= findSchoolMember.length <= 4) && (0 <= findUser.friends.length <= 4)) {
+                        condition1Function(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                    } else if ((0 <= findSchoolMember.length <= 4) && (0 <= findUser.friends.length <= 4)) {
                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: { condition1: false, condition2: true } }, { new: true })
                         if (update.condition2 == true) {
                             console.log("98-------------condition1Function", findUser.firstName);
@@ -132,7 +132,7 @@ async function condition1Function(questionId, userId, fullDate, hrs3) {
     }
 }
 async function condition2Function(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("141-----------------------------", totalQuestion.optionCount);
@@ -172,7 +172,7 @@ async function condition2Function(questionId, userId, fullDate, hrs3) {
 }
 async function condition3Function(questionId, userId, fullDate, hrs3) {
     console.log("164-------------condition3Function");
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("182-----------------------------", totalQuestion.optionCount);
@@ -227,7 +227,7 @@ async function condition3Function(questionId, userId, fullDate, hrs3) {
     }
 }
 async function condition2priority1(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("239-----------------------------", totalQuestion.optionCount);
@@ -253,13 +253,13 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
                                             if ((findUser.gender == 'female') == true) {
                                                 let findFriend = await user.findOne({ _id: findUser.friends[j].toString(), gender: 'male' });
                                                 if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
+                                                    userArray.push((findFriend._id).toString())
                                                 }
                                             }
                                             if ((findUser.gender == 'male') == true) {
                                                 let findFriend = await user.findOne({ _id: findUser.friends[j].toString(), gender: 'female' });
                                                 if (findFriend.flameCount == 0) {
-                                                    userArray.push(findUser.friends[j].toString())
+                                                    userArray.push((findFriend._id).toString())
                                                 }
                                             }
                                         }
@@ -277,7 +277,7 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
                                         } else {
                                             let findFriend = await user.findOne({ _id: findUser.friends[j].toString() });
                                             if (findFriend.flameCount > 0) {
-                                                userArray.push(findUser.friends[j].toString())
+                                                userArray.push((findFriend._id).toString())
                                             }
                                         }
                                     }
@@ -308,228 +308,245 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition2priority1a(userId, fullDate, hrs3, userArray, questionId) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
-    let length;
-    const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, length);
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
     if (totalQuestion.optionCount === 0) {
-        let obj, optionCount = 0;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
             }
+            if (optionCount == 14) {
+                obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+            } else {
+                obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+            }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+        console.log(obj)
+        // let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj, optionCount = 1;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 1;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 13; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
             }
+            if (optionCount == 14) {
+                obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+            } else {
+                obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+            }
         }
-
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+
     }
     if (totalQuestion.optionCount === 2) {
-        let obj, optionCount = 2;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 2;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            console.log(obj)
+            for (let i = 0; i < 12; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
-        let obj, optionCount = 3;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 3;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 11; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+            console.log(obj)
         }
 
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 4) {
-        let obj, optionCount = 0;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 0;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            console.log(obj)
+            for (let i = 0; i < 10; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj, optionCount = 1;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 1;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 9; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+
+            console.log(obj)
         }
 
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 6) {
-        let obj, optionCount = 2;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 2;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            console.log(obj)
+            for (let i = 0; i < 8; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj, optionCount = 7;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 7;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 7; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+
+            console.log(obj)
         }
 
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 8) {
-        let obj, optionCount = 8;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 8;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            console.log(obj)
+            for (let i = 0; i < 6; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj, optionCount = 9;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 9;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 5; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+
+            console.log(obj)
         }
 
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 10) {
-        let obj, optionCount = 10;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 10;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            console.log(obj)
+            for (let i = 0; i < 4; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
+        console.log(obj)
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj, optionCount = 11;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 11;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 3; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+
+            console.log(obj)
         }
 
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 12) {
-        let obj, optionCount = 12;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 12;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 2; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
         }
+        console.log(obj)
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj, optionCount = 13;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-        }
+        let obj = [], optionCount = 13;
         if (optionCount < 14) {
-            for (let i = 0; i < sample.length; i++) {
+            for (let i = 0; i < 1; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                if (optionCount == 14) {
+                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
+                } else {
+                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                }
             }
+            console.log(obj)
         }
         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
 };
 async function condition2priority2(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("1282-----------------------------", totalQuestion.optionCount);
@@ -601,7 +618,7 @@ async function condition2priority2(questionId, userId, fullDate, hrs3) {
                                         let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: { condition2: false, condition3: true, priority2_1: true, priority2_2: false, } }, { new: true })
                                     } else {
                                         console.log("610*****************************************************", userArray);
-                                        condition2priority2a(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime, userArray, totalQuestion._id);
+                                        condition2priority2a(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime, userArray);
                                     }
                                 }
                             }
@@ -621,227 +638,161 @@ async function condition2priority2(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition2priority2a(questionId, userId, fullDate, hrs3, userArray) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
+    let optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj, optionCount = 0;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj, optionCount = 1;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: truse, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 2) {
-        let obj, optionCount = 2;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
-        let obj, optionCount = 3;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 4) {
-        let obj, optionCount = 0;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj, optionCount = 1;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 6) {
-        let obj, optionCount = 2;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj, optionCount = 7;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 8) {
-        let obj, optionCount = 8;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj, optionCount = 9;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 10) {
-        let obj, optionCount = 10;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj, optionCount = 11;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 12) {
-        let obj, optionCount = 12;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj, optionCount = 13;
-        if (optionCount == 14) {
-            obj = { optionCount: 14, condition3: false, priority2_1: false, priority2_2: false };
-        } else {
-            obj = { optionCount: optionCount, condition2: false, condition3: true, priority2_1: true, priority2_2: false };
-        }
+        let obj = {}; optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount > 14) {
+        obj = { condition3: false, priority2_1: false, priority2_2: false, optionCount: 14 };
+    } else {
+        obj = { condition2: false, condition3: true, priority2_1: true, priority2_2: false, optionCount: optionCount };
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
+
 };
 async function condition3priority1(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("2330-----------------------------", totalQuestion.optionCount);
@@ -1282,7 +1233,7 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -1290,7 +1241,7 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             } else {
                                 console.log("------------2261---------------------", totalQuestion.priority4);
@@ -1335,7 +1286,7 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -1343,7 +1294,7 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             }
                         }
@@ -1364,7 +1315,7 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition3priority2a(userId, fullDate, hrs3, userArray, questionId) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
     if (totalQuestion.optionCount == 0) {
         let obj;
@@ -1410,7 +1361,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 14) {
             obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
         let obj;
@@ -1453,7 +1404,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 13) {
             obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 2) {
         let obj;
@@ -1493,7 +1444,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
         let obj;
@@ -1533,7 +1484,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 4) {
         let obj;
@@ -1573,7 +1524,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
         let obj;
@@ -1613,7 +1564,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 6) {
         let obj;
@@ -1653,7 +1604,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
         let obj;
@@ -1693,7 +1644,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 8) {
         let obj;
@@ -1733,7 +1684,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
         let obj;
@@ -1773,7 +1724,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 10) {
         let obj;
@@ -1813,7 +1764,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
         let obj;
@@ -1853,7 +1804,7 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
 };
 async function condition3priority3(questionId, userId, fullDate, hrs3) {
@@ -1926,7 +1877,7 @@ async function condition3priority3(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             } else {
                                 console.log("------------2261---------------------", totalQuestion.priority4);
@@ -1968,7 +1919,7 @@ async function condition3priority3(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             }
                         }
@@ -1990,7 +1941,7 @@ async function condition3priority3(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition3priority3a(questionId, userId, fullDate, hrs3, userArray) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
     if (totalQuestion.optionCount == 0) {
         let obj;
@@ -2036,7 +1987,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 14) {
             obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
         let obj;
@@ -2079,7 +2030,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 13) {
             obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 2) {
         let obj;
@@ -2119,7 +2070,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
         let obj;
@@ -2159,7 +2110,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 4) {
         let obj;
@@ -2199,7 +2150,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
         let obj;
@@ -2239,7 +2190,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 6) {
         let obj;
@@ -2279,7 +2230,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
         let obj;
@@ -2319,7 +2270,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 8) {
         let obj;
@@ -2360,7 +2311,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
             obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
         }
         console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
         let obj;
@@ -2400,7 +2351,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 10) {
         let obj;
@@ -2440,7 +2391,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
         let obj;
@@ -2480,7 +2431,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 12) {
         let obj;
@@ -2520,7 +2471,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
         let obj;
@@ -2560,7 +2511,7 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         if (sample.length == 12) {
             obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
 };
 async function condition3priority4(questionId, userId, fullDate, hrs3) {
@@ -2590,7 +2541,7 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -2630,7 +2581,7 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             } else {
                                 console.log("------------2261---------------------", totalQuestion.priority4);
@@ -2644,7 +2595,7 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -2675,7 +2626,7 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority5 == true) {
                                     console.log("-263------------------------------");
-                                    condition3priority5(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority5(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                             }
                         }
@@ -2696,7 +2647,7 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition3priority4a(userId, fullDate, hrs3, userArray, questionId) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
     if (totalQuestion.optionCount == 0) {
         let obj;
@@ -2742,7 +2693,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 14) {
             obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     };
     if (totalQuestion.optionCount == 1) {
         let obj;
@@ -2785,7 +2736,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 13) {
             obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority4: false, priority5: false };
         };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     };
     if (totalQuestion.optionCount == 2) {
         let obj;
@@ -2825,7 +2776,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority4: false, priority5: false };
         };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     };
     if (totalQuestion.optionCount == 3) {
         let obj;
@@ -2865,7 +2816,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority4: false, priority5: false };
         };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     };
     if (totalQuestion.optionCount == 4) {
         let obj;
@@ -2905,7 +2856,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority4: false, priority5: false };
         };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     };
     if (totalQuestion.optionCount == 5) {
         let obj;
@@ -2945,8 +2896,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
-    }
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+    };
     if (totalQuestion.optionCount == 6) {
         let obj;
         if (sample.length == 1) {
@@ -2985,7 +2936,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
         let obj;
@@ -3025,7 +2976,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 8) {
         let obj;
@@ -3066,7 +3017,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
             obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
         }
         console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
         let obj;
@@ -3106,7 +3057,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 10) {
         let obj;
@@ -3146,7 +3097,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
         let obj;
@@ -3186,7 +3137,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 12) {
         let obj;
@@ -3226,7 +3177,7 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
         let obj;
@@ -3266,11 +3217,11 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
 };
 async function condition3priority5(questionId, userId, fullDate, hrs3) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     if (totalQuestion) {
         if (totalQuestion.optionCount == 14) {
             console.log("6363-----------------------------", totalQuestion.optionCount);
@@ -3296,7 +3247,7 @@ async function condition3priority5(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -3348,7 +3299,7 @@ async function condition3priority5(questionId, userId, fullDate, hrs3) {
                                 }
                                 if (totalQuestion.priority3 == true) {
                                     console.log("-120-------------------------------");
-                                    condition3priority3(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
+                                    condition3priority3(totalQuestion._id, totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime)
                                 }
                                 if (totalQuestion.priority4 == true) {
                                     console.log("-49-------------------------------");
@@ -3393,7 +3344,7 @@ async function condition3priority5(questionId, userId, fullDate, hrs3) {
     }
 };
 async function condition3priority5a(userId, fullDate, hrs3, userArray, questionId) {
-    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId })
+    let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
     if (totalQuestion.optionCount == 0) {
         let obj;
@@ -3439,7 +3390,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 14) {
             obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
         let obj;
@@ -3482,7 +3433,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 13) {
             obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 2) {
         let obj;
@@ -3522,7 +3473,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
         let obj;
@@ -3562,7 +3513,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 4) {
         let obj;
@@ -3602,7 +3553,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
         let obj;
@@ -3642,7 +3593,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 6) {
         let obj;
@@ -3682,7 +3633,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
         let obj;
@@ -3722,7 +3673,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 8) {
         let obj;
@@ -3763,7 +3714,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
             obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
         }
         console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
         let obj;
@@ -3803,7 +3754,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 10) {
         let obj;
@@ -3843,7 +3794,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
         let obj;
@@ -3883,7 +3834,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 12) {
         let obj;
@@ -3923,7 +3874,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
         let obj;
@@ -3963,7 +3914,7 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         if (sample.length == 12) {
             obj = { option_14: sample[0], optionCount: 14, priority5: false };
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true })
+        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
 
 };

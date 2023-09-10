@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.status(200).send({ msg: "Working App" });
 });
 // require('./controllers/SubscriptionCronjob')
-require('./controllers/Cronjob/QuestionCronjob')
+// require('./controllers/Cronjob/QuestionCronjob')
 require('./controllers/Cronjob/QuestionoptionCondition1')
 require('./controllers/Cronjob/whatAppContact')
 app.use("/api/v1/", require("./route/user"));
