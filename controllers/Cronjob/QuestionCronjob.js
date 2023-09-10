@@ -58,7 +58,7 @@ async function CreateSession() {
                         if (((i.friends.length) == 0) && (findSchoolMember.length == 0)) {
                             condition1 = true; condition2 = false; condition3 = false;
                         }
-                        if (((0 < findSchoolMember.length) && (findSchoolMember.length < 4)) && ((0 < i.friends.length) && (i.friends.length < 4))) {
+                        if ((0 <= findSchoolMember.length <= 4) && (0 <= i.friends.length <= 4)) {
                             condition1 = false; condition2 = true; condition3 = false;
                         }
                         let obj = {
