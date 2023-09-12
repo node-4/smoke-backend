@@ -46,6 +46,8 @@ exports.createUser = async (req, res) => {
                                         return res.status(200).send({ message: "Registered successfully", data: newUser, accessToken: accessToken, });
                                 }
                         }
+                } else {
+
                 }
         } catch (error) {
                 console.error(error);

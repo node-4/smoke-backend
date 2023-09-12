@@ -32,8 +32,8 @@ async function startCondition1() {
     } else {
         hrs2 = parseInt(hr + 1);
     }
-    // hrs3 = hrs2; /// server
-    hrs3 = hrs;  //local
+    hrs3 = hrs2; /// server
+    // hrs3 = hrs;  //local
     // hrs3 = "11"
     console.log("*****************************************************************************");
     console.log("startCondition1  Full Date ===>", fullDate);
