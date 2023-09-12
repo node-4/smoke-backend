@@ -286,7 +286,6 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
                                     } else {
                                         condition2priority1a(totalQuestion.userID, totalQuestion.questionDate, totalQuestion.questionTime, userArray, totalQuestion._id);
                                     }
-
                                 }
                             }
                         }
@@ -310,240 +309,156 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
 async function condition2priority1a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
+    let optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = [], optionCount = 0;
+        let obj = {}; optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-            }
-            if (optionCount == 14) {
-                obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-            } else {
-                obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        console.log(obj)
-        // let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = [], optionCount = 1;
+        let obj = {}; optionCount = 1;
         if (optionCount < 14) {
-            for (let i = 0; i < 13; i++) {
+            for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-            }
-            if (optionCount == 14) {
-                obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-            } else {
-                obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = [], optionCount = 2;
+        let obj = {}; optionCount = 2;
         if (optionCount < 14) {
-            console.log(obj)
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = [], optionCount = 3;
+        let obj = {}; optionCount = 3;
         if (optionCount < 14) {
-            for (let i = 0; i < 11; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-            console.log(obj)
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = [], optionCount = 0;
+        let obj = {}; optionCount = 4;
         if (optionCount < 14) {
-            console.log(obj)
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = [], optionCount = 1;
+        let obj = {}; optionCount = 5;
         if (optionCount < 14) {
-            for (let i = 0; i < 9; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-
-            console.log(obj)
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = [], optionCount = 2;
+        let obj = {}; optionCount = 6;
         if (optionCount < 14) {
-            console.log(obj)
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = [], optionCount = 7;
+        let obj = {}; optionCount = 7;
         if (optionCount < 14) {
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-
-            console.log(obj)
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = [], optionCount = 8;
+        let obj = {}; optionCount = 8;
         if (optionCount < 14) {
-            console.log(obj)
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = [], optionCount = 9;
+        let obj = {}; optionCount = 9;
         if (optionCount < 14) {
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-
-            console.log(obj)
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = [], optionCount = 10;
+        let obj = {}; optionCount = 10;
         if (optionCount < 14) {
-            console.log(obj)
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        console.log(obj)
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = [], optionCount = 11;
+        let obj = {}; optionCount = 11;
         if (optionCount < 14) {
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-
-            console.log(obj)
         }
-
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = [], optionCount = 12;
+        let obj = {}; optionCount = 12;
         if (optionCount < 14) {
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-        console.log(obj)
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = [], optionCount = 13;
+        let obj = {}; optionCount = 13;
         if (optionCount < 14) {
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
                 optionCount++;
-                if (optionCount == 14) {
-                    obj = { optionCount: 14, priority2_1: false, priority2_2: false };
-                } else {
-                    obj = { optionCount: optionCount, priority2_1: false, priority2_2: true };
-                }
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
-            console.log(obj)
         }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount >= 14) {
+        obj = { priority2_1: false, priority2_2: false, optionCount: 14 };
+    } else {
+        obj = { priority2_1: false, priority2_2: true, optionCount: optionCount };
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
+
 };
 async function condition2priority2(questionId, userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
@@ -783,7 +698,7 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
-    if (optionCount > 14) {
+    if (optionCount >= 14) {
         obj = { condition3: false, priority2_1: false, priority2_2: false, optionCount: 14 };
     } else {
         obj = { condition2: false, condition3: true, priority2_1: true, priority2_2: false, optionCount: optionCount };
@@ -1317,495 +1232,156 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
 async function condition3priority2a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    if (totalQuestion.optionCount == 0) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_1: sample[0], optionCount: 1, priority2: false, priority3: true }
+    let optionCount;
+    if (totalQuestion.optionCount === 0) {
+        let obj = {}; optionCount = 0;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority2: false, priority3: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority2: false, priority3: false };
-        }
-        if (sample.length == 13) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], optionCount: 13, priority2: false, priority3: false };
-        }
-        if (sample.length == 14) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_2: sample[0], optionCount: 2, priority2: false, priority3: true }
+        let obj = {}; optionCount = 1;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], optionCount: 13, priority2: false, priority3: false };
-        }
-        if (sample.length == 13) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 2) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_3: sample[0], optionCount: 3, priority2: false, priority3: true }
+    if (totalQuestion.optionCount === 2) {
+        let obj = {}; optionCount = 2;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_4: sample[0], optionCount: 4, priority2: false, priority3: true }
+        let obj = {}; optionCount = 3;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority2: false, priority3: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 4) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_5: sample[0], optionCount: 5, priority2: false, priority3: true }
+    if (totalQuestion.optionCount === 4) {
+        let obj = {}; optionCount = 4;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_6: sample[0], optionCount: 6, priority2: false, priority3: true }
+        let obj = {}; optionCount = 5;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 6) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_7: sample[0], optionCount: 7, priority2: false, priority3: true }
+    if (totalQuestion.optionCount === 6) {
+        let obj = {}; optionCount = 6;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_8: sample[0], optionCount: 8, priority2: false, priority3: true }
+        let obj = {}; optionCount = 7;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 8) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_9: sample[0], optionCount: 9, priority2: false, priority3: true }
+    if (totalQuestion.optionCount === 8) {
+        let obj = {}; optionCount = 8;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], optionCount: 13, priority2: false, priority3: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_10: sample[0], optionCount: 10, priority2: false, priority3: true }
+        let obj = {}; optionCount = 9;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], optionCount: 13, priority2: false, priority3: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 10) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_11: sample[0], optionCount: 11, priority2: false, priority3: true }
+    if (totalQuestion.optionCount === 10) {
+        let obj = {}; optionCount = 10;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority2: false, priority3: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], optionCount: 13, priority2: false, priority3: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_14: sample[3], optionCount: 14, priority2: false, priority3: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_12: sample[0], optionCount: 12, priority2: false, priority3: false }
+        let obj = {}; optionCount = 11;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_12: sample[0], option_13: sample[1], optionCount: 13, priority2: false, priority3: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 6) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 7) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 8) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 9) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 10) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 11) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        if (sample.length == 12) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority2: false, priority3: false }
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
+    if (totalQuestion.optionCount === 12) {
+        let obj = {}; optionCount = 12;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
+    if (totalQuestion.optionCount == 13) {
+        let obj = {}; optionCount = 13;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount >= 14) {
+        obj = { priority2: false, priority3: false, condition3: false, optionCount: 14 };
+    } else {
+        obj = { priority2: false, priority3: true, optionCount: optionCount };
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
+
 };
 async function condition3priority3(questionId, userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
@@ -1943,576 +1519,156 @@ async function condition3priority3(questionId, userId, fullDate, hrs3) {
 async function condition3priority3a(questionId, userId, fullDate, hrs3, userArray) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    if (totalQuestion.optionCount == 0) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_1: sample[0], optionCount: 1, priority3: false, priority4: true }
+    let optionCount;
+    if (totalQuestion.optionCount === 0) {
+        let obj = {}; optionCount = 0;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority3: false, priority4: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 13) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 14) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_2: sample[0], optionCount: 2, priority3: false, priority4: true }
+        let obj = {}; optionCount = 1;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 13) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 2) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_3: sample[0], optionCount: 3, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 2) {
+        let obj = {}; optionCount = 2;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 3) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_4: sample[0], optionCount: 4, priority3: false, priority4: true }
+        let obj = {}; optionCount = 3;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 4) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_5: sample[0], optionCount: 5, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 4) {
+        let obj = {}; optionCount = 4;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_6: sample[0], optionCount: 6, priority3: false, priority4: true }
+        let obj = {}; optionCount = 5;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 6) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_7: sample[0], optionCount: 7, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 6) {
+        let obj = {}; optionCount = 6;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_8: sample[0], optionCount: 8, priority3: false, priority4: true }
+        let obj = {}; optionCount = 7;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 8) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_9: sample[0], optionCount: 9, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 8) {
+        let obj = {}; optionCount = 8;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], optionCount: 13, priority3: false, priority4: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority3: false, priority4: false };
-        }
-        console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_10: sample[0], optionCount: 10, priority3: false, priority4: true }
+        let obj = {}; optionCount = 9;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], optionCount: 13, priority3: false, priority4: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 10) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_11: sample[0], optionCount: 11, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 10) {
+        let obj = {}; optionCount = 10;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], optionCount: 13, priority3: false, priority4: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_12: sample[0], optionCount: 12, priority3: false, priority4: true }
+        let obj = {}; optionCount = 11;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_12: sample[0], option_13: sample[1], optionCount: 13, priority3: false, priority4: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 12) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_13: sample[0], optionCount: 13, priority3: false, priority4: true }
+    if (totalQuestion.optionCount === 12) {
+        let obj = {}; optionCount = 12;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false }
+        let obj = {}; optionCount = 13;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_14: sample[0], optionCount: 14, priority3: false, priority4: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount >= 14) {
+        obj = { priority3: false, priority4: false, condition3: false, optionCount: 14 };
+    } else {
+        obj = { priority3: false, priority4: true, optionCount: optionCount };
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
+
 };
 async function condition3priority4(questionId, userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
@@ -2649,576 +1805,155 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
 async function condition3priority4a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    if (totalQuestion.optionCount == 0) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_1: sample[0], optionCount: 1, priority4: false, priority5: true }
+    let optionCount;
+    if (totalQuestion.optionCount === 0) {
+        let obj = {}; optionCount = 0;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority4: false, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority4: false, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority4: false, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority4: false, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority4: false, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority4: false, priority5: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority4: false, priority5: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority4: false, priority5: true };
-        }
-        if (sample.length == 13) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], optionCount: 13, priority4: false, priority5: true };
-        }
-        if (sample.length == 14) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
+    }
     if (totalQuestion.optionCount == 1) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_2: sample[0], optionCount: 2, priority4: false, priority5: true }
-        };
-        if (sample.length == 2) {
-            obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority4: false, priority5: true }
-        };
-        if (sample.length == 3) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority4: false, priority5: true }
-        };
-        if (sample.length == 4) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority4: false, priority5: true }
-        };
-        if (sample.length == 5) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority4: false, priority5: true };
-        };
-        if (sample.length == 6) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority4: false, priority5: true };
-        };
-        if (sample.length == 7) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority4: false, priority5: true };
-        };
-        if (sample.length == 8) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority4: false, priority5: true };
-        };
-        if (sample.length == 9) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority4: false, priority5: true };
-        };
-        if (sample.length == 10) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority4: false, priority5: true };
-        };
-        if (sample.length == 11) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority4: false, priority5: true };
-        };
-        if (sample.length == 12) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], optionCount: 13, priority4: false, priority5: true };
-        };
-        if (sample.length == 13) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority4: false, priority5: false };
-        };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
-    if (totalQuestion.optionCount == 2) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_3: sample[0], optionCount: 3, priority4: false, priority5: true }
-        };
-        if (sample.length == 2) {
-            obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority4: false, priority5: true }
-        };
-        if (sample.length == 3) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority4: false, priority5: true }
-        };
-        if (sample.length == 4) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority4: false, priority5: true }
-        };
-        if (sample.length == 5) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority4: false, priority5: true };
-        };
-        if (sample.length == 6) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority4: false, priority5: true };
-        };
-        if (sample.length == 7) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority4: false, priority5: true };
-        };
-        if (sample.length == 8) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority4: false, priority5: true };
-        };
-        if (sample.length == 9) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority4: false, priority5: true };
-        };
-        if (sample.length == 10) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority4: false, priority5: true };
-        };
-        if (sample.length == 11) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], optionCount: 13, priority4: false, priority5: true };
-        };
-        if (sample.length == 12) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority4: false, priority5: false };
-        };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
+        let obj = {}; optionCount = 1;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
+    if (totalQuestion.optionCount === 2) {
+        let obj = {}; optionCount = 2;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
     if (totalQuestion.optionCount == 3) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_4: sample[0], optionCount: 4, priority4: false, priority5: true }
-        };
-        if (sample.length == 2) {
-            obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority4: false, priority5: true }
-        };
-        if (sample.length == 3) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority4: false, priority5: true }
-        };
-        if (sample.length == 4) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority4: false, priority5: true }
-        };
-        if (sample.length == 5) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority4: false, priority5: true };
-        };
-        if (sample.length == 6) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority4: false, priority5: true };
-        };
-        if (sample.length == 7) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority4: false, priority5: true };
-        };
-        if (sample.length == 8) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority4: false, priority5: true };
-        };
-        if (sample.length == 9) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority4: false, priority5: true };
-        };
-        if (sample.length == 10) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], optionCount: 13, priority4: false, priority5: true };
-        };
-        if (sample.length == 11) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority4: false, priority5: false };
-        };
-        if (sample.length == 12) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority4: false, priority5: false };
-        };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
-    if (totalQuestion.optionCount == 4) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_5: sample[0], optionCount: 5, priority4: false, priority5: true }
-        };
-        if (sample.length == 2) {
-            obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority4: false, priority5: true }
-        };
-        if (sample.length == 3) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority4: false, priority5: true }
-        };
-        if (sample.length == 4) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority4: false, priority5: true }
-        };
-        if (sample.length == 5) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority4: false, priority5: true };
-        };
-        if (sample.length == 6) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority4: false, priority5: true };
-        };
-        if (sample.length == 7) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority4: false, priority5: true };
-        };
-        if (sample.length == 8) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority4: false, priority5: true };
-        };
-        if (sample.length == 9) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], optionCount: 13, priority4: false, priority5: true };
-        };
-        if (sample.length == 10) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority4: false, priority5: false };
-        };
-        if (sample.length == 11) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority4: false, priority5: false };
-        };
-        if (sample.length == 12) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority4: false, priority5: false };
-        };
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
+        let obj = {}; optionCount = 3;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
+    if (totalQuestion.optionCount === 4) {
+        let obj = {}; optionCount = 4;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
+        }
+    }
     if (totalQuestion.optionCount == 5) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_6: sample[0], optionCount: 6, priority4: false, priority5: true }
-        };
-        if (sample.length == 2) {
-            obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority4: false, priority5: true }
+        let obj = {}; optionCount = 5;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 3) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority4: false, priority5: true }
+    }
+    if (totalQuestion.optionCount === 6) {
+        let obj = {}; optionCount = 6;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 4) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority4: false, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority4: false, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority4: false, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], optionCount: 13, priority4: false, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    };
-    if (totalQuestion.optionCount == 6) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_7: sample[0], optionCount: 7, priority4: false, priority5: true }
-        }
-        if (sample.length == 2) {
-            obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority4: false, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority4: false, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], optionCount: 13, priority4: false, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_8: sample[0], optionCount: 8, priority4: false, priority5: true }
+        let obj = {}; optionCount = 7;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority4: false, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], optionCount: 13, priority4: false, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 8) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_9: sample[0], optionCount: 9, priority4: false, priority5: true }
+    if (totalQuestion.optionCount === 8) {
+        let obj = {}; optionCount = 8;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], optionCount: 13, priority4: false, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority4: false, priority5: false };
-        }
-        console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_10: sample[0], optionCount: 10, priority4: false, priority5: true }
+        let obj = {}; optionCount = 9;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], optionCount: 13, priority4: false, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 10) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_11: sample[0], optionCount: 11, priority4: false, priority5: true }
+    if (totalQuestion.optionCount === 10) {
+        let obj = {}; optionCount = 10;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], optionCount: 13, priority4: false, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_12: sample[0], optionCount: 12, priority4: false, priority5: true }
+        let obj = {}; optionCount = 11;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_12: sample[0], option_13: sample[1], optionCount: 13, priority4: false, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 12) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_13: sample[0], optionCount: 13, priority4: false, priority5: true }
+    if (totalQuestion.optionCount === 12) {
+        let obj = {}; optionCount = 12;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false }
+        let obj = {}; optionCount = 13;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_14: sample[0], optionCount: 14, priority4: false, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount >= 14) {
+        obj = { priority4: false, condition3: false, priority5: false, optionCount: 14 };
+    } else {
+        obj = { priority4: false, priority5: true, optionCount: optionCount };
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
 };
 async function condition3priority5(questionId, userId, fullDate, hrs3) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
@@ -3346,576 +2081,155 @@ async function condition3priority5(questionId, userId, fullDate, hrs3) {
 async function condition3priority5a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    if (totalQuestion.optionCount == 0) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_1: sample[0], optionCount: 1, priority5: true }
+    let optionCount;
+    if (totalQuestion.optionCount === 0) {
+        let obj = {}; optionCount = 0;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_1: sample[0], option_2: sample[1], optionCount: 2, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], optionCount: 3, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], optionCount: 4, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], optionCount: 5, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], optionCount: 6, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], optionCount: 7, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], optionCount: 8, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], optionCount: 9, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 13) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 14) {
-            obj = { option_1: sample[0], option_2: sample[1], option_3: sample[2], option_4: sample[3], option_5: sample[4], option_6: sample[5], option_7: sample[6], option_8: sample[7], option_9: sample[8], option_10: sample[9], option_11: sample[10], option_12: sample[11], option_13: sample[12], option_14: sample[13], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 1) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_2: sample[0], optionCount: 2, priority5: true }
+        let obj = {}; optionCount = 1;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                console.log(obj)
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_2: sample[0], option_3: sample[1], optionCount: 3, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], optionCount: 4, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], optionCount: 5, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], optionCount: 6, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], optionCount: 7, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], optionCount: 8, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], optionCount: 9, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 13) {
-            obj = { option_2: sample[0], option_3: sample[1], option_4: sample[2], option_5: sample[3], option_6: sample[4], option_7: sample[5], option_8: sample[6], option_9: sample[7], option_10: sample[8], option_11: sample[9], option_12: sample[10], option_13: sample[11], option_14: sample[12], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 2) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_3: sample[0], optionCount: 3, priority5: true }
+    if (totalQuestion.optionCount === 2) {
+        let obj = {}; optionCount = 2;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_3: sample[0], option_4: sample[1], optionCount: 4, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], optionCount: 5, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], optionCount: 6, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], optionCount: 7, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], optionCount: 8, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], optionCount: 9, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 12) {
-            obj = { option_3: sample[0], option_4: sample[1], option_5: sample[2], option_6: sample[3], option_7: sample[4], option_8: sample[5], option_9: sample[6], option_10: sample[7], option_11: sample[8], option_12: sample[9], option_13: sample[10], option_14: sample[11], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
-    }
+    };
     if (totalQuestion.optionCount == 3) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_4: sample[0], optionCount: 4, priority5: true }
+        let obj = {}; optionCount = 3;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_4: sample[0], option_5: sample[1], optionCount: 5, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], optionCount: 6, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], optionCount: 7, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], optionCount: 8, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], optionCount: 9, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 11) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_4: sample[0], option_5: sample[1], option_6: sample[2], option_7: sample[3], option_8: sample[4], option_9: sample[5], option_10: sample[6], option_11: sample[7], option_12: sample[8], option_13: sample[9], option_14: sample[10], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 4) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_5: sample[0], optionCount: 5, priority5: true }
+    if (totalQuestion.optionCount === 4) {
+        let obj = {}; optionCount = 4;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_5: sample[0], option_6: sample[1], optionCount: 6, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], optionCount: 7, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], optionCount: 8, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], optionCount: 9, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 10) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_5: sample[0], option_6: sample[1], option_7: sample[2], option_8: sample[3], option_9: sample[4], option_10: sample[5], option_11: sample[6], option_12: sample[7], option_13: sample[8], option_14: sample[9], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 5) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_6: sample[0], optionCount: 6, priority5: true }
+        let obj = {}; optionCount = 5;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_6: sample[0], option_7: sample[1], optionCount: 7, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], optionCount: 8, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], optionCount: 9, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], optionCount: 10, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 9) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_6: sample[0], option_7: sample[1], option_8: sample[2], option_9: sample[3], option_10: sample[4], option_11: sample[5], option_12: sample[6], option_13: sample[7], option_14: sample[8], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 6) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_7: sample[0], optionCount: 7, priority5: true }
+    if (totalQuestion.optionCount === 6) {
+        let obj = {}; optionCount = 6;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_7: sample[0], option_8: sample[1], optionCount: 8, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], optionCount: 9, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], optionCount: 10, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], optionCount: 11, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 8) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_7: sample[0], option_8: sample[1], option_9: sample[2], option_10: sample[3], option_11: sample[4], option_12: sample[5], option_13: sample[6], option_14: sample[7], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 7) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_8: sample[0], optionCount: 8, priority5: true }
+        let obj = {}; optionCount = 7;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_8: sample[0], option_9: sample[1], optionCount: 9, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], optionCount: 10, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], optionCount: 11, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], optionCount: 12, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 7) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_8: sample[0], option_9: sample[1], option_10: sample[2], option_11: sample[3], option_12: sample[4], option_13: sample[5], option_14: sample[6], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 8) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_9: sample[0], optionCount: 9, priority5: true }
+    if (totalQuestion.optionCount === 8) {
+        let obj = {}; optionCount = 8;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_9: sample[0], option_10: sample[1], optionCount: 10, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], optionCount: 11, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], optionCount: 12, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], optionCount: 13, priority5: true };
-        }
-        if (sample.length == 6) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_9: sample[0], option_10: sample[1], option_11: sample[2], option_12: sample[3], option_13: sample[4], option_14: sample[5], optionCount: 14, priority5: false };
-        }
-        console.log("2640===========================", obj);
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 9) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_10: sample[0], optionCount: 10, priority5: true }
+        let obj = {}; optionCount = 9;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_10: sample[0], option_11: sample[1], optionCount: 11, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], optionCount: 12, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], optionCount: 13, priority5: true }
-        }
-        if (sample.length == 5) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_10: sample[0], option_11: sample[1], option_12: sample[2], option_13: sample[3], option_14: sample[4], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 10) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_11: sample[0], optionCount: 11, priority5: true }
+    if (totalQuestion.optionCount === 10) {
+        let obj = {}; optionCount = 10;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_11: sample[0], option_12: sample[1], optionCount: 12, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], optionCount: 13, priority5: true }
-        }
-        if (sample.length == 4) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_11: sample[0], option_12: sample[1], option_13: sample[2], option_13: sample[3], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 11) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_12: sample[0], optionCount: 12, priority5: true }
+        let obj = {}; optionCount = 11;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_12: sample[0], option_13: sample[1], optionCount: 13, priority5: true }
-        }
-        if (sample.length == 3) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_12: sample[0], option_13: sample[1], option_14: sample[2], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-    if (totalQuestion.optionCount == 12) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_13: sample[0], optionCount: 13, priority5: true }
+    if (totalQuestion.optionCount === 12) {
+        let obj = {}; optionCount = 12;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_13: sample[0], option_14: sample[1], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
     if (totalQuestion.optionCount == 13) {
-        let obj;
-        if (sample.length == 1) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false }
+        let obj = {}; optionCount = 13;
+        if (optionCount < 14) {
+            for (let i = 0; i < sample.length; i++) {
+                obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
+                optionCount++;
+                let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
+            }
         }
-        if (sample.length == 2) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 3) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 4) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false }
-        }
-        if (sample.length == 5) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 6) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 7) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 8) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 9) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 10) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 11) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        if (sample.length == 12) {
-            obj = { option_14: sample[0], optionCount: 14, priority5: false };
-        }
-        let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
     }
-
+    let c = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
+    if (optionCount >= 14) {
+        obj = { priority5: false, condition3: false, optionCount: 14 };
+    } else {
+        obj = { condition1: true, condition2: false, priority2_1: true, priority2_2: false, condition3: false, priority1: true, priority2: false, priority3: false, priority4: false, priority5: false, optionCount: optionCount };
+        condition1Function(questionId, userId, fullDate, hrs3)
+    }
+    await questionAnswer.findByIdAndUpdate({ _id: c._id }, { $set: obj }, { new: true });
 };
 setInterval(startCondition1, 60000);
