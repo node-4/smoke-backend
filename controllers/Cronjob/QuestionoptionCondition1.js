@@ -9,7 +9,7 @@ async function startCondition1() {
     let month = new Date(Date.now()).getMonth() + 1;
     let year = new Date(Date.now()).getFullYear();
     let fullDate = (`${date}/${month}/${year}`).toString();
-    let hrs = new Date(Date.now()).getHours() + 1
+    let hrs = new Date(Date.now()).getHours()
     let min = new Date(Date.now()).getMinutes();
     let hrs1, hr, hrs2, hrs3;
     if (hrs < 10) {
@@ -33,8 +33,8 @@ async function startCondition1() {
         hrs2 = parseInt(hr + 1);
     }
     // hrs3 = hrs2; /// server
-    // hrs3 = hrs;  //local
-    hrs3 = "11"
+    hrs3 = hrs;  //local
+    // hrs3 = "11"
     console.log("*****************************************************************************");
     console.log("startCondition1  Full Date ===>", fullDate);
     console.log("startCondition1 Min ===>", min);
@@ -309,9 +309,10 @@ async function condition2priority1(questionId, userId, fullDate, hrs3) {
 async function condition2priority1a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -321,7 +322,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {};
+        optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -332,7 +334,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -342,7 +345,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = {}; optionCount = 3;
+        let obj = {};
+        optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -352,7 +356,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -362,7 +367,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -372,7 +378,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -382,7 +389,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -392,7 +400,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -402,7 +411,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -412,7 +422,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -422,7 +433,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -432,7 +444,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -442,7 +455,8 @@ async function condition2priority1a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -555,9 +569,10 @@ async function condition2priority2(questionId, userId, fullDate, hrs3) {
 async function condition2priority2a(questionId, userId, fullDate, hrs3, userArray) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -567,7 +582,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {};
+        optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -578,7 +594,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -588,7 +605,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = {}; optionCount = 3;
+        let obj = {};
+        optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -598,7 +616,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -608,7 +627,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -618,7 +638,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -628,7 +649,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -638,7 +660,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -648,7 +671,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -658,7 +682,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -668,7 +693,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -678,7 +704,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -688,7 +715,8 @@ async function condition2priority2a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1232,9 +1260,10 @@ async function condition3priority2(questionId, userId, fullDate, hrs3) {
 async function condition3priority2a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1244,7 +1273,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {};
+        optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -1255,7 +1285,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1265,7 +1296,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = {}; optionCount = 3;
+        let obj = {};
+        optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1275,7 +1307,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1285,7 +1318,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1295,7 +1329,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1305,7 +1340,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1315,7 +1351,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1325,7 +1362,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1335,7 +1373,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1345,7 +1384,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1355,7 +1395,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1365,7 +1406,8 @@ async function condition3priority2a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1519,9 +1561,10 @@ async function condition3priority3(questionId, userId, fullDate, hrs3) {
 async function condition3priority3a(questionId, userId, fullDate, hrs3, userArray) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1531,7 +1574,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {};
+        optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -1542,7 +1586,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1552,7 +1597,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = {}; optionCount = 3;
+        let obj = {};
+        optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1562,7 +1608,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1572,7 +1619,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1582,7 +1630,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1592,7 +1641,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1602,7 +1652,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1612,7 +1663,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1622,7 +1674,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1632,7 +1685,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1642,7 +1696,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1652,7 +1707,8 @@ async function condition3priority3a(questionId, userId, fullDate, hrs3, userArra
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1805,9 +1861,10 @@ async function condition3priority4(questionId, userId, fullDate, hrs3) {
 async function condition3priority4a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1817,7 +1874,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {};
+        optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -1828,7 +1886,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1838,7 +1897,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 3) {
-        let obj = {}; optionCount = 3;
+        let obj = {};
+        optionCount = 3;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1848,7 +1908,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1858,7 +1919,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1868,7 +1930,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1878,7 +1941,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1888,7 +1952,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1898,7 +1963,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1908,7 +1974,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1918,7 +1985,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1928,7 +1996,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -1938,7 +2007,8 @@ async function condition3priority4a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2081,9 +2151,10 @@ async function condition3priority5(questionId, userId, fullDate, hrs3) {
 async function condition3priority5a(userId, fullDate, hrs3, userArray, questionId) {
     let totalQuestion = await questionAnswer.findOne({ _id: questionId, questionDate: fullDate, questionTime: hrs3, userID: userId });
     const sample = userArray.map(x => ({ x, r: Math.random() })).sort((a, b) => a.r - b.r).map(a => a.x).slice(0, userArray.length);
-    let optionCount;
+    let obj, optionCount;
     if (totalQuestion.optionCount === 0) {
-        let obj = {}; optionCount = 0;
+        let obj = {};
+        optionCount = 0;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2091,9 +2162,9 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-    }
+    };
     if (totalQuestion.optionCount == 1) {
-        let obj = {}; optionCount = 1;
+        let obj = {}, optionCount = 1;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 console.log(obj)
@@ -2102,9 +2173,10 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
                 let update = await questionAnswer.findByIdAndUpdate({ _id: totalQuestion._id }, { $set: obj }, { new: true });
             }
         }
-    }
+    };
     if (totalQuestion.optionCount === 2) {
-        let obj = {}; optionCount = 2;
+        let obj = {};
+        optionCount = 2;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2124,7 +2196,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 4) {
-        let obj = {}; optionCount = 4;
+        let obj = {};
+        optionCount = 4;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2134,7 +2207,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 5) {
-        let obj = {}; optionCount = 5;
+        let obj = {};
+        optionCount = 5;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2144,7 +2218,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 6) {
-        let obj = {}; optionCount = 6;
+        let obj = {};
+        optionCount = 6;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2154,7 +2229,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 7) {
-        let obj = {}; optionCount = 7;
+        let obj = {};
+        optionCount = 7;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2164,7 +2240,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 8) {
-        let obj = {}; optionCount = 8;
+        let obj = {};
+        optionCount = 8;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2174,7 +2251,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 9) {
-        let obj = {}; optionCount = 9;
+        let obj = {};
+        optionCount = 9;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2184,7 +2262,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 10) {
-        let obj = {}; optionCount = 10;
+        let obj = {};
+        optionCount = 10;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2194,7 +2273,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 11) {
-        let obj = {}; optionCount = 11;
+        let obj = {};
+        optionCount = 11;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2204,7 +2284,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount === 12) {
-        let obj = {}; optionCount = 12;
+        let obj = {};
+        optionCount = 12;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
@@ -2214,7 +2295,8 @@ async function condition3priority5a(userId, fullDate, hrs3, userArray, questionI
         }
     }
     if (totalQuestion.optionCount == 13) {
-        let obj = {}; optionCount = 13;
+        let obj = {};
+        optionCount = 13;
         if (optionCount < 14) {
             for (let i = 0; i < sample.length; i++) {
                 obj[`option_${i + totalQuestion.optionCount + 1}`] = sample[i];
