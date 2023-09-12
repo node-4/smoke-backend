@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/smokeApp/dev/1694501618151-2023-09-12T06:53:38.151Z/smokeApp.zip"
+          "S3Key": "serverless/smokeApp/dev/1694527233773-2023-09-12T14:00:33.773Z/smokeApp.zip"
         },
         "Handler": "server.handler",
         "Runtime": "nodejs18.x",
@@ -180,14 +180,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionkb2GqjmfkOEBs7Mk7nsUICyCguctHkID36d5gwZDwko": {
+    "AppLambdaVersion8TEGgn2ZcUMuByC9DzWZrlPkizj00jsYZbZnAGrq1yU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "CPBR9jLBO/B4MoU1zJ4eGgiLhJ23I/HwkCB2aaRy3ok="
+        "CodeSha256": "moJG3mO6B5FPkRhoxo/b+iAWI9C4wVhndQGjXHyvWW8="
       }
     },
     "ApiGatewayRestApi": {
@@ -408,7 +408,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1694501556277": {
+    "ApiGatewayDeployment1694527177186": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -473,7 +473,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionkb2GqjmfkOEBs7Mk7nsUICyCguctHkID36d5gwZDwko"
+        "Ref": "AppLambdaVersion8TEGgn2ZcUMuByC9DzWZrlPkizj00jsYZbZnAGrq1yU"
       },
       "Export": {
         "Name": "sls-smokeApp-dev-AppLambdaFunctionQualifiedArn"
