@@ -10,7 +10,7 @@ exports.createAboutUs = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: result });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getAboutUs = async (req, res) => {
@@ -23,7 +23,7 @@ exports.getAboutUs = async (req, res) => {
 
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getAboutUsById = async (req, res) => {
@@ -35,7 +35,7 @@ exports.getAboutUsById = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: data });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.updateAboutUs = async (req, res) => {
@@ -51,16 +51,16 @@ exports.updateAboutUs = async (req, res) => {
                 }
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.deleteAboutUs = async (req, res) => {
         try {
                 const result = await staticContent.findByIdAndDelete({ _id: req.params.id });
-                res.status(200).json({ message: "ok" })
+                return res.status(200).json({ message: "ok" })
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.createTerms = async (req, res) => {
@@ -72,7 +72,7 @@ exports.createTerms = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data create successfully.", data: result });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.updateTerms = async (req, res) => {
@@ -87,7 +87,7 @@ exports.updateTerms = async (req, res) => {
                 }
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getTerms = async (req, res) => {
@@ -99,7 +99,7 @@ exports.getTerms = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: data });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getTermsbyId = async (req, res) => {
@@ -111,7 +111,7 @@ exports.getTermsbyId = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: data });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.deleteTerms = async (req, res) => {
@@ -120,10 +120,10 @@ exports.deleteTerms = async (req, res) => {
                 if (!data) {
                         return res.status(404).json({ status: 404, message: "No data found", data: {} });
                 }
-                res.status(200).json({ status: 200, message: "Deleted Successfully", });
+                return res.status(200).json({ status: 200, message: "Deleted Successfully", });
         } catch (err) {
                 console.log(err.message);
-                res.status(500).send({ msg: "internal server error", error: err.message });
+                return res.status(500).send({ msg: "internal server error", error: err.message });
         }
 };
 exports.createPrivacy = async (req, res) => {
@@ -135,7 +135,7 @@ exports.createPrivacy = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data create successfully.", data: result });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.updatePrivacy = async (req, res) => {
@@ -150,7 +150,7 @@ exports.updatePrivacy = async (req, res) => {
                 }
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getPrivacy = async (req, res) => {
@@ -162,7 +162,7 @@ exports.getPrivacy = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: data });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.getPrivacybyId = async (req, res) => {
@@ -174,7 +174,7 @@ exports.getPrivacybyId = async (req, res) => {
                 return res.status(200).json({ status: 200, message: "Data found successfully.", data: data });
         } catch (error) {
                 console.log(error);
-                res.status(501).send({ status: 501, message: "server error.", data: {}, });
+                return res.status(501).send({ status: 501, message: "server error.", data: {}, });
         }
 };
 exports.deletePrivacy = async (req, res) => {
@@ -184,9 +184,9 @@ exports.deletePrivacy = async (req, res) => {
                         return res.status(404).json({ status: 404, message: "No data found", data: {} });
                 }
                 const data1 = await staticContent.findByIdAndDelete(req.params.id);
-                res.status(200).json({ status: 200, message: "Deleted Successfully", });
+                return res.status(200).json({ status: 200, message: "Deleted Successfully", });
         } catch (err) {
                 console.log(err.message);
-                res.status(500).send({ msg: "internal server error", error: err.message });
+                return res.status(500).send({ msg: "internal server error", error: err.message });
         }
 };

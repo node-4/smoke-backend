@@ -3,10 +3,10 @@ const Faq = require("../model/faq");
 exports.getAllFaqs = async (req, res) => {
     try {
         const faqs = await Faq.find().lean();
-        res.status(200).json({ message: "faqs retrieved successfully ", data: faqs });
+        return res.status(200).json({ message: "faqs retrieved successfully ", data: faqs });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
+        return res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.getFaqById = async (req, res) => {
@@ -16,10 +16,10 @@ exports.getFaqById = async (req, res) => {
         if (!faq) {
             return res.status(404).json({ message: "Not Found ", data: {} });
         }
-        res.status(200).json({ message: "faqs retrieved successfully ", data: faq });
+        return res.status(200).json({ message: "faqs retrieved successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
+        return res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.createFaq = async (req, res) => {
@@ -29,10 +29,10 @@ exports.createFaq = async (req, res) => {
             return res.status(400).json({ message: "questions and answers cannot be blank " });
         }
         const faq = await Faq.create(req.body);
-        res.status(200).json({ message: "FAQ Added Successfully ", data: faq });
+        return res.status(200).json({ message: "FAQ Added Successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
+        return res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.updateFaq = async (req, res) => {
@@ -42,10 +42,10 @@ exports.updateFaq = async (req, res) => {
         if (!faq) {
             return res.status(404).json({ message: "Not Found ", data: {} });
         }
-        res.status(200).json({ message: "FAQ Updated Successfully ", data: faq });
+        return res.status(200).json({ message: "FAQ Updated Successfully ", data: faq });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
+        return res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
 exports.deleteFaq = async (req, res) => {
@@ -56,9 +56,9 @@ exports.deleteFaq = async (req, res) => {
             return res.status(404).json({ message: "Not Found ", data: {} });
         }
         const faq1 = await Faq.findByIdAndDelete(id);
-        res.status(200).json({ message: "FAQ Deleted Successfully ", data: faq1 });
+        return res.status(200).json({ message: "FAQ Deleted Successfully ", data: faq1 });
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'An error occurred while fetching the faqs' });
+        return res.status(500).json({ error: 'An error occurred while fetching the faqs' });
     }
 };
